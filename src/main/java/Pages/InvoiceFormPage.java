@@ -42,11 +42,26 @@ public class InvoiceFormPage {
     @FindBy(how = How.NAME, using = "invoice.foreignCompany.street")
     private WebElement foreignCompanyStreet;
     @FindBy(how = How.NAME, using = "invoice.foreignCompany.buildingNo")
-    private WebElement foreignCompanyBuilding;
+    private WebElement foreignCompanyBuildingNo;
     @FindBy(how = How.NAME, using = "invoice.foreignCompany.flatNo")
-    private WebElement foreignCompanyFlat;
+    private WebElement foreignCompanyFlatNo;
     @FindBy(how = How.NAME, using = "invoice.foreignCompany.email")
     private WebElement foreignCompanyEmail;
+    //endregion
+
+    //region Private person WebElements
+    @FindBy(how = How.NAME, using = "invoice.individual.companyName")
+    private WebElement individualName;
+    @FindBy(how = How.NAME, using = "invoice.individual.email")
+    private WebElement individualEmail;
+    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.town']//*/input")
+    private WebElement individualTown;
+    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.street']//*/input")
+    private WebElement individualStreet;
+    @FindBy(how = How.NAME, using = "invoice.individual.buildingNo")
+    private WebElement individualBuildingNo;
+    @FindBy(how = How.NAME, using = "invoice.individual.flatNo")
+    private WebElement individualFlatNo;
     //endregion
 
     public InvoiceFormPage() {
@@ -92,11 +107,54 @@ public class InvoiceFormPage {
         return this;
     }
     public InvoiceFormPage fillInvoiceForeignCompanyBuildingNo(String text){
-        foreignCompanyBuilding.sendKeys(text);
+        foreignCompanyBuildingNo.sendKeys(text);
         return this;
     }
     public InvoiceFormPage fillInvoiceForeignCompanyFlatNo(String text){
-        foreignCompanyFlat.sendKeys(text);
+        foreignCompanyFlatNo.sendKeys(text);
+        return this;
+    }
+    public InvoiceFormPage fillInvoiceForeignCompanyEmail(String text){
+        foreignCompanyEmail.sendKeys(text);
+        return this;
+    }
+    //endregion
+
+    //region Private person fill methods
+    public InvoiceFormPage fillInvoiceForeignCompanyPrefix(String text) {
+        commonHelper.writeAndConfirmDropdown(foreignCompanyPrefixInput, text);
+        return this;
+    }
+    public InvoiceFormPage fillInvoiceForeignCompanyNip(String text){
+        foreignCompanyNip.sendKeys(text);
+        return this;
+    }
+    public InvoiceFormPage fillInvoiceForeignCompanyName(String text){
+        foreignCompanyName.sendKeys(text);
+        return this;
+    }
+    public InvoiceFormPage fillInvoiceForeignCompanyCountry(String text) {
+        commonHelper.writeAndConfirmDropdown(foreignCompanyCountryInput, text);
+        return this;
+    }
+    public InvoiceFormPage fillInvoiceForeignCompanyPostalCode(String text) {
+        foreignCompanyPostalCode.sendKeys(text);
+        return this;
+    }
+    public InvoiceFormPage fillInvoiceForeignCompanyTown(String text){
+        foreignCompanyTown.sendKeys(text);
+        return this;
+    }
+    public InvoiceFormPage fillInvoiceForeignCompanyStreet(String text){
+        foreignCompanyStreet.sendKeys(text);
+        return this;
+    }
+    public InvoiceFormPage fillInvoiceForeignCompanyBuildingNo(String text){
+        foreignCompanyBuildingNo.sendKeys(text);
+        return this;
+    }
+    public InvoiceFormPage fillInvoiceForeignCompanyFlatNo(String text){
+        foreignCompanyFlatNo.sendKeys(text);
         return this;
     }
     public InvoiceFormPage fillInvoiceForeignCompanyEmail(String text){
