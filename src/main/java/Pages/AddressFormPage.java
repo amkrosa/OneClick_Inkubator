@@ -17,16 +17,41 @@ public class AddressFormPage extends FormPage{
 
     @FindBy(how = How.NAME, using = "targetAddress.zipCode")
     WebElement receiverZipCode;
-    @FindBy(how = How.NAME, using = "targetAddress.town")
+    @FindBy(how = How.XPATH, using = "//*[@name='targetAddress.town']//*/input")
     WebElement receiverTown;
-    @FindBy(how = How.NAME, using = "targetAddress.street")
+    @FindBy(how = How.XPATH, using = "//*[@name='targetAddress.street']//*/input")
     WebElement receiverStreet;
     @FindBy(how = How.NAME, using = "targetAddress.buildingNo")
     WebElement receiverBuildingNo;
     @FindBy(how = How.NAME, using = "targetAddress.flatNo")
     WebElement receiverFlatNo;
 
-    AddressFormPage(){  super();  }
+    public AddressFormPage(){  super();  }
+
+    public FormPage fillReceiverZipCode(String text) {
+        receiverZipCode.sendKeys(text);
+        return this;
+    }
+
+    public FormPage fillReceiverTown(String text) {
+        commonHelper.writeAndConfirmDropdown(receiverTown, text);
+        return this;
+    }
+
+    public FormPage fillReceiverStreet(String text) {
+        commonHelper.writeAndConfirmDropdown(receiverStreet, text);
+        return this;
+    }
+
+    public FormPage fillReceiverBuildingNo(String text) {
+        receiverBuildingNo.sendKeys(text);
+        return this;
+    }
+
+    public FormPage fillReceiverFlatNo(String text) {
+        receiverFlatNo.sendKeys(text);
+        return this;
+    }
 
 
 
