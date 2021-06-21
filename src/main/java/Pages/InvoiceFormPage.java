@@ -12,6 +12,8 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.xml.xpath.XPath;
+
 public class InvoiceFormPage {
 
     private WebDriver driver;
@@ -121,44 +123,34 @@ public class InvoiceFormPage {
     //endregion
 
     //region Private person fill methods
-    public InvoiceFormPage fillInvoiceForeignCompanyPrefix(String text) {
-        commonHelper.writeAndConfirmDropdown(foreignCompanyPrefixInput, text);
+
+    public InvoiceFormPage fillIndividualName(String text) {
+        individualName.sendKeys(text);
         return this;
     }
-    public InvoiceFormPage fillInvoiceForeignCompanyNip(String text){
-        foreignCompanyNip.sendKeys(text);
+
+    public InvoiceFormPage fillIndividualEmail(String text) {
+        individualEmail.sendKeys(text);
         return this;
     }
-    public InvoiceFormPage fillInvoiceForeignCompanyName(String text){
-        foreignCompanyName.sendKeys(text);
+
+    public InvoiceFormPage fillIndividualBuildingNo(String text) {
+        individualBuildingNo.sendKeys(text);
         return this;
     }
-    public InvoiceFormPage fillInvoiceForeignCompanyCountry(String text) {
-        commonHelper.writeAndConfirmDropdown(foreignCompanyCountryInput, text);
+
+    public InvoiceFormPage fillIndividualFlatNo(String text) {
+        individualFlatNo.sendKeys(text);
         return this;
     }
-    public InvoiceFormPage fillInvoiceForeignCompanyPostalCode(String text) {
-        foreignCompanyPostalCode.sendKeys(text);
+
+    public InvoiceFormPage fillIndividualTown(String text) {
+        commonHelper.writeAndConfirmDropdown(individualTown, text);
         return this;
     }
-    public InvoiceFormPage fillInvoiceForeignCompanyTown(String text){
-        foreignCompanyTown.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyStreet(String text){
-        foreignCompanyStreet.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyBuildingNo(String text){
-        foreignCompanyBuildingNo.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyFlatNo(String text){
-        foreignCompanyFlatNo.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyEmail(String text){
-        foreignCompanyEmail.sendKeys(text);
+
+    public InvoiceFormPage fillIndividualStreet(String text) {
+        commonHelper.writeAndConfirmDropdown(individualStreet, text);
         return this;
     }
     //endregion
