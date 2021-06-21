@@ -21,46 +21,42 @@ import java.util.Map;
 
 public class FormPage {
 
+    @FindBy(how = How.ID, using = "onetrust-accept-btn-handler")
+    WebElement policyButton;
+    @FindBy(how = How.CLASS_NAME, using = "btn-cookie-trigger")
+    WebElement cookieButton;
+    @FindBy(how = How.NAME, using = "senderAddress.name")
+    WebElement senderName;
+    @FindBy(how = How.NAME, using = "senderAddress.phoneNum")
+    WebElement senderPhone;
+    @FindBy(how = How.NAME, using = "senderAddress.email")
+    WebElement senderEmail;
+    @FindBy(how = How.NAME, using = "targetAddress.name")
+    WebElement receiverName;
+    @FindBy(how = How.NAME, using = "phoneNumber")
+    WebElement receiverPhone;
+    @FindBy(how = How.NAME, using = "addresseeEmail")
+    WebElement receiverEmail;
+    @FindBy(how = How.CSS, using = "[for=terms] > .input-checkmark")
+    WebElement terms;
+    @FindBy(how = How.CSS, using = "[for=newsletter] > .input-checkmark")
+    WebElement newsletter;
+    @FindBy(how = How.CSS, using = "[for=deliveryTypeboxmachine]")
+    WebElement deliveryTypeBoxmachine;
+    @FindBy(how = How.CSS, using = "[for=deliveryTypeaddress]")
+    WebElement deliveryTypeAddress;
+    @FindBy(how = How.CSS, using = "[for=parcelSizeA]")
+    WebElement parcelSizeA;
+    @FindBy(how = How.CSS, using = "[for=parcelSizeB]")
+    WebElement parcelSizeB;
+    @FindBy(how = How.CSS, using = "[for=parcelSizeC]")
+    WebElement parcelSizeC;
+    @FindBy(how = How.CSS, using = "[for=in_changer]")
+    WebElement invoiceCheckbox;
     private WebDriver driver;
     private CommonHelper commonHelper;
     private WaitHelper waitHelper;
     private ActionHelper actionHelper;
-
-    @FindBy(how = How.ID, using = "onetrust-accept-btn-handler")
-    private WebElement policyButton;
-    @FindBy(how = How.CLASS_NAME, using = "btn-cookie-trigger")
-    private WebElement cookieButton;
-    @FindBy(how = How.NAME, using = "senderAddress.name")
-    private WebElement senderName;
-    @FindBy(how = How.NAME, using = "senderAddress.phoneNum")
-    private WebElement senderPhone;
-    @FindBy(how = How.NAME, using = "senderAddress.email")
-    private WebElement senderEmail;
-    @FindBy(how = How.NAME, using = "targetAddress.name")
-    private WebElement receiverName;
-    @FindBy(how = How.NAME, using = "phoneNumber")
-    private WebElement receiverPhone;
-    @FindBy(how = How.NAME, using = "addresseeEmail")
-    private WebElement receiverEmail;
-    @FindBy(how = How.CSS, using = ".ng-input > input")
-    private WebElement parcelmachine;
-    @FindBy(how = How.CSS, using = "[for=terms] > .input-checkmark")
-    private WebElement terms;
-    @FindBy(how = How.CSS, using = "[for=newsletter] > .input-checkmark")
-    private WebElement newsletter;
-    @FindBy(how = How.CSS, using = "[for=deliveryTypeboxmachine]")
-    private WebElement deliveryTypeBoxmachine;
-    @FindBy(how = How.CSS, using = "[for=deliveryTypeaddress]")
-    private WebElement deliveryTypeAddress;
-    @FindBy(how = How.CSS, using = "[for=parcelSizeA]")
-    private WebElement parcelSizeA;
-    @FindBy(how = How.CSS, using = "[for=parcelSizeB]")
-    private WebElement parcelSizeB;
-    @FindBy(how = How.CSS, using = "[for=parcelSizeC]")
-    private WebElement parcelSizeC;
-    @FindBy(how = How.CSS, using = "[for=in_changer]")
-    private WebElement invoiceCheckbox;
-
 
 
     public FormPage() {
@@ -71,51 +67,71 @@ public class FormPage {
         commonHelper = new CommonHelper(actionHelper, waitHelper);
     }
 
-    public void fillSender(String name, String phone, String email) {
-        senderName.sendKeys(name);
-        senderEmail.sendKeys(email);
-        senderPhone.sendKeys(phone);
+    public FormPage fillSenderName(String text) {
+        senderName.sendKeys(text);
+        return this;
     }
 
-    public void setParcelmachine(String pm) {
-        parcelmachine.sendKeys(pm);
-        waitHelper.waitUntilClickable(By.cssSelector("#" + pm.toUpperCase()));
-        driver.findElement(By.cssSelector("#" + pm.toUpperCase())).click();
+    public FormPage fillSenderEmail(String text) {
+        senderEmail.sendKeys(text);
+        return this;
     }
 
-    public void fillReceiverParcelmachine(String name, String phone, String email, String parcelmachine) {
-        receiverName.sendKeys(name);
-        receiverEmail.sendKeys(email);
-        receiverPhone.sendKeys(phone);
-        setParcelmachine(parcelmachine);
+
+    public FormPage fillSenderPhone(String text) {
+        senderPhone.sendKeys(text);
+        return this;
     }
 
-    public void clickNewsletterCheckbox(){
+    public FormPage fillReceiverName(String text) {
+        receiverName.sendKeys(text);
+        return this;
+    }
+
+    public FormPage fillReceiverEmail(String text) {
+        receiverEmail.sendKeys(text);
+        return this;
+    }
+
+    public FormPage fillReceiverPhone(String text) {
+        receiverPhone.sendKeys(text);
+        return this;
+    }
+
+
+    public FormPage clickNewsletterCheckbox() {
         commonHelper.moveAndClick(newsletter);
+        return this;
     }
 
-    public void clickTermsCheckbox(){
+    public FormPage clickTermsCheckbox() {
         commonHelper.moveAndClick(terms);
+        return this;
     }
 
-    public void clickBoxmachineDeliveryMethod(){
+    public FormPage clickBoxmachineDeliveryMethod() {
         commonHelper.moveAndClick(deliveryTypeBoxmachine);
+        return this;
     }
 
-    public void clickAddressDeliveryMethod(){
+    public FormPage clickAddressDeliveryMethod() {
         commonHelper.moveAndClick(deliveryTypeAddress);
+        return this;
     }
 
-    public void clickParcelSizeA(){
+    public FormPage clickParcelSizeA() {
         commonHelper.moveAndClick(parcelSizeA);
+        return this;
     }
 
-    public void clickParcelSizeB(){
+    public FormPage clickParcelSizeB() {
         commonHelper.moveAndClick(parcelSizeB);
+        return this;
     }
 
-    public void clickParcelSizeC(){
+    public FormPage clickParcelSizeC() {
         commonHelper.moveAndClick(parcelSizeC);
+        return this;
     }
 
     public boolean submit() {
@@ -125,17 +141,19 @@ public class FormPage {
         return !driver.findElements(By.cssSelector(".parcel-form-whole-summary-modal")).isEmpty();
     }
 
-    public void clickPolicyButton(){
+    public FormPage clickPolicyButton() {
         commonHelper.waitAndClick(policyButton);
+        return this;
     }
 
-    public void clickCookieButton(){
+    public FormPage clickCookieButton() {
         commonHelper.waitAndClick(cookieButton);
+        return this;
     }
 
-    public FormPage clickInvoiceCheckbox(){
+    public FormPage clickInvoiceCheckbox() {
         commonHelper.moveAndClick(invoiceCheckbox);
         return this;
     }
-    
+
 }

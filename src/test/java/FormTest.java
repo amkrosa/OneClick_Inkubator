@@ -23,8 +23,8 @@ public class FormTest extends Base {
     public class DeliveryMethodTest{
 
         @Test
-        @DisplayName("Given page loaded correctly when data is correct then input is valid")
-        public void Given_PageLoaded_When_DataIsCorrect_Then_InputIsValid(){
+        @DisplayName("Given page loaded correctly when boxmachine delivery method is clicked then form is for boxmachine delivery")
+        public void Given_PageLoaded_When_BoxmachineDeliveryClicked_Then_FormIsBoxmachineDelivery(){
             formPage.clickBoxmachineDeliveryMethod();
         }
         @Test
