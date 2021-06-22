@@ -8,12 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-public class AddressFormPage extends FormPage{
-
-    private WebDriver driver;
-    private CommonHelper commonHelper;
-    private WaitHelper waitHelper;
-    private ActionHelper actionHelper;
+public class AddressFormPage extends BasePage{
 
     @FindBy(how = How.NAME, using = "targetAddress.zipCode")
     WebElement receiverZipCode;
@@ -28,27 +23,27 @@ public class AddressFormPage extends FormPage{
 
     public AddressFormPage(){  super();  }
 
-    public FormPage fillReceiverZipCode(String text) {
+    public AddressFormPage fillReceiverZipCode(String text) {
         receiverZipCode.sendKeys(text);
         return this;
     }
 
-    public FormPage fillReceiverTown(String text) {
-        commonHelper.writeAndConfirmDropdown(receiverTown, text);
+    public AddressFormPage fillReceiverTown(String text) {
+        getCommonHelper().writeAndConfirmDropdown(receiverTown, text);
         return this;
     }
 
-    public FormPage fillReceiverStreet(String text) {
-        commonHelper.writeAndConfirmDropdown(receiverStreet, text);
+    public AddressFormPage fillReceiverStreet(String text) {
+        getCommonHelper().writeAndConfirmDropdown(receiverStreet, text);
         return this;
     }
 
-    public FormPage fillReceiverBuildingNo(String text) {
+    public AddressFormPage fillReceiverBuildingNo(String text) {
         receiverBuildingNo.sendKeys(text);
         return this;
     }
 
-    public FormPage fillReceiverFlatNo(String text) {
+    public AddressFormPage fillReceiverFlatNo(String text) {
         receiverFlatNo.sendKeys(text);
         return this;
     }
