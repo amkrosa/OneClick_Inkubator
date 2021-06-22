@@ -34,4 +34,8 @@ public abstract class BasePage {
     public ActionHelper getActionHelper() {
         return actionHelper;
     }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
 }
