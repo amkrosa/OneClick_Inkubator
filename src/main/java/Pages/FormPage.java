@@ -1,8 +1,6 @@
 package Pages;
 
 import Helpers.ActionHelper;
-import Helpers.CommonHelper;
-import Helpers.WaitHelper;
 import SeleniumBase.Base;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -19,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FormPage {
+public class FormPage extends BasePage{
 
     @FindBy(how = How.ID, using = "onetrust-accept-btn-handler")
     WebElement policyButton;
@@ -53,18 +51,9 @@ public class FormPage {
     WebElement parcelSizeC;
     @FindBy(how = How.CSS, using = "[for=in_changer]")
     WebElement invoiceCheckbox;
-    private WebDriver driver;
-    private CommonHelper commonHelper;
-    private WaitHelper waitHelper;
-    private ActionHelper actionHelper;
-
 
     public FormPage() {
-        driver = Base.driver;
-        PageFactory.initElements(driver, this);
-        waitHelper = new WaitHelper(new WebDriverWait(Base.driver, 3));
-        actionHelper = new ActionHelper(new Actions(Base.driver));
-        commonHelper = new CommonHelper(actionHelper, waitHelper);
+        super();
     }
 
     public FormPage fillSenderName(String text) {
@@ -100,59 +89,59 @@ public class FormPage {
 
 
     public FormPage clickNewsletterCheckbox() {
-        commonHelper.moveAndClick(newsletter);
+        getCommonHelper().moveAndClick(newsletter);
         return this;
     }
 
     public FormPage clickTermsCheckbox() {
-        commonHelper.moveAndClick(terms);
+        getCommonHelper().moveAndClick(terms);
         return this;
     }
 
     public FormPage clickBoxmachineDeliveryMethod() {
-        commonHelper.moveAndClick(deliveryTypeBoxmachine);
+        getCommonHelper().moveAndClick(deliveryTypeBoxmachine);
         return this;
     }
 
     public FormPage clickAddressDeliveryMethod() {
-        commonHelper.moveAndClick(deliveryTypeAddress);
+        getCommonHelper().moveAndClick(deliveryTypeAddress);
         return this;
     }
 
     public FormPage clickParcelSizeA() {
-        commonHelper.moveAndClick(parcelSizeA);
+        getCommonHelper().moveAndClick(parcelSizeA);
         return this;
     }
 
     public FormPage clickParcelSizeB() {
-        commonHelper.moveAndClick(parcelSizeB);
+        getCommonHelper().moveAndClick(parcelSizeB);
         return this;
     }
 
     public FormPage clickParcelSizeC() {
-        commonHelper.moveAndClick(parcelSizeC);
+        getCommonHelper().moveAndClick(parcelSizeC);
         return this;
     }
 
     public boolean submit() {
-        WebElement button = driver.findElement(By.cssSelector("#parcelFormButton > button"));
-        commonHelper.moveAndClick(button);
-        waitHelper.waitUntilVisible(By.cssSelector(".parcel-form-whole-summary-modal"));
-        return !driver.findElements(By.cssSelector(".parcel-form-whole-summary-modal")).isEmpty();
+        WebElement button = getDriver().findElement(By.cssSelector("#parcelFormButton > button"));
+        getCommonHelper().moveAndClick(button);
+        getWaitHelper().waitUntilVisible(By.cssSelector(".parcel-form-whole-summary-modal"));
+        return !getDriver().findElements(By.cssSelector(".parcel-form-whole-summary-modal")).isEmpty();
     }
 
     public FormPage clickPolicyButton() {
-        commonHelper.waitAndClick(policyButton);
+        getCommonHelper().waitAndClick(policyButton);
         return this;
     }
 
     public FormPage clickCookieButton() {
-        commonHelper.waitAndClick(cookieButton);
+        getCommonHelper().waitAndClick(cookieButton);
         return this;
     }
 
     public FormPage clickInvoiceCheckbox() {
-        commonHelper.moveAndClick(invoiceCheckbox);
+        getCommonHelper().moveAndClick(invoiceCheckbox);
         return this;
     }
 
