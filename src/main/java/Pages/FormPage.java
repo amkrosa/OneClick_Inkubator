@@ -7,6 +7,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -51,6 +52,12 @@ public class FormPage extends BasePage{
     WebElement parcelSizeC;
     @FindBy(how = How.CSS, using = "[for=in_changer]")
     WebElement invoiceCheckbox;
+    @FindBy(how = How.XPATH, using = "(//span[@class='custom-action-in-title'])[1]")
+    WebElement howToSendButton;
+    @FindBy(how = How.XPATH, using = "(//span[@class='custom-action-in-title'])[2]")
+    WebElement howToPackButton;
+
+
 
     public FormPage() {
         super();
@@ -145,4 +152,23 @@ public class FormPage extends BasePage{
         return this;
     }
 
+    public FormPage clickHowToSendButton() {
+        getCommonHelper().moveAndClick(howToSendButton);
+        return this;
+    }
+
+    public FormPage clickHowToPackButton() {
+        getCommonHelper().moveAndClick(howToPackButton);
+        return this;
+    }
+
+    public boolean isHowToSendModalVisible(){
+        By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
+        return getCommonHelper().isModalVisible(xpath, howToSendButton);
+    }
+
+    public boolean isHowToPackModalVisible(){
+        By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
+        return getCommonHelper().isModalVisible(xpath, howToPackButton);
+    }
 }
