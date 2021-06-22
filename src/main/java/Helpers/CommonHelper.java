@@ -45,4 +45,8 @@ public class CommonHelper {
         inputElement.sendKeys(Keys.ENTER);
     }
 
+    public boolean isVisible(By by){
+        return !Base.driver.findElements(by).isEmpty();
+    }
+
 }
