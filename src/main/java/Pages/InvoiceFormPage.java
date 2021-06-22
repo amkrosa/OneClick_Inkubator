@@ -14,12 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.xml.xpath.XPath;
 
-public class InvoiceFormPage {
-
-    private WebDriver driver;
-    private CommonHelper commonHelper;
-    private WaitHelper waitHelper;
-    private ActionHelper actionHelper;
+public class InvoiceFormPage extends BasePage{
 
     @FindBy(how = How.CSS, using = "[for=legalStatusforeignCompany]")
     private WebElement invoiceForeignCompanyCheckbox;
@@ -67,21 +62,17 @@ public class InvoiceFormPage {
     //endregion
 
     public InvoiceFormPage() {
-        driver = Base.driver;
-        PageFactory.initElements(driver, this);
-        waitHelper = new WaitHelper(new WebDriverWait(Base.driver, 3));
-        actionHelper = new ActionHelper(new Actions(Base.driver));
-        commonHelper = new CommonHelper(actionHelper, waitHelper);
+        super();
     }
 
     public InvoiceFormPage clickInvoiceForeignCompanyCheckbox(){
-        commonHelper.moveAndClick(invoiceForeignCompanyCheckbox);
+        getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
         return this;
     }
 
     //region Foreign company fill methods
     public InvoiceFormPage fillInvoiceForeignCompanyPrefix(String text) {
-        commonHelper.writeAndConfirmDropdown(foreignCompanyPrefixInput, text);
+        getCommonHelper().writeAndConfirmDropdown(foreignCompanyPrefixInput, text);
         return this;
     }
     public InvoiceFormPage fillInvoiceForeignCompanyNip(String text){
@@ -93,7 +84,7 @@ public class InvoiceFormPage {
         return this;
     }
     public InvoiceFormPage fillInvoiceForeignCompanyCountry(String text) {
-        commonHelper.writeAndConfirmDropdown(foreignCompanyCountryInput, text);
+        getCommonHelper().writeAndConfirmDropdown(foreignCompanyCountryInput, text);
         return this;
     }
     public InvoiceFormPage fillInvoiceForeignCompanyPostalCode(String text) {
@@ -145,12 +136,12 @@ public class InvoiceFormPage {
     }
 
     public InvoiceFormPage fillIndividualTown(String text) {
-        commonHelper.writeAndConfirmDropdown(individualTown, text);
+        getCommonHelper().writeAndConfirmDropdown(individualTown, text);
         return this;
     }
 
     public InvoiceFormPage fillIndividualStreet(String text) {
-        commonHelper.writeAndConfirmDropdown(individualStreet, text);
+        getCommonHelper().writeAndConfirmDropdown(individualStreet, text);
         return this;
     }
     //endregion
