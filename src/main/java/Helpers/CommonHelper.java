@@ -49,4 +49,14 @@ public class CommonHelper {
         return !Base.driver.findElements(by).isEmpty();
     }
 
+    public boolean isModalVisible(By byxpath, WebElement openModalButton){
+            moveAndClick(openModalButton);
+            try {
+                waitHelper.waitUntilVisible(byxpath);
+                return true;
+            }catch (Exception e){
+                return false;
+            }
+    }
+
 }
