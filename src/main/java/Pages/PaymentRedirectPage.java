@@ -29,4 +29,9 @@ public class PaymentRedirectPage extends BasePage {
         getCommonHelper().moveAndClick(pendingPaymentButton);
         return this;
     }
+
+    @Override
+    public WebElement getInitElement() {
+        return pendingPaymentButton;
+    }
 }

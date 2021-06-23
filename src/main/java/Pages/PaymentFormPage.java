@@ -37,4 +37,9 @@ public class PaymentFormPage extends BasePage{
         getCommonHelper().moveAndClick(finishButton);
         return this;
     }
+
+    @Override
+    public WebElement getInitElement() {
+        return finishButton;
+    }
 }

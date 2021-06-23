@@ -13,12 +13,20 @@ public class Client implements Serializable {
         this.city = city;
         this.buildingNo = buildingNo;
         this.flatNo = flatNo;
+        this.parcelmachine = "";
+
     }
 
     public Client(String name, String phone, String email) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.zipCode = "";
+        this.city = "";
+        this.buildingNo = "";
+        this.flatNo = "";
+        this.parcelmachine = "";
+
     }
 
     public Client(String name, String phone, String email, String parcelmachine) {
@@ -26,6 +34,10 @@ public class Client implements Serializable {
         this.phone = phone;
         this.email = email;
         this.parcelmachine = parcelmachine;
+        this.zipCode = "";
+        this.city = "";
+        this.buildingNo = "";
+        this.flatNo = "";
     }
 
     public String getName() {

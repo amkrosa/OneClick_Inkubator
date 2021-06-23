@@ -72,4 +72,9 @@ public class AddressFormPage extends BasePage{
     public String valueReceiverFlatNo() {
         return receiverFlatNo.getAttribute("value");
     }
+
+    @Override
+    public WebElement getInitElement() {
+        return receiverStreet;
+    }
 }
