@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.Enums;
 
 public enum Banner {
     BANNER_PARCEL("https://inpost.pl/SzybkieNadania/assets/icons/paczka.svg?v=1.10.0"),

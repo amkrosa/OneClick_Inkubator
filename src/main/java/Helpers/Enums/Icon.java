@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.Enums;
 
 public enum Icon {
 

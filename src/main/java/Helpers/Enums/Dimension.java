@@ -1,4 +1,4 @@
-package Helpers;
+package Helpers.Enums;
 
 public enum Dimension {
     PARCEL_A("8 x 38 x 64", "25"),
