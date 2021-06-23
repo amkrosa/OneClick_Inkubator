@@ -72,8 +72,6 @@ public class FormPage extends BasePage{
     @FindBy(how = How.XPATH, using = "//*[@class='chosen-text-description']")
     WebElement summarySizeDimension;
 
-    //(//*[@class='summaryForm'])[2]//*[@class='custom-column-summary']
-
 
     public FormPage() {
         super();
@@ -81,11 +79,13 @@ public class FormPage extends BasePage{
 
     public FormPage fillSenderName(String text) {
         senderName.sendKeys(text);
+
         return this;
     }
 
     public FormPage fillSenderEmail(String text) {
         senderEmail.sendKeys(text);
+
         return this;
     }
 
@@ -196,4 +196,13 @@ public class FormPage extends BasePage{
         }
         return true;
     }
+
+    public String textSummarySizeDimension() {
+        return summarySizeDimension.getText();
+    }
+
+    public String textSummarySizeText() {
+        return summarySizeText.getText();
+    }
+
 }
