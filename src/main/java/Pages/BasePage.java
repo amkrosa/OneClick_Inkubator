@@ -5,6 +5,7 @@ import Helpers.CommonHelper;
 import Helpers.WaitHelper;
 import SeleniumBase.Base;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -38,4 +39,10 @@ public abstract class BasePage {
     public WebDriver getDriver() {
         return driver;
     }
+
+    public <T extends BasePage> T init(){
+        waitHelper.waitUntilVisible(getInitElement());
+        return (T)this;
+    };
+    public abstract WebElement getInitElement();
 }
