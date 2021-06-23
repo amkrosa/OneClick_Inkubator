@@ -1,6 +1,7 @@
 package Pages;
 
 import Helpers.ActionHelper;
+import Helpers.Banner;
 import SeleniumBase.Base;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -56,7 +57,22 @@ public class FormPage extends BasePage{
     WebElement howToSendButton;
     @FindBy(how = How.XPATH, using = "(//span[@class='custom-action-in-title'])[2]")
     WebElement howToPackButton;
+    @FindAll({
+            @FindBy(how = How.XPATH, using = "//*[@id='process']//img")
+    })
+    List<WebElement> bannerImages;
+    @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//div[contains(@class, 'chosen-icon')]/img[1]")
+    WebElement summarySenderMethodIcon;
+    @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//div[contains(@class, 'chosen-icon')]/img[2]")
+    WebElement summaryReceiverMethodIcon;
+    @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//*([@class='custom-column-summary'])[1]")
+    WebElement summarySizeText;
+    @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//*([@class='custom-column-summary'])[2]")
+    WebElement summarySizeIcon;
+    @FindBy(how = How.XPATH, using = "//*[@class='chosen-text-description']")
+    WebElement summarySizeDimension;
 
+    //(//*[@class='summaryForm'])[2]//*[@class='custom-column-summary']
 
 
     public FormPage() {
@@ -170,5 +186,14 @@ public class FormPage extends BasePage{
     public boolean isHowToPackModalVisible(){
         By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
         return getCommonHelper().isModalVisible(xpath, howToPackButton);
+    }
+
+    public boolean isBannerImagesVisible(){
+        Banner[] banners = Banner.values();
+        for (int i=0; i<bannerImages.size(); i++){
+            if (!bannerImages.get(i).getAttribute("src").equals(banners[i].url))
+                return false;
+        }
+        return true;
     }
 }
