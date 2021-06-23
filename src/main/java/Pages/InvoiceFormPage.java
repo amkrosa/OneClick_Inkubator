@@ -21,7 +21,7 @@ public class InvoiceFormPage extends BasePage{
     @FindBy(how = How.CSS, using = "[for=legalStatusindividual]")
     private WebElement invoiceIndividualCheckbox;
     @FindBy(how = How.CSS, using = "[for=legalStatuscompany]")
-    private WebElement invoicePolishCompanyCheckbox;
+    private WebElement invoiceCompanyCheckbox;
 
     //region Foreign company WebElements
     @FindBy(how = How.XPATH, using = "//*[@id='error-invoice.foreignCompany.prefixNip']/../..//*[@role='combobox']/input")
@@ -92,12 +92,27 @@ public class InvoiceFormPage extends BasePage{
     private WebElement companyEmail;
     //endregion
 
+    private WebElement initElement;
+
     public InvoiceFormPage() {
         super();
     }
 
     public InvoiceFormPage clickInvoiceForeignCompanyCheckbox(){
         getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
+        initElement = foreignCompanyTown;
+        return this;
+    }
+
+    public InvoiceFormPage clickInvoiceIndividualCheckbox(){
+        getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
+        initElement = individualTown;
+        return this;
+    }
+
+    public InvoiceFormPage clickInvoiceCompanyCheckbox(){
+        getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
+        initElement = companyTownInput;
         return this;
     }
 
@@ -323,4 +338,8 @@ public class InvoiceFormPage extends BasePage{
 
     //endregion
 
+    @Override
+    public WebElement getInitElement() {
+        return null;
+    }
 }
