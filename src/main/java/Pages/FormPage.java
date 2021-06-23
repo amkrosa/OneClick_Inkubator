@@ -69,7 +69,6 @@ public class FormPage extends BasePage{
 
     public FormPage fillSenderName(String text) {
         senderName.sendKeys(text);
-
         return this;
     }
 
@@ -195,4 +194,27 @@ public class FormPage extends BasePage{
         return summarySizeText.getText();
     }
 
+    public String valueSenderName() {
+        return senderName.getAttribute("value");
+    }
+
+    public String valueSenderPhone() {
+        return senderPhone.getAttribute("value");
+    }
+
+    public String valueSenderEmail() {
+        return senderEmail.getAttribute("value");
+    }
+
+    public String valueReceiverName() {
+        return receiverName.getAttribute("value");
+    }
+
+    public String valueReceiverPhone() {
+        return receiverPhone.getAttribute("value");
+    }
+
+    public String valueReceiverEmail() {
+        return receiverEmail.getAttribute("value");
+    }
 }

@@ -13,6 +13,8 @@ public class BoxmachineFormPage extends BasePage {
 
     @FindBy(how = How.CSS, using = ".ng-input > input")
     WebElement parcelmachine;
+    @FindBy(how = How.CSS, using = ".ng-value")
+    WebElement parcelmachineFieldValue;
     @FindBy(how = How.CSS, using = "app-geowidget")
     WebElement geowidget;
 
@@ -23,5 +25,9 @@ public class BoxmachineFormPage extends BasePage {
         getWaitHelper().waitUntilClickable(By.cssSelector("#" + pm.toUpperCase()));
         getDriver().findElement(By.cssSelector("#" + pm.toUpperCase())).click();
         return this;
+    }
+
+    public String textParcelmachineFieldValue() {
+        return parcelmachineFieldValue.getText();
     }
 }

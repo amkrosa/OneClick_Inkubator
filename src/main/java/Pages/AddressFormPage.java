@@ -14,8 +14,12 @@ public class AddressFormPage extends BasePage{
     WebElement receiverZipCode;
     @FindBy(how = How.XPATH, using = "//*[@name='targetAddress.town']//*/input")
     WebElement receiverTown;
+    @FindBy(how = How.XPATH, using = "//*[@name='targetAddress.town']//*[@class='ng-value']")
+    WebElement receiverTownValue;
     @FindBy(how = How.XPATH, using = "//*[@name='targetAddress.street']//*/input")
     WebElement receiverStreet;
+    @FindBy(how = How.XPATH, using = "//*[@name='targetAddress.street']//*[@class='ng-value']")
+    WebElement receiverStreetValue;
     @FindBy(how = How.NAME, using = "targetAddress.buildingNo")
     WebElement receiverBuildingNo;
     @FindBy(how = How.NAME, using = "targetAddress.flatNo")
@@ -49,6 +53,23 @@ public class AddressFormPage extends BasePage{
     }
 
 
+    public String valueReceiverZipCode() {
+        return receiverZipCode.getAttribute("value");
+    }
 
+    public String valueReceiverTown() {
+        return receiverTown.getAttribute("value");
+    }
 
+    public String valueReceiverStreet() {
+        return receiverStreet.getAttribute("value");
+    }
+
+    public String valueReceiverBuildingNo() {
+        return receiverBuildingNo.getAttribute("value");
+    }
+
+    public String valueReceiverFlatNo() {
+        return receiverFlatNo.getAttribute("value");
+    }
 }

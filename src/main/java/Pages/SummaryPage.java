@@ -13,6 +13,7 @@ public class SummaryPage extends BasePage{
     private final String deliveryMethod;
     private final InvoiceType invoiceType;
 
+    //region Receiver data
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[1]")
     WebElement receiverName;
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[2]")
@@ -23,14 +24,18 @@ public class SummaryPage extends BasePage{
     WebElement receiverZipCodeCity;
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[5]")
     WebElement receiverStreetBuildingNo;
+    //endregion
 
+    //region Sender data
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[2]/div[1]")
     WebElement senderName;
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[2]/div[2]")
     WebElement senderPhone;
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[2]/div[3]")
     WebElement senderEmail;
+    //endregion
 
+    //region Parcelmachine data
     @FindAll({
             @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'third-column') and not(contains(@class, 'summary-column'))])[1]/div/div")
     })
@@ -39,7 +44,9 @@ public class SummaryPage extends BasePage{
     WebElement receiverParcelmachineStreetBuldingNo;
     WebElement receiverParcelmachineZipCodeCity;
     WebElement receiverParcelmachineDescription;
+    //endregion
 
+    //region Invoice data
     @FindAll({
             @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'third-column') and not(contains(@class, 'summary-column'))])[2]/div/div")
     })
@@ -48,11 +55,14 @@ public class SummaryPage extends BasePage{
     WebElement invoiceNip;
     WebElement invoiceZipCodeCity;
     WebElement invoiceStreetBuildingNo;
+    //endregion
 
+    //region Buttons
     @FindBy(how = How.XPATH, using = "//app-summary-print-label//button[1]")
     WebElement downloadLabelButton;
     @FindBy(how = How.XPATH, using = "//app-summary-print-label//button[2]")
     WebElement printLabelButton;
+    //endregions
 
     public SummaryPage(String deliveryMethod){
         super();
@@ -66,6 +76,7 @@ public class SummaryPage extends BasePage{
         this.invoiceType = invoiceType;
     }
 
+    //region Single get text methods
     public String textReceiverName() {
         return receiverName.getText();
     }
@@ -97,7 +108,9 @@ public class SummaryPage extends BasePage{
     public String textSenderEmail() {
         return senderEmail.getText();
     }
+    //endregion
 
+    //region Compound get text methods
     public String textReceiver(){
         String receiver;
         receiver=textReceiverName()+" "+textReceiverPhone()+" "+textReceiverEmail()+" ";
@@ -111,7 +124,9 @@ public class SummaryPage extends BasePage{
         sender=textReceiverName()+" "+textReceiverPhone()+" "+textReceiverEmail()+" ";
         return sender;
     }
+    //endregion
 
+    //region Set methods for invoice and parcelmachine fields
     public SummaryPage setInvoiceFields(){
         if (invoiceType==null)
             return null;
@@ -144,4 +159,5 @@ public class SummaryPage extends BasePage{
         }
         return null;
     }
+    //endregion
 }
