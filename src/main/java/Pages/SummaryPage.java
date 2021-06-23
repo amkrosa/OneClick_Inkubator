@@ -1,12 +1,17 @@
 package Pages;
 
+import Helpers.InvoiceType;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-public class FinalSummaryPage extends BasePage{
+import java.util.List;
+
+public class SummaryPage extends BasePage{
 
     private final String deliveryMethod;
+    private final InvoiceType invoiceType;
 
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[1]")
     WebElement receiverName;
@@ -26,21 +31,39 @@ public class FinalSummaryPage extends BasePage{
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[2]/div[3]")
     WebElement senderEmail;
 
-    @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[2]/div[1]")
-    WebElement senderName;
-    @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[2]/div[2]")
-    WebElement senderPhone;
-    @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[2]/div[3]")
-    WebElement senderEmail;
+    @FindAll({
+            @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'third-column') and not(contains(@class, 'summary-column'))])[1]/div/div")
+    })
+    List<WebElement> receiverParcelmachineFields;
+    WebElement receiverParcelmachineName;
+    WebElement receiverParcelmachineStreetBuldingNo;
+    WebElement receiverParcelmachineZipCodeCity;
+    WebElement receiverParcelmachineDescription;
+
+    @FindAll({
+            @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'third-column') and not(contains(@class, 'summary-column'))])[2]/div/div")
+    })
+    List<WebElement> invoiceFields;
+    WebElement invoiceCompanyName;
+    WebElement invoiceNip;
+    WebElement invoiceZipCodeCity;
+    WebElement invoiceStreetBuildingNo;
 
     @FindBy(how = How.XPATH, using = "//app-summary-print-label//button[1]")
     WebElement downloadLabelButton;
     @FindBy(how = How.XPATH, using = "//app-summary-print-label//button[2]")
     WebElement printLabelButton;
 
-    public FinalSummaryPage(String deliveryMethod){
+    public SummaryPage(String deliveryMethod){
         super();
         this.deliveryMethod = deliveryMethod;
+        this.invoiceType = null;
+    }
+
+    public SummaryPage(String deliveryMethod, InvoiceType invoiceType){
+        super();
+        this.deliveryMethod = deliveryMethod;
+        this.invoiceType = invoiceType;
     }
 
     public String textReceiverName() {
@@ -87,5 +110,38 @@ public class FinalSummaryPage extends BasePage{
         String sender;
         sender=textReceiverName()+" "+textReceiverPhone()+" "+textReceiverEmail()+" ";
         return sender;
+    }
+
+    public SummaryPage setInvoiceFields(){
+        if (invoiceType==null)
+            return null;
+        invoiceCompanyName = invoiceFields.get(0);
+
+        switch (invoiceType){
+            case INDIVIDUAL_PERSON:
+                invoiceZipCodeCity = invoiceFields.get(1);
+                invoiceStreetBuildingNo = invoiceFields.get(2);
+                break;
+            case FOREIGN_COMPANY:
+            case COMPANY:
+                invoiceNip = invoiceFields.get(1);
+                invoiceZipCodeCity = invoiceFields.get(2);
+                invoiceStreetBuildingNo = invoiceFields.get(3);
+                break;
+            default:
+                break;
+        }
+        return this;
+    }
+
+    public SummaryPage setReceiverParcelmachineFields(){
+        if (deliveryMethod.equals("parcelmachine")){
+            receiverParcelmachineName = receiverParcelmachineFields.get(0);
+            receiverParcelmachineStreetBuldingNo = receiverParcelmachineFields.get(1);
+            receiverParcelmachineZipCodeCity = receiverParcelmachineFields.get(2);
+            receiverParcelmachineDescription = receiverParcelmachineFields.get(3);
+            return this;
+        }
+        return null;
     }
 }
