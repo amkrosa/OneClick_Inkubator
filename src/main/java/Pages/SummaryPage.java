@@ -12,18 +12,19 @@ public class SummaryPage extends BasePage{
 
     private final String deliveryMethod;
     private final InvoiceType invoiceType;
+    private final String summaryType;
 
     //region Receiver data
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[1]")
-    WebElement receiverName;
+    private WebElement receiverName;
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[2]")
-    WebElement receiverPhone;
+    private WebElement receiverPhone;
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[3]")
-    WebElement receiverEmail;
+    private WebElement receiverEmail;
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[4]")
-    WebElement receiverZipCodeCity;
+    private WebElement receiverZipCodeCity;
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[5]")
-    WebElement receiverStreetBuildingNo;
+    private WebElement receiverStreetBuildingNo;
     //endregion
 
     //region Sender data
@@ -62,16 +63,22 @@ public class SummaryPage extends BasePage{
     WebElement downloadLabelButton;
     @FindBy(how = How.XPATH, using = "//app-summary-print-label//button[2]")
     WebElement printLabelButton;
+    @FindBy(how = How.XPATH, using = "(//div[contains(@class, 'parcel-form-whole-summary-modal')]//button)[1]")
+    WebElement fixDataButton;
+    @FindBy(how = How.XPATH, using = "(//div[contains(@class, 'parcel-form-whole-summary-modal')]//button)[2]")
+    WebElement payButton;
     //endregions
 
-    public SummaryPage(String deliveryMethod){
+    public SummaryPage(String summaryType, String deliveryMethod){
         super();
+        this.summaryType = summaryType;
         this.deliveryMethod = deliveryMethod;
         this.invoiceType = null;
     }
 
-    public SummaryPage(String deliveryMethod, InvoiceType invoiceType){
+    public SummaryPage(String summaryType, String deliveryMethod, InvoiceType invoiceType){
         super();
+        this.summaryType = summaryType;
         this.deliveryMethod = deliveryMethod;
         this.invoiceType = invoiceType;
     }
@@ -82,7 +89,7 @@ public class SummaryPage extends BasePage{
     }
 
     public String textReceiverPhone() {
-        return receiverPhone.getText();
+        return receiverPhone.getText().replace(" ", "");
     }
 
     public String textReceiverEmail() {
@@ -102,7 +109,7 @@ public class SummaryPage extends BasePage{
     }
 
     public String textSenderPhone() {
-        return senderPhone.getText();
+        return senderPhone.getText().replace(" ", "");
     }
 
     public String textSenderEmail() {
@@ -112,17 +119,20 @@ public class SummaryPage extends BasePage{
 
     //region Compound get text methods
     public String textReceiver(){
-        String receiver;
-        receiver=textReceiverName()+" "+textReceiverPhone()+" "+textReceiverEmail()+" ";
+        StringBuilder receiver = new StringBuilder();
+        receiver.append(textReceiverName()).append(" ").append(textReceiverPhone()).append(" ").append(textReceiverEmail());
         if (deliveryMethod.equals("address"))
-            receiver+=textReceiverZipCodeCity()+" "+textReceiverStreetBuildingNo();
-        return receiver;
+            receiver.append(" ").append(textReceiverZipCodeCity()).append(" ").append(textReceiverStreetBuildingNo());
+        return receiver.toString();
     }
 
     public String textSender(){
-        String sender;
-        sender=textReceiverName()+" "+textReceiverPhone()+" "+textReceiverEmail()+" ";
-        return sender;
+        StringBuilder sender = new StringBuilder();
+        System.out.println(textSenderName());
+        System.out.println(textSenderPhone());
+        sender.append(textSenderName()).append(" ").append(textSenderPhone()).append(" ").append(textSenderEmail());
+        System.out.println(sender.toString());
+        return sender.toString();
     }
     //endregion
 
@@ -160,4 +170,12 @@ public class SummaryPage extends BasePage{
         return null;
     }
     //endregion
+
+    @Override
+    public WebElement getInitElement() {
+        if (summaryType.equals("modal"))
+            return payButton;
+        else
+            return downloadLabelButton;
+    }
 }

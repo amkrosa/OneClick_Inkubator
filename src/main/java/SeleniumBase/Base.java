@@ -32,6 +32,7 @@ public class Base {
                 environment = entry.getValue();
         }
 
+
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         driver = new ChromeDriver();
         LocalStorage local = ((WebStorage) driver).getLocalStorage();
