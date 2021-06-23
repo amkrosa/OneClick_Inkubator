@@ -13,6 +13,8 @@ public class FormPage extends BasePage{
 
     @FindBy(how = How.ID, using = "onetrust-accept-btn-handler")
     WebElement policyButton;
+    @FindBy(how = How.CSS, using = "#parcelFormButton > button")
+    WebElement submitButton;
     @FindBy(how = How.CLASS_NAME, using = "btn-cookie-trigger")
     WebElement cookieButton;
     @FindBy(how = How.NAME, using = "senderAddress.name")
@@ -55,9 +57,9 @@ public class FormPage extends BasePage{
     WebElement summarySenderMethodIcon;
     @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//div[contains(@class, 'chosen-icon')]/img[2]")
     WebElement summaryReceiverMethodIcon;
-    @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//*([@class='custom-column-summary'])[1]")
+    @FindBy(how = How.XPATH, using = "((//*[@class='summaryForm'])[2]//*[@class='custom-column-summary'])[1]")
     WebElement summarySizeText;
-    @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//*([@class='custom-column-summary'])[2]")
+    @FindBy(how = How.XPATH, using = "((//*[@class='summaryForm'])[2]//*[@class='custom-column-summary'])[2]")
     WebElement summarySizeIcon;
     @FindBy(how = How.XPATH, using = "//*[@class='chosen-text-description']")
     WebElement summarySizeDimension;
@@ -77,7 +79,6 @@ public class FormPage extends BasePage{
 
         return this;
     }
-
 
     public FormPage fillSenderPhone(String text) {
         senderPhone.sendKeys(text);
@@ -136,14 +137,18 @@ public class FormPage extends BasePage{
     }
 
     public boolean submit() {
-        WebElement button = getDriver().findElement(By.cssSelector("#parcelFormButton > button"));
-        getCommonHelper().moveAndClick(button);
-        getWaitHelper().waitUntilVisible(By.cssSelector(".parcel-form-whole-summary-modal"));
+        clickSubmitButton();
+        getWaitHelper().waitUntilClickable(By.xpath("(//div[contains(@class, 'parcel-form-whole-summary-modal')]//button)[2]"));
         return !getDriver().findElements(By.cssSelector(".parcel-form-whole-summary-modal")).isEmpty();
     }
 
     public FormPage clickPolicyButton() {
         getCommonHelper().waitAndClick(policyButton);
+        return this;
+    }
+
+    public FormPage clickSubmitButton() {
+        getCommonHelper().waitAndClick(submitButton);
         return this;
     }
 
@@ -199,7 +204,7 @@ public class FormPage extends BasePage{
     }
 
     public String valueSenderPhone() {
-        return senderPhone.getAttribute("value");
+        return senderPhone.getAttribute("value").replace(" ", "");
     }
 
     public String valueSenderEmail() {
@@ -211,10 +216,28 @@ public class FormPage extends BasePage{
     }
 
     public String valueReceiverPhone() {
-        return receiverPhone.getAttribute("value");
+        return receiverPhone.getAttribute("value").replace(" ", "");
     }
 
     public String valueReceiverEmail() {
         return receiverEmail.getAttribute("value");
     }
+
+    public String srcSummarySenderMethodIcon() {
+        return summarySenderMethodIcon.getAttribute("src");
+    }
+
+    public String srcSummaryReceiverMethodIcon() {
+        return summaryReceiverMethodIcon.getAttribute("src");
+    }
+
+    public String srcSummarySizeIcon() {
+        return summarySizeIcon.getAttribute("src");
+    }
+
+    @Override
+    public WebElement getInitElement() {
+        return submitButton;
+    }
+
 }
