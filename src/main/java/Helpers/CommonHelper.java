@@ -11,7 +11,7 @@ public class CommonHelper {
 
     public CommonHelper() {
         this.actionHelper = new ActionHelper(new Actions(Base.driver));
-        this.waitHelper = new WaitHelper(new WebDriverWait(Base.driver, 3));
+        this.waitHelper = new WaitHelper();
     }
 
     public CommonHelper(ActionHelper actionHelper, WaitHelper waitHelper){
@@ -36,6 +36,7 @@ public class CommonHelper {
     }
 
     public void writeAndConfirmDropdown(WebElement inputElement, String text) throws UnsupportedOperationException {
+        inputElement.click();
         inputElement.sendKeys(text);
         WebElement listBoxElement = inputElement.findElement(By.xpath("./../../../../*[@role='listbox']"));
         By path = By.xpath("//div[@role='option']");

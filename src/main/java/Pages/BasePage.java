@@ -19,7 +19,7 @@ public abstract class BasePage {
     public BasePage(){
         driver = Base.driver;
         PageFactory.initElements(driver, this);
-        waitHelper = new WaitHelper(new WebDriverWait(Base.driver, 3));
+        waitHelper = new WaitHelper();
         actionHelper = new ActionHelper(new Actions(Base.driver));
         commonHelper = new CommonHelper(actionHelper, waitHelper);
     }

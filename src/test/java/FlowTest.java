@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FlowTest {
 
     private Client receiverPm, receiverAddress, sender;
@@ -24,6 +25,7 @@ public class FlowTest {
 
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+    @Order(1)
     @DisplayName("Parcelmachine delivery method")
     public class ParcelmachineDeliveryTest extends Base{
         private BoxmachineFormPage boxmachineFormPage = new BoxmachineFormPage();
@@ -34,10 +36,11 @@ public class FlowTest {
         @Order(1)
         @DisplayName("Page loaded")
         public void Should_LoadPage(){
-            formPage.clickCookieButton();
             if (!(Base.environment.getEnv() == EnvironmentType.PRODUCTION)){
                 formPage.clickPolicyButton();
             }
+            formPage.clickCookieButton();
+
             Assertions.assertDoesNotThrow(()->
                     formPage.<FormPage>init()
             );
@@ -132,6 +135,7 @@ public class FlowTest {
 
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+    @Order(2)
     @DisplayName("Address delivery method")
     public class AddressDeliveryTest extends Base{
         private SummaryPage summaryPage = new SummaryPage("modal","address");
@@ -143,10 +147,11 @@ public class FlowTest {
         @Order(1)
         @DisplayName("Page loaded")
         public void Should_LoadPage(){
-            formPage.clickCookieButton();
             if (!(Base.environment.getEnv() == EnvironmentType.PRODUCTION)){
                 formPage.clickPolicyButton();
             }
+            formPage.clickCookieButton();
+
             Assertions.assertDoesNotThrow(()->
                     formPage.<FormPage>init()
             );
