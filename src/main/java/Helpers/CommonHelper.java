@@ -3,7 +3,6 @@ package Helpers;
 import SeleniumBase.Base;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CommonHelper {
@@ -38,8 +37,9 @@ public class CommonHelper {
 
     public void writeAndConfirmDropdown(WebElement inputElement, String text) throws UnsupportedOperationException {
         inputElement.sendKeys(text);
-
         WebElement listBoxElement = inputElement.findElement(By.xpath("./../../../../*[@role='listbox']"));
+        By path = By.xpath("//div[@role='option']");
+        waitHelper.waitUntilVisible(waitHelper.waitUntilLocated(path));
         if (!listBoxElement.findElements(By.cssSelector(".ng-option-disabled")).isEmpty())
             throw new UnsupportedOperationException("listbox is empty");
         inputElement.sendKeys(Keys.ENTER);
@@ -52,7 +52,7 @@ public class CommonHelper {
     public boolean isModalVisible(By byxpath, WebElement openModalButton){
             moveAndClick(openModalButton);
             try {
-                waitHelper.waitUntilVisible(byxpath);
+                waitHelper.waitUntilLocated(byxpath);
                 return true;
             }catch (Exception e){
                 return false;

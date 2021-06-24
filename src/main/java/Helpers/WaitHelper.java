@@ -17,8 +17,8 @@ public class WaitHelper {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void waitUntilVisible(By by){
-        wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    public WebElement waitUntilLocated(By by){
+        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     public void waitUntilClickable(WebElement element){
