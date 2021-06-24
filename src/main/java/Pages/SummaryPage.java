@@ -168,6 +168,65 @@ public class SummaryPage extends BasePage{
     }
     //endregion
 
+    //region Click button methods
+    public SummaryPage clickPayButton(){
+        getCommonHelper().moveAndClick(payButton);
+        return this;
+    }
+
+    public SummaryPage clickFixDataButton(){
+        getCommonHelper().moveAndClick(fixDataButton);
+        return this;
+    }
+
+    public SummaryPage clickPrintLabelButton(){
+        getCommonHelper().moveAndClick(printLabelButton);
+        return this;
+    }
+
+    public SummaryPage clickDownloadLabelButton(){
+        getCommonHelper().moveAndClick(downloadLabelButton);
+        return this;
+    }
+    //endregion
+
+
+    //region Get text parcelmachine methods
+    public String textReceiverParcelmachineName() {
+        return receiverParcelmachineName.getText();
+    }
+
+    public String textReceiverParcelmachineStreetBuldingNo() {
+        return receiverParcelmachineStreetBuldingNo.getText();
+    }
+
+    public String textReceiverParcelmachineZipCodeCity() {
+        return receiverParcelmachineZipCodeCity.getText();
+    }
+
+    public String textReceiverParcelmachineDescription() {
+        return receiverParcelmachineDescription.getText();
+    }
+    //endregion
+
+    //region Invoice get text methods
+    public String textInvoiceCompanyName() {
+        return invoiceCompanyName.getText();
+    }
+
+    public String textInvoiceNip() {
+        return invoiceNip.getText();
+    }
+
+    public String textInvoiceZipCodeCity() {
+        return invoiceZipCodeCity.getText();
+    }
+
+    public String textInvoiceStreetBuildingNo() {
+        return invoiceStreetBuildingNo.getText();
+    }
+    //endregion
+
     @Override
     public WebElement getInitElement() {
         if (summaryType.equals("modal"))
