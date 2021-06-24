@@ -33,12 +33,12 @@ public class AddressFormPage extends BasePage{
     }
 
     public AddressFormPage fillReceiverTown(String text) {
-        getCommonHelper().writeAndConfirmDropdown(receiverTown, text);
+        getCommonHelper().confirmDropdown(receiverTown);
         return this;
     }
 
     public AddressFormPage fillReceiverStreet(String text) {
-        getCommonHelper().writeAndConfirmDropdown(receiverStreet, text);
+        getCommonHelper().confirmDropdown(receiverStreet);
         return this;
     }
 
