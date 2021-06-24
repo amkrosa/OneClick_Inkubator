@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.function.Function;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -20,8 +21,8 @@ public class WaitHelper {
 
     public WaitHelper(){
         fluentWait = new FluentWait<>(Base.driver);
-        fluentWait.withTimeout(Duration.ofSeconds(3))
-                .pollingEvery(Duration.ofMillis(500))
+        fluentWait.withTimeout(Duration.ofSeconds(5))
+                .pollingEvery(Duration.ofMillis(1000))
                 .ignoring(Exception.class);
     }
 
@@ -30,7 +31,11 @@ public class WaitHelper {
     }
 
     public WebElement waitUntilLocated(By by){
-        return fluentWait.until(ExpectedConditions.presenceOfElementLocated(by));
+        return fluentWait.until((new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement(by);
+            }
+        }));
     }
 
     public void waitUntilClickable(WebElement element){
