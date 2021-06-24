@@ -1,10 +1,14 @@
 package Pages;
 
 import Helpers.Enums.InvoiceType;
+import Helpers.Enums.StaticText;
+import SeleniumBase.Base;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -67,7 +71,12 @@ public class SummaryPage extends BasePage{
     WebElement fixDataButton;
     @FindBy(how = How.XPATH, using = "(//div[contains(@class, 'parcel-form-whole-summary-modal')]//button)[2]")
     WebElement payButton;
-    //endregions
+    //endregion
+
+    //region Policy
+    @FindBy(how = How.XPATH, using = "//*[@id='onetrust-accept-btn-handler']")
+    WebElement policyButton;
+    //endregion
 
     public SummaryPage(String summaryType, String deliveryMethod){
         super();
@@ -188,6 +197,11 @@ public class SummaryPage extends BasePage{
         getCommonHelper().moveAndClick(downloadLabelButton);
         return this;
     }
+
+    public SummaryPage clickPolicyButton(){
+        getCommonHelper().moveAndClick(policyButton);
+        return this;
+    }
     //endregion
 
 
@@ -227,11 +241,30 @@ public class SummaryPage extends BasePage{
     }
     //endregion
 
+    public void refreshUntilPaymentIsDone(){
+        String textCurrent = Base.config.getLanguage().equals("pl") ? StaticText.SUMMARY_TRANSACTION_PENDING.pl
+                : StaticText.SUMMARY_TRANSACTION_PENDING.en;
+        String text = Base.config.getLanguage().equals("pl") ? StaticText.SUMMARY_TRANSACTION_SUCCESS.pl
+                : StaticText.SUMMARY_TRANSACTION_SUCCESS.en;
+        while (true){
+                getDriver().navigate().refresh();
+                getCommonHelper().waitAndClick(policyButton);
+                List<WebElement> element = getDriver().findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
+            if (element.size() > 0)
+                    return;
+
+                //getWaitHelper().waitUntilVisible(getWaitHelper().waitUntilLocated(By.xpath("//*[contains(text(),'"+textCurrent+"')]")));
+
+        }
+    }
+
     @Override
     public WebElement getInitElement() {
         if (summaryType.equals("modal"))
             return payButton;
-        else
+        else {
+            refreshUntilPaymentIsDone();
             return downloadLabelButton;
+        }
     }
 }
