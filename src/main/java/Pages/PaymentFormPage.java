@@ -8,11 +8,11 @@ public class PaymentFormPage extends BasePage{
 
     @FindBy(how = How.ID, using = "data-processing-agreement")
     WebElement dataProcessingAgreementCheckbox;
-    @FindBy(how = How.XPATH, using = "//*[@title='mTransfer']/input")
+    @FindBy(how = How.XPATH, using = "//*[@title='mTransfer']")
     WebElement mtransferPaymentButton;
     @FindBy(how = How.NAME, using = "EMAIL")
     WebElement emailField;
-    @FindBy(how = How.XPATH, using = "//*[@class='finish-button']")
+    @FindBy(how = How.XPATH, using = "//*[contains(@class,'finish-button')]")
     WebElement finishButton;
 
     public PaymentFormPage(){super();}
@@ -23,8 +23,6 @@ public class PaymentFormPage extends BasePage{
     }
 
     public PaymentFormPage clickDataProcessingAgreementCheckbox() {
-        if (!dataProcessingAgreementCheckbox.getAttribute("checked").equals("checked"))
-            getCommonHelper().moveAndClick(dataProcessingAgreementCheckbox);
         return this;
     }
 
