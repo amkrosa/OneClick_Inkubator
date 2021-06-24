@@ -20,9 +20,10 @@ public class FlowTest {
         sender = new Client("Magda Asowska", "321321321", "magda@magda.pl");
     }
 
+
     @Nested
-    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     @Order(1)
+    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     @DisplayName("Parcelmachine delivery method")
     public class ParcelmachineDeliveryTest extends Base {
         private BoxmachineFormPage boxmachineFormPage = new BoxmachineFormPage();
@@ -137,6 +138,7 @@ public class FlowTest {
         @Test
         @Order(14)
         public void Should_ParcelmachineDataBeTheSame_When_FormIsSubmitted() {
+            summaryPage.setReceiverParcelmachineFields();
             assertEquals(receiverPm.getParcelmachine(), summaryPage.textReceiverParcelmachineName());
         }
 
@@ -166,7 +168,6 @@ public class FlowTest {
             paymentFormPage.clickDataProcessingAgreementCheckbox();
             paymentFormPage.clickFinishButton();
             paymentRedirectPage.<PaymentRedirectPage>init().clickConfirmedPaymentButton();
-
             assertDoesNotThrow(() ->
                     finalSummaryPage.<SummaryPage>init()
             );
@@ -192,6 +193,7 @@ public class FlowTest {
         @Test
         @Order(20)
         public void Should_ParcelmachineDataBeTheSame_When_InFinalSummary() {
+            finalSummaryPage.setReceiverParcelmachineFields();
             assertEquals(receiverPm.getParcelmachine(), finalSummaryPage.textReceiverParcelmachineName());
         }
 
@@ -204,8 +206,8 @@ public class FlowTest {
     }
 
     @Nested
-    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     @Order(2)
+    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     @DisplayName("Address delivery method")
     public class AddressDeliveryTest extends Base{
         private SummaryPage summaryPage = new SummaryPage("modal","address");
