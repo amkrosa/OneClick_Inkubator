@@ -21,11 +21,12 @@ public class Base {
 
     public static WebDriver driver;
     public static Environment environment;
+    public static Config config;
 
     @BeforeAll
     public static void setUp() throws FileNotFoundException {
         ConfigHandler handler = ConfigHandler.getInstance();
-        Config config = handler.getConfig();
+        config = handler.getConfig();
 
         for(var entry : config.getEnvs().entrySet()){
             if (entry.getValue().isActive())
@@ -35,6 +36,7 @@ public class Base {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         driver = new ChromeDriver();
         LocalStorage local = ((WebStorage) driver).getLocalStorage();
+        driver.manage().window().maximize();
 
         driver.get(environment.getUrl());
         local.setItem("sn_lang", config.getLanguage());
