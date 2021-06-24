@@ -32,17 +32,19 @@ public class CommonHelper {
 
     public void moveAndClick(WebElement element){
         actionHelper.moveToElement(element);
+        waitHelper.waitUntilClickable(element);
         element.click();
     }
 
     public void writeAndConfirmDropdown(WebElement inputElement, String text) throws UnsupportedOperationException {
-        inputElement.click();
         inputElement.sendKeys(text);
-        WebElement listBoxElement = inputElement.findElement(By.xpath("./../../../../*[@role='listbox']"));
+        confirmDropdown(inputElement);
+    }
+
+    public void confirmDropdown(WebElement inputElement) throws UnsupportedOperationException{
+        inputElement.click();
         By path = By.xpath("//div[@role='option']");
         waitHelper.waitUntilVisible(waitHelper.waitUntilLocated(path));
-        if (!listBoxElement.findElements(By.cssSelector(".ng-option-disabled")).isEmpty())
-            throw new UnsupportedOperationException("listbox is empty");
         inputElement.sendKeys(Keys.ENTER);
     }
 
