@@ -3,9 +3,9 @@ package Models;
 import java.io.Serializable;
 
 public class Client implements Serializable {
-    private String name, phone, email, zipCode, city, buildingNo, flatNo, parcelmachine;
+    private String name, phone, email, zipCode, city, street, buildingNo, flatNo, parcelmachine;
 
-    public Client(String name, String phone, String email, String zipCode, String city, String buildingNo, String flatNo) {
+    public Client(String name, String phone, String email, String zipCode, String city, String street, String buildingNo, String flatNo) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -13,6 +13,7 @@ public class Client implements Serializable {
         this.city = city;
         this.buildingNo = buildingNo;
         this.flatNo = flatNo;
+        this.street = street;
         this.parcelmachine = "";
 
     }
@@ -38,6 +39,14 @@ public class Client implements Serializable {
         this.city = "";
         this.buildingNo = "";
         this.flatNo = "";
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getName() {

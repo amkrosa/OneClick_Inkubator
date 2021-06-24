@@ -57,12 +57,12 @@ public class AddressFormPage extends BasePage{
         return receiverZipCode.getAttribute("value");
     }
 
-    public String valueReceiverTown() {
-        return receiverTown.getAttribute("value");
+    public String textReceiverTownValue() {
+        return receiverTownValue.getText();
     }
 
-    public String valueReceiverStreet() {
-        return receiverStreet.getAttribute("value");
+    public String textReceiverStreetValue() {
+        return receiverStreetValue.getText();
     }
 
     public String valueReceiverBuildingNo() {

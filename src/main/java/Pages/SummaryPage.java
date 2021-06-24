@@ -128,10 +128,7 @@ public class SummaryPage extends BasePage{
 
     public String textSender(){
         StringBuilder sender = new StringBuilder();
-        System.out.println(textSenderName());
-        System.out.println(textSenderPhone());
         sender.append(textSenderName()).append(" ").append(textSenderPhone()).append(" ").append(textSenderEmail());
-        System.out.println(sender.toString());
         return sender.toString();
     }
     //endregion

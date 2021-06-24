@@ -17,9 +17,7 @@ public class BoxmachineFormPage extends BasePage {
     public BoxmachineFormPage(){  super(); }
 
     public BoxmachineFormPage setParcelmachine(String pm) {
-        parcelmachine.sendKeys(pm);
-        getWaitHelper().waitUntilClickable(By.cssSelector("#" + pm.toUpperCase()));
-        getDriver().findElement(By.cssSelector("#" + pm.toUpperCase())).click();
+        getCommonHelper().writeAndConfirmDropdown(parcelmachine, pm);
         return this;
     }
 
