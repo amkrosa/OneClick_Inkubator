@@ -9,8 +9,16 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
 import java.time.Duration;
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -30,12 +38,31 @@ public class WaitHelper {
         fluentWait.until(ExpectedConditions.visibilityOf(element));
     }
 
+    public void waitUntilVisible(By by){
+        fluentWait.until(ExpectedConditions.visibilityOf(
+                waitUntilLocated(by)
+        ));
+    }
+
     public WebElement waitUntilLocated(By by){
-        return fluentWait.until((new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                return driver.findElement(by);
-            }
-        }));
+        return fluentWait.until(driver -> driver.findElement(by));
+    }
+
+    public boolean waitUntilDownloaded(WebElement elementInitializingDownload) throws IOException {
+        FileHelper fileHelper = new FileHelper();
+        final Path targetFolder = Path.of(Base.downloadFolder);
+        FileTime before = Files.getLastModifiedTime(targetFolder);
+        waitUntilClickable(elementInitializingDownload);
+        elementInitializingDownload.click();
+        return fluentWait.until(driver -> {
+            try {
+                FileTime after = Files.getLastModifiedTime(fileHelper.getLatestFile());
+                int result = fileHelper.countFilesWithExtension("crdownload");
+                if (!before.equals(after) && result==0)
+                    return true;
+            } catch (IOException ignored) {}
+            return false;
+        });
     }
 
     public void waitUntilClickable(WebElement element){
