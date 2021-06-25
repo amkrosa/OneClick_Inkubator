@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.io.IOException;
 import java.util.List;
 
 public class SummaryPage extends BasePage{
@@ -193,10 +194,16 @@ public class SummaryPage extends BasePage{
         return this;
     }
 
-    public SummaryPage clickDownloadLabelButton(){
-        getCommonHelper().moveAndClick(downloadLabelButton);
+    public SummaryPage clickDownloadLabelButton() throws IOException {
+        getWaitHelper().waitUntilDownloaded(downloadLabelButton);
         return this;
     }
+
+    public String textDownloadLabelButton() {
+        return downloadLabelButton.getText();
+    }
+
+
 
     public SummaryPage clickPolicyButton(){
         getCommonHelper().moveAndClick(policyButton);
@@ -249,12 +256,10 @@ public class SummaryPage extends BasePage{
         while (true){
                 getDriver().navigate().refresh();
                 getCommonHelper().waitAndClick(policyButton);
+                getWaitHelper().waitUntilVisible(By.xpath("//*[contains(@class, 'mat-wrapper')]"));
                 List<WebElement> element = getDriver().findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
             if (element.size() > 0)
                     return;
-
-                //getWaitHelper().waitUntilVisible(getWaitHelper().waitUntilLocated(By.xpath("//*[contains(text(),'"+textCurrent+"')]")));
-
         }
     }
 
@@ -264,7 +269,7 @@ public class SummaryPage extends BasePage{
             return payButton;
         else {
             refreshUntilPaymentIsDone();
-            return downloadLabelButton;
+            return printLabelButton;
         }
     }
 }
