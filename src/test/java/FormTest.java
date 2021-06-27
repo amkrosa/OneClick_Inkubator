@@ -105,7 +105,7 @@ public class FormTest extends Base {
 
         @Test
         public void Should_ReceiverParcelmachineBeCorrect_When_FilledWithCorrectData() {
-            boxmachineFormPage.setParcelmachine(receiverPm.getParcelmachine());
+            boxmachineFormPage.parcelmachine().fill(receiverPm.getParcelmachine()).confirmDropdown();
             assertTrue(boxmachineFormPage.parcelmachineFieldValue().text().contains(receiverPm.getParcelmachine()));
         }
 

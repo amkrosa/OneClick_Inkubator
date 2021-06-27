@@ -87,7 +87,7 @@ public class ParcelCreationTest {
         @Order(7)
         public void Should_ReceiverParcelmachineBeCorrect_When_FilledWithCorrectData() {
             boxmachineFormPage.parcelmachine().fill(receiverPm.getParcelmachine()).confirmDropdown();
-            assertTrue(boxmachineFormPage.parcelmachineFieldValue().value().contains(receiverPm.getParcelmachine()));
+            assertTrue(boxmachineFormPage.parcelmachineFieldValue().text().contains(receiverPm.getParcelmachine()));
         }
 
         @Test
@@ -154,7 +154,7 @@ public class ParcelCreationTest {
         @Test
         @Order(16)
         public void Should_LoadPaymentPage_When_PayIsClicked() {
-            summaryPage.clickPayButton();
+            summaryPage.payButton().click();
             assertDoesNotThrow(() ->
                     paymentFormPage.<PaymentFormPage>init()
             );
@@ -163,11 +163,12 @@ public class ParcelCreationTest {
         @Test
         @Order(17)
         public void Should_RedirectToSummary_When_PaymentIsDone() {
-            paymentFormPage.emailField().fill(sender.getEmail());
-            paymentFormPage.mtransferPaymentButton().click();
-            paymentFormPage.clickDataProcessingAgreementCheckbox();
-            paymentFormPage.finishButton().click();
-            paymentRedirectPage.<PaymentRedirectPage>init().confirmedPaymentButton().click();
+            paymentFormPage
+                    .emailField().fill(sender.getEmail())
+                    .page()
+                    .mtransferPaymentButton().click()
+                    .page()
+                    .finishButton().click();
             assertDoesNotThrow(() ->
                     finalSummaryPage.<SummaryPage>init()
             );
@@ -354,7 +355,7 @@ public class ParcelCreationTest {
         @Test
         @Order(19)
         public void Should_LoadPaymentPage_When_PayIsClicked() {
-            summaryPage.clickPayButton();
+            summaryPage.payButton().click();
             assertDoesNotThrow(() ->
                     paymentFormPage.<PaymentFormPage>init()
             );
@@ -363,11 +364,12 @@ public class ParcelCreationTest {
         @Test
         @Order(20)
         public void Should_RedirectToSummary_When_PaymentIsDone() {
-            paymentFormPage.fillEmailField(sender.getEmail());
-            paymentFormPage.clickMtransferPaymentButton();
-            paymentFormPage.clickDataProcessingAgreementCheckbox();
-            paymentFormPage.clickFinishButton();
-            paymentRedirectPage.<PaymentRedirectPage>init().clickConfirmedPaymentButton();
+            paymentFormPage
+                    .emailField().fill(sender.getEmail())
+                    .page()
+                    .mtransferPaymentButton().click()
+                    .page()
+                    .finishButton().click();
             assertDoesNotThrow(() ->
                     finalSummaryPage.<SummaryPage>init()
             );
