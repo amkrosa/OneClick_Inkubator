@@ -218,6 +218,9 @@ public class ParcelCreationTest {
         private SummaryPage summaryPage = new SummaryPage("modal","address");
         private AddressFormPage addressFormPage = new AddressFormPage();
         private FormPage formPage = new FormPage();
+        private SummaryPage finalSummaryPage = new SummaryPage("final", "address");
+        private PaymentFormPage paymentFormPage = new PaymentFormPage();
+        private PaymentRedirectPage paymentRedirectPage = new PaymentRedirectPage();
 
 
         @Test
@@ -327,11 +330,13 @@ public class ParcelCreationTest {
                     formPage.clickTermsCheckbox()
             );
         }
+
         @Test
         @Order(16)
         public void Should_DisplaySummaryModal_When_FormIsSubmitted(){
             assertTrue(formPage.submit());
         }
+
         @Test
         @Order(17)
         public void Should_ReceiverDataBeTheSame_When_FormIsSubmitted() {
@@ -342,6 +347,7 @@ public class ParcelCreationTest {
                     ()->assertEquals(receiverAddress.getStreet()+" "+receiverAddress.getBuildingNo()+"/"+receiverAddress.getFlatNo(), summaryPage.textReceiverStreetBuildingNo())
             );
         }
+
         @Test
         @Order(18)
         public void Should_SenderDataBeTheSame_When_FormIsSubmitted() {
@@ -349,6 +355,56 @@ public class ParcelCreationTest {
                     ()->assertEquals(sender.getPhone(), summaryPage.textSenderPhone()),
                     ()->assertEquals(sender.getEmail(), summaryPage.textSenderEmail())
             );
+        }
+
+        @Test
+        @Order(19)
+        public void Should_LoadPaymentPage_When_PayIsClicked() {
+            summaryPage.clickPayButton();
+            assertDoesNotThrow(() ->
+                    paymentFormPage.<PaymentFormPage>init()
+            );
+        }
+
+        @Test
+        @Order(20)
+        public void Should_RedirectToSummary_When_PaymentIsDone() {
+            paymentFormPage.fillEmailField(sender.getEmail());
+            paymentFormPage.clickMtransferPaymentButton();
+            paymentFormPage.clickDataProcessingAgreementCheckbox();
+            paymentFormPage.clickFinishButton();
+            paymentRedirectPage.<PaymentRedirectPage>init().clickConfirmedPaymentButton();
+            assertDoesNotThrow(() ->
+                    finalSummaryPage.<SummaryPage>init()
+            );
+        }
+
+        @Test
+        @Order(21)
+        public void Should_ReceiverDataBeTheSame_When_InFinalSummary() {
+            assertAll(()->assertEquals(receiverAddress.getName(), finalSummaryPage.textReceiverName()),
+                    ()->assertEquals(receiverAddress.getPhone(), finalSummaryPage.textReceiverPhone()),
+                    ()->assertEquals(receiverAddress.getEmail(), finalSummaryPage.textReceiverEmail()),
+                    ()->assertEquals(receiverAddress.getZipCode()+" "+receiverAddress.getCity(), finalSummaryPage.textReceiverZipCodeCity()),
+                    ()->assertEquals(receiverAddress.getStreet()+" "+receiverAddress.getBuildingNo()+"/"+receiverAddress.getFlatNo(), finalSummaryPage.textReceiverStreetBuildingNo())
+            );
+        }
+
+        @Test
+        @Order(22)
+        public void Should_SenderDataBeTheSame_When_InFinalSummary() {
+            assertAll(() -> assertEquals(sender.getName(), finalSummaryPage.textSenderName()),
+                    () -> assertEquals(sender.getPhone(), finalSummaryPage.textSenderPhone()),
+                    () -> assertEquals(sender.getEmail(), finalSummaryPage.textSenderEmail())
+            );
+        }
+
+        @Test
+        @Order(23)
+        public void Should_DownloadLabel_When_ButtonClicked() throws IOException {
+            finalSummaryPage.clickDownloadLabelButton();
+            FileHelper fileHelper = new FileHelper();
+            assertTrue(fileHelper.isLatestFileNew());
         }
     }
 
