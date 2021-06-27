@@ -13,7 +13,8 @@ public class BoxmachineFormPage extends BasePage {
     WebElement parcelmachineFieldValue;
     @FindBy(how = How.CSS, using = "app-geowidget")
     WebElement geowidget;
-
+    @FindBy(xpath = "//*[contains(@class, 'ng-option-disabled')]")
+    private WebElement parcelmachineDropDownDisabled;
     @FindBy(xpath = "//*[@id='error-boxMachineName']/..//*[contains(@class, 'errors')]")
     WebElement errorReceiverBoxmachine;
 
@@ -34,6 +35,9 @@ public class BoxmachineFormPage extends BasePage {
 
     public Action<BoxmachineFormPage> errorReceiverBoxmachine() {
         return new Action<>(errorReceiverBoxmachine, this);
+    }
+    public Action<BoxmachineFormPage> parcelmachineDropDownDisabled() {
+        return new Action<BoxmachineFormPage>(parcelmachineDropDownDisabled, this);
     }
     //endregion
 
