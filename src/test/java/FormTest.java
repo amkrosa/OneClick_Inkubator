@@ -40,8 +40,8 @@ public class FormTest extends Base {
 
         @BeforeEach
         public void setup(){
-            if (!formPage.srcSummaryReceiverMethodIcon().equals(Icon.BOXMACHINE.url))
-                formPage.clickBoxmachineDeliveryMethod().clickParcelSizeA();
+            if (!formPage.summaryReceiverMethodIcon().src().equals(Icon.BOXMACHINE.url))
+                formPage.parcelSizeA().click();
         }
 
         @Test
@@ -54,75 +54,77 @@ public class FormTest extends Base {
 
         @Test
         public void Should_SelectDeliveryMethodBoxmachine_When_Clicked() {
-            formPage.clickBoxmachineDeliveryMethod();
-            assertEquals(formPage.srcSummaryReceiverMethodIcon(), Icon.BOXMACHINE.url);
+            formPage.deliveryTypeBoxmachine().click();
+            assertEquals(formPage.summaryReceiverMethodIcon().src(), Icon.BOXMACHINE.url);
         }
 
         @Test
         public void Should_SelectParcelSizeB_When_Clicked() {
-            formPage.clickParcelSizeB();
-            String text = formPage.textSummarySizeText();
+            formPage.parcelSizeB().click();
+            String text = formPage.summarySizeText().text();
             boolean result = text.contains(StaticText.SIZE_PARCEL_B.pl) || text.contains(StaticText.SIZE_PARCEL_B.en);
             assertTrue(result);
         }
 
         @Test
         public void Should_ReceiverNameBeCorrect_When_FilledWithCorrectData() {
-            formPage.fillReceiverName(receiverPm.getName());
-            assertTrue(formPage.valueReceiverName().contains(receiverPm.getName()));
+            formPage.receiverName().clear().fill(receiverPm.getName());
+            assertEquals(receiverPm.getName(), formPage.receiverName().value());
         }
 
         @Test
         public void Should_ReceiverPhoneBeCorrect_When_FilledWithCorrectData() {
-            formPage.fillReceiverPhone("").fillReceiverPhone(receiverPm.getPhone());
-            assertTrue(formPage.valueReceiverPhone().contains("+48" + receiverPm.getPhone()));
+            formPage.receiverPhone().clear().fill(receiverPm.getPhone());
+            String phone = formPage.receiverPhone().value().replace(" ","");
+            assertEquals("+48"+receiverPm.getPhone(), phone);
         }
 
         @ParameterizedTest
         @ValueSource(strings = {"000000000", "aaa", "  "})
         public void Should_ReceiverPhoneBeInvalid_When_FilledWithInvalidData(String str) {
-            formPage.clearReceiverPhone().fillReceiverPhone(str);
-            assertTrue(formPage.getErrorReceiverPhone().isDisplayed());
+            formPage.receiverPhone().clear().fill(str);
+            String phone = formPage.receiverPhone().value().replace(" ", "");
+            assertTrue(formPage.errorReceiverPhone().isDisplayed());
         }
 
         @ParameterizedTest
         @ValueSource(strings = {"a@a.pl", "anna@anna.pl"})
         public void Should_ReceiverEmailBeCorrect_When_FilledWithCorrectData(String str) {
             //clear etc
-            formPage.fillReceiverEmail(receiverPm.getEmail());
-            assertTrue(formPage.valueReceiverEmail().contains(receiverPm.getEmail()));
+            formPage.receiverEmail().clear().fill(receiverPm.getEmail());
+
         }
 
         @ParameterizedTest
         @ValueSource(strings = {"a@a.p", "anna", "aaa@aaa", "###@###.pl"})
         public void Should_ReceiverEmailBeInvalid_When_FilledWithInvalidData(String str) {
             //clear etc
-            formPage.fillReceiverEmail(receiverPm.getEmail());
-            assertTrue(formPage.valueReceiverEmail().contains(receiverPm.getEmail()));
+            formPage.receiverEmail().clear().fill(receiverPm.getEmail());
+
         }
 
         @Test
         public void Should_ReceiverParcelmachineBeCorrect_When_FilledWithCorrectData() {
             boxmachineFormPage.setParcelmachine(receiverPm.getParcelmachine());
-            assertTrue(boxmachineFormPage.textParcelmachineFieldValue().contains(receiverPm.getParcelmachine()));
+            assertTrue(boxmachineFormPage.parcelmachineFieldValue().text().contains(receiverPm.getParcelmachine()));
         }
 
         @Test
         public void Should_SenderNameBeCorrect_When_FilledWithCorrectData() {
-            formPage.fillSenderName(sender.getName());
-            assertTrue(formPage.valueSenderName().contains(sender.getName()));
+            formPage.senderName().clear().fill(sender.getName());
+
         }
 
         @Test
         public void Should_SenderPhoneBeCorrect_When_FilledWithCorrectData() {
-            formPage.fillSenderPhone(sender.getPhone());
-            assertTrue(formPage.valueSenderPhone().contains("+48" + sender.getPhone()));
+            formPage.senderPhone().clear().fill(sender.getPhone());
+
         }
 
         @Test
         public void Should_SenderEmailBeCorrect_When_FilledWithCorrectData() {
-            formPage.fillSenderEmail(sender.getEmail());
-            assertTrue(formPage.valueSenderEmail().contains(sender.getEmail()));
+            formPage.senderEmail().clear().fill(sender.getEmail());
+
         }
 
     }
