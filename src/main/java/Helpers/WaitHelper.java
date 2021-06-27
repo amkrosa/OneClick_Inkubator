@@ -51,14 +51,14 @@ public class WaitHelper {
     public boolean waitUntilDownloaded(WebElement elementInitializingDownload) throws IOException {
         FileHelper fileHelper = new FileHelper();
         final Path targetFolder = Path.of(Base.downloadFolder);
-        FileTime before = Files.getLastModifiedTime(targetFolder);
+        FileTime before = Files.getLastModifiedTime(fileHelper.getLatestFile());
         waitUntilClickable(elementInitializingDownload);
         elementInitializingDownload.click();
         return fluentWait.until(driver -> {
             try {
                 FileTime after = Files.getLastModifiedTime(fileHelper.getLatestFile());
                 int result = fileHelper.countFilesWithExtension("crdownload");
-                if (!before.equals(after) && result==0)
+                if (before.compareTo(after)<0 && result==0)
                     return true;
             } catch (IOException ignored) {}
             return false;
