@@ -20,6 +20,7 @@ public class SummaryPage extends BasePage{
 
     private final DeliveryMethod deliveryMethod;
     private final InvoiceType invoiceType;
+    private final StaticText paymentStatus;
     private final String summaryType;
 
     //region Receiver data
@@ -87,6 +88,23 @@ public class SummaryPage extends BasePage{
         this.summaryType = summaryType;
         this.deliveryMethod = deliveryMethod;
         this.invoiceType = null;
+        this.paymentStatus = StaticText.SUMMARY_TRANSACTION_SUCCESS;
+    }
+
+    public SummaryPage(String summaryType, DeliveryMethod deliveryMethod, StaticText paymentStatus){
+        super();
+        this.summaryType = summaryType;
+        this.deliveryMethod = deliveryMethod;
+        this.invoiceType = null;
+        this.paymentStatus = paymentStatus;
+    }
+
+    public SummaryPage(String summaryType, DeliveryMethod deliveryMethod, InvoiceType invoiceType, StaticText paymentStatus){
+        super();
+        this.summaryType = summaryType;
+        this.deliveryMethod = deliveryMethod;
+        this.invoiceType = invoiceType;
+        this.paymentStatus = paymentStatus;
     }
 
     public SummaryPage(String summaryType, DeliveryMethod deliveryMethod, InvoiceType invoiceType){
@@ -94,14 +112,13 @@ public class SummaryPage extends BasePage{
         this.summaryType = summaryType;
         this.deliveryMethod = deliveryMethod;
         this.invoiceType = invoiceType;
+        this.paymentStatus = StaticText.SUMMARY_TRANSACTION_SUCCESS;
     }
     //region Custom Actions
     public void refreshUntilPaymentIsDone(){
         int iterationTimeout = 15;
-        String textCurrent = Base.config.getLanguage().equals("pl") ? StaticText.SUMMARY_TRANSACTION_PENDING.pl
-                : StaticText.SUMMARY_TRANSACTION_PENDING.en;
-        String text = Base.config.getLanguage().equals("pl") ? StaticText.SUMMARY_TRANSACTION_SUCCESS.pl
-                : StaticText.SUMMARY_TRANSACTION_SUCCESS.en;
+        String text = Base.config.getLanguage().equals("pl") ? paymentStatus.pl
+                : paymentStatus.en;
         while (iterationTimeout!=0){
             getDriver().navigate().refresh();
             getCommonHelper().waitAndClick(policyButton);
