@@ -12,6 +12,9 @@ public interface IAction<T extends BasePage> {
     IAction<T> waitVisible();
     IAction<T> waitClickable();
     IAction<T> confirmDropdown();
+    IAction<T> enter();
+    IAction<T> clickAbove();
+    IAction<T> tab();
 
     String text();
     String value();

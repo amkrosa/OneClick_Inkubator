@@ -1,14 +1,20 @@
 package Pages.Actions;
 
+import Helpers.ActionHelper;
 import Helpers.CommonHelper;
 import Helpers.WaitHelper;
 import Pages.BasePage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class Action<T extends BasePage> implements IAction<T>{
     private final T page;
     private final WaitHelper waitHelper = new WaitHelper();
     private final CommonHelper commonHelper = new CommonHelper();
+    private final ActionHelper actionHelper = new ActionHelper();
     private final WebElement element;
 
     public Action(WebElement element, BasePage page){
@@ -58,6 +64,24 @@ public class Action<T extends BasePage> implements IAction<T>{
     }
 
     @Override
+    public IAction<T> enter() {
+        element.sendKeys(Keys.ENTER);
+        return this;
+    }
+
+    @Override
+    public IAction<T> clickAbove() {
+        actionHelper.clickWithOffset(element, 0, -30);
+        return this;
+    }
+
+    @Override
+    public IAction<T> tab() {
+        element.sendKeys(Keys.TAB);
+        return this;
+    }
+
+    @Override
     public String text() {
         return element.getText();
     }
@@ -76,7 +100,5 @@ public class Action<T extends BasePage> implements IAction<T>{
     public boolean isDisplayed() {
         return element.isDisplayed();
     }
-
-
 
 }
