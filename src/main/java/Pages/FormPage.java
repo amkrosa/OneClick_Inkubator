@@ -11,6 +11,7 @@ import java.util.List;
 
 public class FormPage extends BasePage {
 
+    //region Functional elements
     @FindBy(how = How.ID, using = "onetrust-accept-btn-handler")
     WebElement policyButton;
     @FindBy(how = How.CSS, using = "#parcelFormButton > button")
@@ -49,6 +50,9 @@ public class FormPage extends BasePage {
     WebElement howToSendButton;
     @FindBy(how = How.XPATH, using = "(//span[@class='custom-action-in-title'])[2]")
     WebElement howToPackButton;
+    //endregion
+
+    //region Images
     @FindAll({
             @FindBy(how = How.XPATH, using = "//*[@id='process']//img")
     })
@@ -57,12 +61,16 @@ public class FormPage extends BasePage {
     WebElement summarySenderMethodIcon;
     @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//div[contains(@class, 'chosen-icon')]/img[2]")
     WebElement summaryReceiverMethodIcon;
-    @FindBy(how = How.XPATH, using = "((//*[@class='summaryForm'])[2]//*[@class='custom-column-summary'])[1]")
-    WebElement summarySizeText;
     @FindBy(how = How.XPATH, using = "((//*[@class='summaryForm'])[2]//*[@class='custom-column-summary'])[2]")
     WebElement summarySizeIcon;
+    //endregion
+
+    //region Text
+    @FindBy(how = How.XPATH, using = "((//*[@class='summaryForm'])[2]//*[@class='custom-column-summary'])[1]")
+    WebElement summarySizeText;
     @FindBy(how = How.XPATH, using = "//*[@class='chosen-text-description']")
     WebElement summarySizeDimension;
+    //endregion
 
     //region Errors
     @FindBy(xpath = "//*[@id='error-targetAddress.name']/..//*[contains(@class, 'errors')]")
@@ -71,18 +79,6 @@ public class FormPage extends BasePage {
     WebElement errorReceiverEmail;
     @FindBy(xpath = "//*[@id='error-phoneNumber']/..//*[contains(@class, 'errors')]")
     WebElement errorReceiverPhone;
-    @FindBy(xpath = "//*[@id='error-boxMachineName']/..//*[contains(@class, 'errors')]")
-    WebElement errorReceiverBoxmachine;
-    @FindBy(xpath = "//*[@id='error-targetAddress.zipCode']/..//*[contains(@class, 'errors')]")
-    WebElement errorReceiverZipCode;
-    @FindBy(xpath = "//*[@id='error-targetAddress.town']/..//*[contains(@class, 'errors')]")
-    WebElement errorReceiverTown;
-    @FindBy(xpath = "//*[@id='error-targetAddress.street']/..//*[contains(@class, 'errors')]")
-    WebElement errorReceiverStreet;
-    @FindBy(xpath = "//*[@id='error-targetAddress.buildingNo']/..//*[contains(@class, 'errors')]")
-    WebElement errorBuildingNo;
-    @FindBy(xpath = "//*[@id='error-targetAddress.flatNo']/..//*[contains(@class, 'errors')]")
-    WebElement errorFlatNo;
     @FindBy(xpath = "//*[@id='error-senderAddress.name']/..//*[contains(@class, 'errors')]")
     WebElement errorSenderName;
     @FindBy(xpath = "//*[@id='error-senderAddress.email']/..//*[contains(@class, 'errors')]")
@@ -96,6 +92,7 @@ public class FormPage extends BasePage {
         super();
     }
 
+    //region Fill methods
     public FormPage fillSenderName(String text) {
         senderName.sendKeys(text);
         return this;
@@ -109,11 +106,6 @@ public class FormPage extends BasePage {
 
     public FormPage fillSenderPhone(String text) {
         senderPhone.sendKeys(text);
-        return this;
-    }
-
-    public FormPage clearSenderPhone() {
-        senderPhone.clear();
         return this;
     }
 
@@ -131,12 +123,9 @@ public class FormPage extends BasePage {
         receiverPhone.sendKeys(text);
         return this;
     }
-    public FormPage clearReceiverPhone() {
-        receiverPhone.clear();
-        return this;
-    }
+    //endregion
 
-
+    //region Click methods
     public FormPage clickNewsletterCheckbox() {
         getCommonHelper().moveAndClick(newsletter);
         return this;
@@ -172,12 +161,6 @@ public class FormPage extends BasePage {
         return this;
     }
 
-    public boolean submit() {
-        clickSubmitButton();
-        getWaitHelper().waitUntilClickable(By.xpath("(//div[contains(@class, 'parcel-form-whole-summary-modal')]//button)[2]"));
-        return !getDriver().findElements(By.cssSelector(".parcel-form-whole-summary-modal")).isEmpty();
-    }
-
     public FormPage clickPolicyButton() {
         getCommonHelper().waitAndClick(policyButton);
         return this;
@@ -207,7 +190,9 @@ public class FormPage extends BasePage {
         getCommonHelper().moveAndClick(howToPackButton);
         return this;
     }
+    //endregion
 
+    //region isVisible methods
     public boolean isHowToSendModalVisible(){
         By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
         return getCommonHelper().isModalVisible(xpath, howToSendButton);
@@ -226,7 +211,9 @@ public class FormPage extends BasePage {
         }
         return true;
     }
+    //endregion
 
+    //region Text methods
     public String textSummarySizeDimension() {
         return summarySizeDimension.getText();
     }
@@ -234,7 +221,9 @@ public class FormPage extends BasePage {
     public String textSummarySizeText() {
         return summarySizeText.getText();
     }
+    //endregion
 
+    //region Value methods
     public String valueSenderName() {
         return senderName.getAttribute("value");
     }
@@ -258,7 +247,9 @@ public class FormPage extends BasePage {
     public String valueReceiverEmail() {
         return receiverEmail.getAttribute("value");
     }
+    //endregion
 
+    //region Src methods
     public String srcSummarySenderMethodIcon() {
         return summarySenderMethodIcon.getAttribute("src");
     }
@@ -270,7 +261,9 @@ public class FormPage extends BasePage {
     public String srcSummarySizeIcon() {
         return summarySizeIcon.getAttribute("src");
     }
+    //endregion
 
+    //region Get Error methods
     public WebElement getErrorReceiverName() {
         return errorReceiverName;
     }
@@ -281,33 +274,8 @@ public class FormPage extends BasePage {
 
     public WebElement getErrorReceiverPhone() {
 
-        getWaitHelper().waitUntilVisible(errorReceiverPhone);
-
+        //getWaitHelper().waitUntilVisible(errorReceiverPhone);
         return errorReceiverPhone;
-    }
-
-    public WebElement getErrorReceiverBoxmachine() {
-        return errorReceiverBoxmachine;
-    }
-
-    public WebElement getErrorReceiverZipCode() {
-        return errorReceiverZipCode;
-    }
-
-    public WebElement getErrorReceiverTown() {
-        return errorReceiverTown;
-    }
-
-    public WebElement getErrorReceiverStreet() {
-        return errorReceiverStreet;
-    }
-
-    public WebElement getErrorBuildingNo() {
-        return errorBuildingNo;
-    }
-
-    public WebElement getErrorFlatNo() {
-        return errorFlatNo;
     }
 
     public WebElement getErrorSenderName() {
@@ -321,6 +289,47 @@ public class FormPage extends BasePage {
     public WebElement getErrorSenderPhone() {
         return errorSenderPhone;
     }
+    //endregion
+
+    //region Clear methods
+    public FormPage clearSenderName() {
+        senderName.clear();
+        return this;
+    }
+
+    public FormPage clearSenderEmail() {
+        senderEmail.clear();
+        return this;
+    }
+
+    public FormPage clearSenderPhone() {
+        senderPhone.clear();
+        return this;
+    }
+
+    public FormPage clearReceiverName() {
+        receiverName.clear();
+        return this;
+    }
+
+    public FormPage clearReceiverEmail() {
+        receiverEmail.clear();
+        return this;
+    }
+
+    public FormPage clearReceiverPhone() {
+        receiverPhone.clear();
+        return this;
+    }
+    //endregion
+
+    //region Custom methods
+    public boolean submit() {
+        clickSubmitButton();
+        getWaitHelper().waitUntilClickable(By.xpath("(//div[contains(@class, 'parcel-form-whole-summary-modal')]//button)[2]"));
+        return !getDriver().findElements(By.cssSelector(".parcel-form-whole-summary-modal")).isEmpty();
+    }
+    //endregion
 
     @Override
     public WebElement getInitElement() {

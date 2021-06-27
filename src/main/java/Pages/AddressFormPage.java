@@ -10,6 +10,8 @@ import org.openqa.selenium.support.How;
 
 public class AddressFormPage extends BasePage{
 
+
+    //region Functional elements
     @FindBy(how = How.NAME, using = "targetAddress.zipCode")
     WebElement receiverZipCode;
     @FindBy(how = How.XPATH, using = "//*[@name='targetAddress.town']//*/input")
@@ -24,6 +26,21 @@ public class AddressFormPage extends BasePage{
     WebElement receiverBuildingNo;
     @FindBy(how = How.NAME, using = "targetAddress.flatNo")
     WebElement receiverFlatNo;
+    //endregion
+
+    //region Errors
+    @FindBy(xpath = "//*[@id='error-targetAddress.zipCode']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverZipCode;
+    @FindBy(xpath = "//*[@id='error-targetAddress.town']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverTown;
+    @FindBy(xpath = "//*[@id='error-targetAddress.street']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverStreet;
+    @FindBy(xpath = "//*[@id='error-targetAddress.buildingNo']/..//*[contains(@class, 'errors')]")
+    WebElement errorBuildingNo;
+    @FindBy(xpath = "//*[@id='error-targetAddress.flatNo']/..//*[contains(@class, 'errors')]")
+    WebElement errorFlatNo;
+    //endregion
+
 
     public AddressFormPage(){  super();  }
 
@@ -71,6 +88,51 @@ public class AddressFormPage extends BasePage{
 
     public String valueReceiverFlatNo() {
         return receiverFlatNo.getAttribute("value");
+    }
+
+    public WebElement getErrorReceiverZipCode() {
+        return errorReceiverZipCode;
+    }
+
+    public WebElement getErrorReceiverTown() {
+        return errorReceiverTown;
+    }
+
+    public WebElement getErrorReceiverStreet() {
+        return errorReceiverStreet;
+    }
+
+    public WebElement getErrorBuildingNo() {
+        return errorBuildingNo;
+    }
+
+    public WebElement getErrorFlatNo() {
+        return errorFlatNo;
+    }
+
+    public AddressFormPage clearReceiverZipCode() {
+        receiverZipCode.clear();
+        return this;
+    }
+
+    public AddressFormPage clearReceiverTown() {
+        receiverTown.clear();
+        return this;
+    }
+
+    public AddressFormPage clearReceiverStreet() {
+        receiverStreet.clear();
+        return this;
+    }
+
+    public AddressFormPage clearReceiverBuildingNo() {
+        receiverBuildingNo.clear();
+        return this;
+    }
+
+    public AddressFormPage clearReceiverFlatNo() {
+        receiverFlatNo.clear();
+        return this;
     }
 
     @Override
