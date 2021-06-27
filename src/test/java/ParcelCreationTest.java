@@ -1,4 +1,5 @@
 import Configs.EnvironmentType;
+import Helpers.Enums.DeliveryMethod;
 import Helpers.Enums.Icon;
 import Helpers.Enums.StaticText;
 import Helpers.FileHelper;
@@ -30,11 +31,11 @@ public class ParcelCreationTest {
     @DisplayName("Parcelmachine delivery method")
     public class ParcelmachineDeliveryTest extends Base {
         private BoxmachineFormPage boxmachineFormPage = new BoxmachineFormPage();
-        private SummaryPage summaryPage = new SummaryPage("modal", "parcelmachine");
+        private SummaryPage summaryPage = new SummaryPage("modal", DeliveryMethod.BOXMACHINE);
         private FormPage formPage = new FormPage();
         private PaymentFormPage paymentFormPage = new PaymentFormPage();
         private PaymentRedirectPage paymentRedirectPage = new PaymentRedirectPage();
-        private SummaryPage finalSummaryPage = new SummaryPage("final", "parcelmachine");
+        private SummaryPage finalSummaryPage = new SummaryPage("final", DeliveryMethod.BOXMACHINE);
 
         @Test
         @Order(1)
@@ -213,10 +214,10 @@ public class ParcelCreationTest {
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     @DisplayName("Address delivery method")
     public class AddressDeliveryTest extends Base{
-        private SummaryPage summaryPage = new SummaryPage("modal","address");
+        private SummaryPage summaryPage = new SummaryPage("modal",DeliveryMethod.ADDRESS);
         private AddressFormPage addressFormPage = new AddressFormPage();
         private FormPage formPage = new FormPage();
-        private SummaryPage finalSummaryPage = new SummaryPage("final", "address");
+        private SummaryPage finalSummaryPage = new SummaryPage("final", DeliveryMethod.ADDRESS);
         private PaymentFormPage paymentFormPage = new PaymentFormPage();
         private PaymentRedirectPage paymentRedirectPage = new PaymentRedirectPage();
 
