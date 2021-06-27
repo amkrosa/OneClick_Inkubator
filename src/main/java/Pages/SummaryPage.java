@@ -1,10 +1,12 @@
 package Pages;
 
+import Helpers.Enums.DeliveryMethod;
 import Helpers.Enums.InvoiceType;
 import Helpers.Enums.StaticText;
 import Pages.Actions.Action;
 import SeleniumBase.Base;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class SummaryPage extends BasePage{
 
-    private final String deliveryMethod;
+    private final DeliveryMethod deliveryMethod;
     private final InvoiceType invoiceType;
     private final String summaryType;
 
@@ -80,14 +82,14 @@ public class SummaryPage extends BasePage{
     WebElement policyButton;
     //endregion
 
-    public SummaryPage(String summaryType, String deliveryMethod){
+    public SummaryPage(String summaryType, DeliveryMethod deliveryMethod){
         super();
         this.summaryType = summaryType;
         this.deliveryMethod = deliveryMethod;
         this.invoiceType = null;
     }
 
-    public SummaryPage(String summaryType, String deliveryMethod, InvoiceType invoiceType){
+    public SummaryPage(String summaryType, DeliveryMethod deliveryMethod, InvoiceType invoiceType){
         super();
         this.summaryType = summaryType;
         this.deliveryMethod = deliveryMethod;
@@ -95,18 +97,21 @@ public class SummaryPage extends BasePage{
     }
     //region Custom Actions
     public void refreshUntilPaymentIsDone(){
+        int iterationTimeout = 15;
         String textCurrent = Base.config.getLanguage().equals("pl") ? StaticText.SUMMARY_TRANSACTION_PENDING.pl
                 : StaticText.SUMMARY_TRANSACTION_PENDING.en;
         String text = Base.config.getLanguage().equals("pl") ? StaticText.SUMMARY_TRANSACTION_SUCCESS.pl
                 : StaticText.SUMMARY_TRANSACTION_SUCCESS.en;
-        while (true){
+        while (iterationTimeout!=0){
             getDriver().navigate().refresh();
             getCommonHelper().waitAndClick(policyButton);
             getWaitHelper().waitUntilVisible(By.xpath("//*[contains(@class, 'mat-wrapper')]"));
             List<WebElement> element = getDriver().findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
             if (element.size() > 0)
                 return;
+            iterationTimeout--;
         }
+        throw new TimeoutException("Refresh iteration timeout exceeded");
     }
     //endregion
 
@@ -220,7 +225,7 @@ public class SummaryPage extends BasePage{
     }
 
     public SummaryPage setReceiverParcelmachineFields(){
-        if (deliveryMethod.equals("parcelmachine")){
+        if (deliveryMethod==DeliveryMethod.BOXMACHINE){
             receiverParcelmachineName = receiverParcelmachineFields.get(0);
             receiverParcelmachineStreetBuldingNo = receiverParcelmachineFields.get(1);
             receiverParcelmachineZipCodeCity = receiverParcelmachineFields.get(2);
