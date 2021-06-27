@@ -4,11 +4,14 @@ import Helpers.ActionHelper;
 import Helpers.CommonHelper;
 import Helpers.WaitHelper;
 import SeleniumBase.Base;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 public abstract class BasePage {
     private WebDriver driver;
@@ -20,7 +23,7 @@ public abstract class BasePage {
         driver = Base.driver;
         PageFactory.initElements(driver, this);
         waitHelper = new WaitHelper();
-        actionHelper = new ActionHelper(new Actions(Base.driver));
+        actionHelper = new ActionHelper();
         commonHelper = new CommonHelper(actionHelper, waitHelper);
     }
 
@@ -38,6 +41,11 @@ public abstract class BasePage {
 
     public WebDriver getDriver() {
         return driver;
+    }
+
+    public boolean isTextFound(String text) {
+        List<WebElement> element = this.getDriver().findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
+        return element.size() > 0;
     }
 
     public <T extends BasePage> T init(){
