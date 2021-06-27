@@ -10,7 +10,7 @@ public class CommonHelper {
     WaitHelper waitHelper;
 
     public CommonHelper() {
-        this.actionHelper = new ActionHelper(new Actions(Base.driver));
+        this.actionHelper = new ActionHelper();
         this.waitHelper = new WaitHelper();
     }
 
