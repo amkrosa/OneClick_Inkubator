@@ -35,7 +35,7 @@ public class ParcelCreationTest {
         private FormPage formPage = new FormPage();
         private PaymentFormPage paymentFormPage = new PaymentFormPage();
         private PaymentRedirectPage paymentRedirectPage = new PaymentRedirectPage();
-        private SummaryPage finalSummaryPage = new SummaryPage("final", DeliveryMethod.BOXMACHINE);
+        private SummaryPage finalSummaryPage = new SummaryPage("final", DeliveryMethod.BOXMACHINE, StaticText.SUMMARY_TRANSACTION_SUCCESS);
 
         @Test
         @Order(1)
@@ -217,7 +217,7 @@ public class ParcelCreationTest {
         private SummaryPage summaryPage = new SummaryPage("modal",DeliveryMethod.ADDRESS);
         private AddressFormPage addressFormPage = new AddressFormPage();
         private FormPage formPage = new FormPage();
-        private SummaryPage finalSummaryPage = new SummaryPage("final", DeliveryMethod.ADDRESS);
+        private SummaryPage finalSummaryPage = new SummaryPage("final", DeliveryMethod.ADDRESS, StaticText.SUMMARY_TRANSACTION_SUCCESS);
         private PaymentFormPage paymentFormPage = new PaymentFormPage();
         private PaymentRedirectPage paymentRedirectPage = new PaymentRedirectPage();
 
