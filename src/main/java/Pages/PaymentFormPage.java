@@ -1,5 +1,6 @@
 package Pages;
 
+import Pages.Actions.Action;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -20,6 +21,22 @@ public class PaymentFormPage extends BasePage{
     public PaymentFormPage fillEmailField(String text) {
         emailField.sendKeys(text);
         return this;
+    }
+
+    public Action dataProcessingAgreementCheckbox() {
+        return new Action(dataProcessingAgreementCheckbox);
+    }
+
+    public Action mtransferPaymentButton() {
+        return new Action(mtransferPaymentButton);
+    }
+
+    public Action emailField() {
+        return new Action(emailField);
+    }
+
+    public Action finishButton() {
+        return new Action(finishButton);
     }
 
     public PaymentFormPage clickDataProcessingAgreementCheckbox() {

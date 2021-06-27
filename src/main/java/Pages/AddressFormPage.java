@@ -3,6 +3,7 @@ package Pages;
 import Helpers.ActionHelper;
 import Helpers.CommonHelper;
 import Helpers.WaitHelper;
+import Pages.Actions.Action;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,6 +44,54 @@ public class AddressFormPage extends BasePage{
 
 
     public AddressFormPage(){  super();  }
+
+    public Action receiverZipCode() {
+        return new Action(receiverZipCode);
+    }
+
+    public Action receiverTown() {
+        return new Action(receiverTown);
+    }
+
+    public Action receiverTownValue() {
+        return new Action(receiverTownValue);
+    }
+
+    public Action receiverStreet() {
+        return new Action(receiverStreet);
+    }
+
+    public Action receiverStreetValue() {
+        return new Action(receiverStreetValue);
+    }
+
+    public Action receiverBuildingNo() {
+        return new Action(receiverBuildingNo);
+    }
+
+    public Action receiverFlatNo() {
+        return new Action(receiverFlatNo);
+    }
+
+    public Action errorReceiverZipCode() {
+        return new Action(errorReceiverZipCode);
+    }
+
+    public Action errorReceiverTown() {
+        return new Action(errorReceiverTown);
+    }
+
+    public Action errorReceiverStreet() {
+        return new Action(errorReceiverStreet);
+    }
+
+    public Action errorBuildingNo() {
+        return new Action(errorBuildingNo);
+    }
+
+    public Action errorFlatNo() {
+        return new Action(errorFlatNo);
+    }
 
     public AddressFormPage fillReceiverZipCode(String text) {
         receiverZipCode.sendKeys(text);

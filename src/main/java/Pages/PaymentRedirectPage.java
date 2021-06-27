@@ -1,5 +1,6 @@
 package Pages;
 
+import Pages.Actions.Action;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -14,6 +15,18 @@ public class PaymentRedirectPage extends BasePage {
     WebElement pendingPaymentButton;
 
     public PaymentRedirectPage(){super();}
+
+    public Action confirmedPaymentButton() {
+        return new Action(confirmedPaymentButton);
+    }
+
+    public Action rejectedPaymentButton() {
+        return new Action(rejectedPaymentButton);
+    }
+
+    public Action pendingPaymentButton() {
+        return new Action(pendingPaymentButton);
+    }
 
     public PaymentRedirectPage clickConfirmedPaymentButton() {
         getCommonHelper().moveAndClick(confirmedPaymentButton);

@@ -1,6 +1,7 @@
 package Pages;
 
 import Helpers.Enums.Banner;
+import Pages.Actions.Action;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -13,42 +14,60 @@ public class FormPage extends BasePage {
 
     //region Functional elements
     @FindBy(how = How.ID, using = "onetrust-accept-btn-handler")
-    WebElement policyButton;
+    private WebElement policyButton;
     @FindBy(how = How.CSS, using = "#parcelFormButton > button")
+    private
     WebElement submitButton;
     @FindBy(how = How.CLASS_NAME, using = "btn-cookie-trigger")
+    private
     WebElement cookieButton;
     @FindBy(how = How.NAME, using = "senderAddress.name")
+    private
     WebElement senderName;
     @FindBy(how = How.NAME, using = "senderAddress.phoneNum")
+    private
     WebElement senderPhone;
     @FindBy(how = How.NAME, using = "senderAddress.email")
+    private
     WebElement senderEmail;
     @FindBy(how = How.NAME, using = "targetAddress.name")
+    private
     WebElement receiverName;
     @FindBy(how = How.NAME, using = "phoneNumber")
+    private
     WebElement receiverPhone;
     @FindBy(how = How.NAME, using = "addresseeEmail")
+    private
     WebElement receiverEmail;
     @FindBy(how = How.CSS, using = "[for=terms] > .input-checkmark")
+    private
     WebElement terms;
     @FindBy(how = How.CSS, using = "[for=newsletter] > .input-checkmark")
+    private
     WebElement newsletter;
     @FindBy(how = How.CSS, using = "[for=deliveryTypeboxmachine]")
+    private
     WebElement deliveryTypeBoxmachine;
     @FindBy(how = How.CSS, using = "[for=deliveryTypeaddress]")
+    private
     WebElement deliveryTypeAddress;
     @FindBy(how = How.CSS, using = "[for=parcelSizeA]")
+    private
     WebElement parcelSizeA;
     @FindBy(how = How.CSS, using = "[for=parcelSizeB]")
+    private
     WebElement parcelSizeB;
     @FindBy(how = How.CSS, using = "[for=parcelSizeC]")
+    private
     WebElement parcelSizeC;
     @FindBy(how = How.CSS, using = "[for=in_changer]")
+    private
     WebElement invoiceCheckbox;
     @FindBy(how = How.XPATH, using = "(//span[@class='custom-action-in-title'])[1]")
+    private
     WebElement howToSendButton;
     @FindBy(how = How.XPATH, using = "(//span[@class='custom-action-in-title'])[2]")
+    private
     WebElement howToPackButton;
     //endregion
 
@@ -56,35 +75,35 @@ public class FormPage extends BasePage {
     @FindAll({
             @FindBy(how = How.XPATH, using = "//*[@id='process']//img")
     })
-    List<WebElement> bannerImages;
+    private List<WebElement> bannerImages;
     @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//div[contains(@class, 'chosen-icon')]/img[1]")
-    WebElement summarySenderMethodIcon;
+    private WebElement summarySenderMethodIcon;
     @FindBy(how = How.XPATH, using = "(//*[@class='summaryForm'])[2]//div[contains(@class, 'chosen-icon')]/img[2]")
-    WebElement summaryReceiverMethodIcon;
+    private WebElement summaryReceiverMethodIcon;
     @FindBy(how = How.XPATH, using = "((//*[@class='summaryForm'])[2]//*[@class='custom-column-summary'])[2]")
-    WebElement summarySizeIcon;
+    private WebElement summarySizeIcon;
     //endregion
 
     //region Text
     @FindBy(how = How.XPATH, using = "((//*[@class='summaryForm'])[2]//*[@class='custom-column-summary'])[1]")
-    WebElement summarySizeText;
+    private WebElement summarySizeText;
     @FindBy(how = How.XPATH, using = "//*[@class='chosen-text-description']")
-    WebElement summarySizeDimension;
+    private WebElement summarySizeDimension;
     //endregion
 
     //region Errors
     @FindBy(xpath = "//*[@id='error-targetAddress.name']/..//*[contains(@class, 'errors')]")
-    WebElement errorReceiverName;
+    private WebElement errorReceiverName;
     @FindBy(xpath = "//*[@id='error-addresseeEmail']/..//*[contains(@class, 'errors')]")
-    WebElement errorReceiverEmail;
+    private WebElement errorReceiverEmail;
     @FindBy(xpath = "//*[@id='error-phoneNumber']/..//*[contains(@class, 'errors')]")
-    WebElement errorReceiverPhone;
+    private WebElement errorReceiverPhone;
     @FindBy(xpath = "//*[@id='error-senderAddress.name']/..//*[contains(@class, 'errors')]")
-    WebElement errorSenderName;
+    private WebElement errorSenderName;
     @FindBy(xpath = "//*[@id='error-senderAddress.email']/..//*[contains(@class, 'errors')]")
-    WebElement errorSenderEmail;
+    private WebElement errorSenderEmail;
     @FindBy(xpath = "//*[@id='error-senderAddress.phoneNum']/..//*[contains(@class, 'errors')]")
-    WebElement errorSenderPhone;
+    private WebElement errorSenderPhone;
     //endregion
 
 
@@ -92,6 +111,150 @@ public class FormPage extends BasePage {
         super();
     }
 
+    //region Actions
+    public Action policyButton() {
+        return new Action(policyButton);
+    }
+
+    public Action submitButton() {
+        return new Action(submitButton);
+    }
+
+    public Action cookieButton() {
+        return new Action(cookieButton);
+    }
+
+    public Action senderName() {
+        return new Action(senderName);
+    }
+
+    public Action senderPhone() {
+        return new Action(senderPhone);
+    }
+
+    public Action senderEmail() {
+        return new Action(senderEmail);
+    }
+
+    public Action receiverName() {
+        return new Action(receiverName);
+    }
+
+    public Action receiverPhone() {
+        return new Action(receiverPhone);
+    }
+
+    public Action receiverEmail() {
+        return new Action(receiverEmail);
+    }
+
+    public Action terms() {
+        return new Action(terms);
+    }
+
+    public Action newsletter() {
+        return new Action(newsletter);
+    }
+
+    public Action deliveryTypeBoxmachine() {
+        return new Action(deliveryTypeBoxmachine);
+    }
+
+    public Action deliveryTypeAddress() {
+        return new Action(deliveryTypeAddress);
+    }
+
+    public Action parcelSizeA() {
+        return new Action(parcelSizeA);
+    }
+
+    public Action parcelSizeB() {
+        return new Action(parcelSizeB);
+    }
+
+    public Action parcelSizeC() {
+        return new Action(parcelSizeC);
+    }
+
+    public Action invoiceCheckbox() {
+        return new Action(invoiceCheckbox);
+    }
+
+    public Action howToSendButton() {
+        return new Action(howToSendButton);
+    }
+
+    public Action howToPackButton() {
+        return new Action(howToPackButton);
+    }
+
+    public Action summarySenderMethodIcon() {
+        return new Action(summarySenderMethodIcon);
+    }
+
+    public Action summaryReceiverMethodIcon() {
+        return new Action(summaryReceiverMethodIcon);
+    }
+
+    public Action summarySizeIcon() {
+        return new Action(summarySizeIcon);
+    }
+
+    public Action summarySizeText() {
+        return new Action(summarySizeText);
+    }
+
+    public Action summarySizeDimension() {
+        return new Action(summarySizeDimension);
+    }
+
+    public Action errorReceiverName() {
+        return new Action(errorReceiverName);
+    }
+
+    public Action errorReceiverEmail() {
+        return new Action(errorReceiverEmail);
+    }
+
+    public Action errorReceiverPhone() {
+        return new Action(errorReceiverPhone);
+    }
+
+    public Action errorSenderName() {
+        return new Action(errorSenderName);
+    }
+
+    public Action errorSenderEmail() {
+        return new Action(errorSenderEmail);
+    }
+
+    public Action errorSenderPhone() {
+        return new Action(errorSenderPhone);
+    }
+    //endregion
+
+    //region isVisible methods
+    public boolean isHowToSendModalVisible(){
+        By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
+        return getCommonHelper().isModalVisible(xpath, howToSendButton);
+    }
+
+    public boolean isHowToPackModalVisible(){
+        By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
+        return getCommonHelper().isModalVisible(xpath, howToPackButton);
+    }
+
+    public boolean isBannerImagesVisible(){
+        Banner[] banners = Banner.values();
+        for (int i=0; i<bannerImages.size(); i++){
+            if (!bannerImages.get(i).getAttribute("src").equals(banners[i].url))
+                return false;
+        }
+        return true;
+    }
+    //endregion
+
+    /*
     //region Fill methods
     public FormPage fillSenderName(String text) {
         senderName.sendKeys(text);
@@ -189,27 +352,6 @@ public class FormPage extends BasePage {
     public FormPage clickHowToPackButton() {
         getCommonHelper().moveAndClick(howToPackButton);
         return this;
-    }
-    //endregion
-
-    //region isVisible methods
-    public boolean isHowToSendModalVisible(){
-        By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
-        return getCommonHelper().isModalVisible(xpath, howToSendButton);
-    }
-
-    public boolean isHowToPackModalVisible(){
-        By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
-        return getCommonHelper().isModalVisible(xpath, howToPackButton);
-    }
-
-    public boolean isBannerImagesVisible(){
-        Banner[] banners = Banner.values();
-        for (int i=0; i<bannerImages.size(); i++){
-            if (!bannerImages.get(i).getAttribute("src").equals(banners[i].url))
-                return false;
-        }
-        return true;
     }
     //endregion
 
@@ -323,9 +465,11 @@ public class FormPage extends BasePage {
     }
     //endregion
 
+     */
+
     //region Custom methods
     public boolean submit() {
-        clickSubmitButton();
+        submitButton().click();
         getWaitHelper().waitUntilClickable(By.xpath("(//div[contains(@class, 'parcel-form-whole-summary-modal')]//button)[2]"));
         return !getDriver().findElements(By.cssSelector(".parcel-form-whole-summary-modal")).isEmpty();
     }

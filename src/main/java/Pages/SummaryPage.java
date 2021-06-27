@@ -2,6 +2,7 @@ package Pages;
 
 import Helpers.Enums.InvoiceType;
 import Helpers.Enums.StaticText;
+import Pages.Actions.Action;
 import SeleniumBase.Base;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -91,6 +92,90 @@ public class SummaryPage extends BasePage{
         this.summaryType = summaryType;
         this.deliveryMethod = deliveryMethod;
         this.invoiceType = invoiceType;
+    }
+
+    public Action receiverName() {
+        return new Action(receiverName);
+    }
+
+    public Action receiverPhone() {
+        return new Action(receiverPhone);
+    }
+
+    public Action receiverEmail() {
+        return new Action(receiverEmail);
+    }
+
+    public Action receiverZipCodeCity() {
+        return new Action(receiverZipCodeCity);
+    }
+
+    public Action receiverStreetBuildingNo() {
+        return new Action(receiverStreetBuildingNo);
+    }
+
+    public Action senderName() {
+        return new Action(senderName);
+    }
+
+    public Action senderPhone() {
+        return new Action(senderPhone);
+    }
+
+    public Action senderEmail() {
+        return new Action(senderEmail);
+    }
+
+    public Action receiverParcelmachineName() {
+        return new Action(receiverParcelmachineName);
+    }
+
+    public Action receiverParcelmachineStreetBuldingNo() {
+        return new Action(receiverParcelmachineStreetBuldingNo);
+    }
+
+    public Action receiverParcelmachineZipCodeCity() {
+        return new Action(receiverParcelmachineZipCodeCity);
+    }
+
+    public Action receiverParcelmachineDescription() {
+        return new Action(receiverParcelmachineDescription);
+    }
+
+    public Action invoiceCompanyName() {
+        return new Action(invoiceCompanyName);
+    }
+
+    public Action invoiceNip() {
+        return new Action(invoiceNip);
+    }
+
+    public Action invoiceZipCodeCity() {
+        return new Action(invoiceZipCodeCity);
+    }
+
+    public Action invoiceStreetBuildingNo() {
+        return new Action(invoiceStreetBuildingNo);
+    }
+
+    public Action downloadLabelButton() {
+        return new Action(downloadLabelButton);
+    }
+
+    public Action printLabelButton() {
+        return new Action(printLabelButton);
+    }
+
+    public Action fixDataButton() {
+        return new Action(fixDataButton);
+    }
+
+    public Action payButton() {
+        return new Action(payButton);
+    }
+
+    public Action policyButton() {
+        return new Action(policyButton);
     }
 
     //region Single get text methods
