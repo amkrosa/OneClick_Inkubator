@@ -3,6 +3,7 @@ package Pages;
 import Helpers.ActionHelper;
 import Helpers.CommonHelper;
 import Helpers.WaitHelper;
+import Pages.Actions.Action;
 import SeleniumBase.Base;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -98,6 +99,8 @@ public class InvoiceFormPage extends BasePage{
         super();
     }
 
+
+    //region Custom actions
     public InvoiceFormPage clickInvoiceForeignCompanyCheckbox(){
         getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
         initElement = foreignCompanyTown;
@@ -115,227 +118,128 @@ public class InvoiceFormPage extends BasePage{
         initElement = companyTownInput;
         return this;
     }
-
-    //region Foreign company fill methods
-    public InvoiceFormPage fillInvoiceForeignCompanyPrefix(String text) {
-        getCommonHelper().writeAndConfirmDropdown(foreignCompanyPrefixInput, text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyNip(String text){
-        foreignCompanyNip.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyName(String text){
-        foreignCompanyName.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyCountry(String text) {
-        getCommonHelper().writeAndConfirmDropdown(foreignCompanyCountryInput, text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyPostalCode(String text) {
-        foreignCompanyPostalCode.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyTown(String text){
-        foreignCompanyTown.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyStreet(String text){
-        foreignCompanyStreet.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyBuildingNo(String text){
-        foreignCompanyBuildingNo.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyFlatNo(String text){
-        foreignCompanyFlatNo.sendKeys(text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceForeignCompanyEmail(String text){
-        foreignCompanyEmail.sendKeys(text);
-        return this;
-    }
     //endregion
 
-    //region Foreign company value&text methods
-
-    public String valueForeignCompanyNip() {
-        return foreignCompanyNip.getAttribute("value");
+    //region Actions
+    public Action<InvoiceFormPage> foreignCompanyPrefixInput() {
+        return new Action<>(foreignCompanyPrefixInput, this);
     }
 
-    public String valueForeignCompanyName() {
-        return foreignCompanyName.getAttribute("value");
+    public Action<InvoiceFormPage> foreignCompanyPrefixValue() {
+        return new Action<>(foreignCompanyPrefixValue, this);
     }
 
-    public String valueForeignCompanyPostalCode() {
-        return foreignCompanyPostalCode.getAttribute("value");
+    public Action<InvoiceFormPage> foreignCompanyNip() {
+        return new Action<>(foreignCompanyNip, this);
     }
 
-    public String valueForeignCompanyTown() {
-        return foreignCompanyTown.getAttribute("value");
+    public Action<InvoiceFormPage> foreignCompanyName() {
+        return new Action<>(foreignCompanyName, this);
     }
 
-    public String valueForeignCompanyStreet() {
-        return foreignCompanyStreet.getAttribute("value");
+    public Action<InvoiceFormPage> foreignCompanyCountryInput() {
+        return new Action<>(foreignCompanyCountryInput, this);
     }
 
-    public String valueForeignCompanyBuildingNo() {
-        return foreignCompanyBuildingNo.getAttribute("value");
+    public Action<InvoiceFormPage> foreignCompanyCountryValue() {
+        return new Action<>(foreignCompanyCountryValue, this);
     }
 
-    public String valueForeignCompanyFlatNo() {
-        return foreignCompanyFlatNo.getAttribute("value");
+    public Action<InvoiceFormPage> foreignCompanyPostalCode() {
+        return new Action<>(foreignCompanyPostalCode, this);
     }
 
-    public String valueForeignCompanyEmail() {
-        return foreignCompanyEmail.getAttribute("value");
+    public Action<InvoiceFormPage> foreignCompanyTown() {
+        return new Action<>(foreignCompanyTown, this);
     }
 
-    public String textForeignCompanyPrefixValue() {
-        return foreignCompanyPrefixValue.getText();
+    public Action<InvoiceFormPage> foreignCompanyStreet() {
+        return new Action<>(foreignCompanyStreet, this);
     }
 
-    public String textForeignCompanyCountryValue() {
-        return foreignCompanyCountryValue.getText();
+    public Action<InvoiceFormPage> foreignCompanyBuildingNo() {
+        return new Action<>(foreignCompanyBuildingNo, this);
     }
 
-    //endregion
-
-    //region Private person fill methods
-
-    public InvoiceFormPage fillIndividualName(String text) {
-        individualName.sendKeys(text);
-        return this;
+    public Action<InvoiceFormPage> foreignCompanyFlatNo() {
+        return new Action<>(foreignCompanyFlatNo, this);
     }
 
-    public InvoiceFormPage fillIndividualEmail(String text) {
-        individualEmail.sendKeys(text);
-        return this;
+    public Action<InvoiceFormPage> foreignCompanyEmail() {
+        return new Action<>(foreignCompanyEmail, this);
     }
 
-    public InvoiceFormPage fillIndividualBuildingNo(String text) {
-        individualBuildingNo.sendKeys(text);
-        return this;
+    public Action<InvoiceFormPage> individualName() {
+        return new Action<>(individualName, this);
     }
 
-    public InvoiceFormPage fillIndividualFlatNo(String text) {
-        individualFlatNo.sendKeys(text);
-        return this;
+    public Action<InvoiceFormPage> individualEmail() {
+        return new Action<>(individualEmail, this);
     }
 
-    public InvoiceFormPage fillIndividualTown(String text) {
-        getCommonHelper().writeAndConfirmDropdown(individualTown, text);
-        return this;
+    public Action<InvoiceFormPage> individualTown() {
+        return new Action<>(individualTown, this);
     }
 
-    public InvoiceFormPage fillIndividualStreet(String text) {
-        getCommonHelper().writeAndConfirmDropdown(individualStreet, text);
-        return this;
-    }
-    //endregion
-
-    //region Private person value&text methods
-    public String valueIndividualName() {
-        return individualName.getAttribute("value");
+    public Action<InvoiceFormPage> individualTownValue() {
+        return new Action<>(individualTownValue, this);
     }
 
-    public String valueIndividualEmail() {
-        return individualEmail.getAttribute("value");
+    public Action<InvoiceFormPage> individualStreet() {
+        return new Action<>(individualStreet, this);
     }
 
-    public String valueIndividualBuildingNo() {
-        return individualBuildingNo.getAttribute("value");
+    public Action<InvoiceFormPage> individualStreetValue() {
+        return new Action<>(individualStreetValue, this);
     }
 
-    public String valueIndividualFlatNo() {
-        return individualFlatNo.getAttribute("value");
+    public Action<InvoiceFormPage> individualBuildingNo() {
+        return new Action<>(individualBuildingNo, this);
     }
 
-    public String textIndividualTownValue() {
-        return individualTownValue.getText();
+    public Action<InvoiceFormPage> individualFlatNo() {
+        return new Action<>(individualFlatNo, this);
     }
 
-    public String textIndividualStreetValue() {
-        return individualStreetValue.getText();
-    }
-    //endregion
-
-    //region Company fill methods
-    public InvoiceFormPage fillInvoiceCompanyTown(String text) {
-        getCommonHelper().writeAndConfirmDropdown(companyTownInput, text);
-        return this;
-    }
-    public InvoiceFormPage fillInvoiceCompanyStreet(String text) {
-        getCommonHelper().writeAndConfirmDropdown(companyStreetInput, text);
-        return this;
-    }
-    public InvoiceFormPage fillCompanyNip(String text) {
-        companyNip.sendKeys(text);
-        return this;
+    public Action<InvoiceFormPage> companyNip() {
+        return new Action<>(companyNip, this);
     }
 
-    public InvoiceFormPage fillCompanyName(String text) {
-        companyName.sendKeys(text);
-        return this;
+    public Action<InvoiceFormPage> companyName() {
+        return new Action<>(companyName, this);
     }
 
-    public InvoiceFormPage fillCompanyPostalCode(String text) {
-        companyPostalCode.sendKeys(text);
-        return this;
+    public Action<InvoiceFormPage> companyPostalCode() {
+        return new Action<>(companyPostalCode, this);
     }
 
-    public InvoiceFormPage fillCompanyBuildingNo(String text) {
-        companyBuildingNo.sendKeys(text);
-        return this;
+    public Action<InvoiceFormPage> companyTownInput() {
+        return new Action<>(companyTownInput, this);
     }
 
-    public InvoiceFormPage fillCompanyFlatNo(String text) {
-        companyFlatNo.sendKeys(text);
-        return this;
+    public Action<InvoiceFormPage> companyTownValue() {
+        return new Action<>(companyTownValue, this);
     }
 
-    public InvoiceFormPage fillCompanyEmail(String text) {
-        companyEmail.sendKeys(text);
-        return this;
-    }
-    //endregion
-
-    //region Company value&text methods
-
-    public String valueCompanyNip() {
-        return companyNip.getAttribute("value");
+    public Action<InvoiceFormPage> companyStreetInput() {
+        return new Action<>(companyStreetInput, this);
     }
 
-    public String valueCompanyName() {
-        return companyName.getAttribute("value");
+    public Action<InvoiceFormPage> companyStreetValue() {
+        return new Action<>(companyStreetValue, this);
     }
 
-    public String valueCompanyPostalCode() {
-        return companyPostalCode.getAttribute("value");
+    public Action<InvoiceFormPage> companyBuildingNo() {
+        return new Action<>(companyBuildingNo, this);
     }
 
-    public String valueCompanyBuildingNo() {
-        return companyBuildingNo.getAttribute("value");
+    public Action<InvoiceFormPage> companyFlatNo() {
+        return new Action<>(companyFlatNo, this);
     }
 
-    public String valueCompanyFlatNo() {
-        return companyFlatNo.getAttribute("value");
+    public Action<InvoiceFormPage> companyEmail() {
+        return new Action<>(companyEmail, this);
     }
-
-    public String valueCompanyEmail() {
-        return companyEmail.getAttribute("value");
-    }
-
-    public String textCompanyTownValue() {
-        return companyTownValue.getText();
-    }
-
-    public String textCompanyStreetValue() {
-        return companyStreetValue.getText();
-    }
-
     //endregion
 
     @Override

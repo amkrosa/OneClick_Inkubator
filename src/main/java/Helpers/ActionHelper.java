@@ -5,7 +5,7 @@ import org.openqa.selenium.interactions.Actions;
 
 public class ActionHelper {
 
-    private Actions actions;
+    private final Actions actions;
 
     public ActionHelper(Actions actions){
         this.actions = actions;

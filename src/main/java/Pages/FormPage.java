@@ -112,125 +112,127 @@ public class FormPage extends BasePage {
     }
 
     //region Actions
-    public Action policyButton() {
-        return new Action(policyButton);
+
+    public Action<FormPage> policyButton() {
+        return new Action<>(policyButton, this);
     }
 
-    public Action submitButton() {
-        return new Action(submitButton);
+    public Action<FormPage> submitButton() {
+        return new Action<>(submitButton, this);
     }
 
-    public Action cookieButton() {
-        return new Action(cookieButton);
+    public Action<FormPage> cookieButton() {
+        return new Action<>(cookieButton, this);
     }
 
-    public Action senderName() {
-        return new Action(senderName);
+    public Action<FormPage> senderName() {
+        return new Action<>(senderName, this);
     }
 
-    public Action senderPhone() {
-        return new Action(senderPhone);
+    public Action<FormPage> senderPhone() {
+        return new Action<>(senderPhone, this);
     }
 
-    public Action senderEmail() {
-        return new Action(senderEmail);
+    public Action<FormPage> senderEmail() {
+        return new Action<>(senderEmail, this);
     }
 
-    public Action receiverName() {
-        return new Action(receiverName);
+    public Action<FormPage> receiverName() {
+        return new Action<>(receiverName, this);
     }
 
-    public Action receiverPhone() {
-        return new Action(receiverPhone);
+    public Action<FormPage> receiverPhone() {
+        return new Action<>(receiverPhone, this);
     }
 
-    public Action receiverEmail() {
-        return new Action(receiverEmail);
+    public Action<FormPage> receiverEmail() {
+        return new Action<>(receiverEmail, this);
     }
 
-    public Action terms() {
-        return new Action(terms);
+    public Action<FormPage> terms() {
+        return new Action<>(terms, this);
     }
 
-    public Action newsletter() {
-        return new Action(newsletter);
+    public Action<FormPage> newsletter() {
+        return new Action<>(newsletter, this);
     }
 
-    public Action deliveryTypeBoxmachine() {
-        return new Action(deliveryTypeBoxmachine);
+    public Action<FormPage> deliveryTypeBoxmachine() {
+        return new Action<>(deliveryTypeBoxmachine, this);
     }
 
-    public Action deliveryTypeAddress() {
-        return new Action(deliveryTypeAddress);
+    public Action<FormPage> deliveryTypeAddress() {
+        return new Action<>(deliveryTypeAddress, this);
     }
 
-    public Action parcelSizeA() {
-        return new Action(parcelSizeA);
+    public Action<FormPage> parcelSizeA() {
+        return new Action<>(parcelSizeA, this);
     }
 
-    public Action parcelSizeB() {
-        return new Action(parcelSizeB);
+    public Action<FormPage> parcelSizeB() {
+        return new Action<>(parcelSizeB, this);
     }
 
-    public Action parcelSizeC() {
-        return new Action(parcelSizeC);
+    public Action<FormPage> parcelSizeC() {
+        return new Action<>(parcelSizeC, this);
     }
 
-    public Action invoiceCheckbox() {
-        return new Action(invoiceCheckbox);
+    public Action<FormPage> invoiceCheckbox() {
+        return new Action<>(invoiceCheckbox, this);
     }
 
-    public Action howToSendButton() {
-        return new Action(howToSendButton);
+    public Action<FormPage> howToSendButton() {
+        return new Action<>(howToSendButton, this);
     }
 
-    public Action howToPackButton() {
-        return new Action(howToPackButton);
+    public Action<FormPage> howToPackButton() {
+        return new Action<>(howToPackButton, this);
     }
 
-    public Action summarySenderMethodIcon() {
-        return new Action(summarySenderMethodIcon);
+    public Action<FormPage> summarySenderMethodIcon() {
+        return new Action<>(summarySenderMethodIcon, this);
     }
 
-    public Action summaryReceiverMethodIcon() {
-        return new Action(summaryReceiverMethodIcon);
+    public Action<FormPage> summaryReceiverMethodIcon() {
+        return new Action<>(summaryReceiverMethodIcon, this);
     }
 
-    public Action summarySizeIcon() {
-        return new Action(summarySizeIcon);
+    public Action<FormPage> summarySizeIcon() {
+        return new Action<>(summarySizeIcon, this);
     }
 
-    public Action summarySizeText() {
-        return new Action(summarySizeText);
+    public Action<FormPage> summarySizeText() {
+        return new Action<>(summarySizeText, this);
     }
 
-    public Action summarySizeDimension() {
-        return new Action(summarySizeDimension);
+    public Action<FormPage> summarySizeDimension() {
+        return new Action<>(summarySizeDimension, this);
     }
 
-    public Action errorReceiverName() {
-        return new Action(errorReceiverName);
+    public Action<FormPage> errorReceiverName() {
+        return new Action<>(errorReceiverName, this);
     }
 
-    public Action errorReceiverEmail() {
-        return new Action(errorReceiverEmail);
+    public Action<FormPage> errorReceiverEmail() {
+        return new Action<>(errorReceiverEmail, this);
     }
 
-    public Action errorReceiverPhone() {
-        return new Action(errorReceiverPhone);
+    public Action<FormPage> errorReceiverPhone() {
+        return new Action<>(errorReceiverPhone, this);
     }
 
-    public Action errorSenderName() {
-        return new Action(errorSenderName);
+    public Action<FormPage> errorSenderName() {
+        return new Action<>(errorSenderName, this);
     }
 
-    public Action errorSenderEmail() {
-        return new Action(errorSenderEmail);
+    public Action<FormPage> errorSenderEmail() {
+        return new Action<>(errorSenderEmail, this);
     }
 
-    public Action errorSenderPhone() {
-        return new Action(errorSenderPhone);
+    public Action<FormPage> errorSenderPhone() {
+        return new Action<>(errorSenderPhone, this);
     }
+
     //endregion
 
     //region isVisible methods
@@ -253,219 +255,6 @@ public class FormPage extends BasePage {
         return true;
     }
     //endregion
-
-    /*
-    //region Fill methods
-    public FormPage fillSenderName(String text) {
-        senderName.sendKeys(text);
-        return this;
-    }
-
-    public FormPage fillSenderEmail(String text) {
-        senderEmail.sendKeys(text);
-
-        return this;
-    }
-
-    public FormPage fillSenderPhone(String text) {
-        senderPhone.sendKeys(text);
-        return this;
-    }
-
-    public FormPage fillReceiverName(String text) {
-        receiverName.sendKeys(text);
-        return this;
-    }
-
-    public FormPage fillReceiverEmail(String text) {
-        receiverEmail.sendKeys(text);
-        return this;
-    }
-
-    public FormPage fillReceiverPhone(String text) {
-        receiverPhone.sendKeys(text);
-        return this;
-    }
-    //endregion
-
-    //region Click methods
-    public FormPage clickNewsletterCheckbox() {
-        getCommonHelper().moveAndClick(newsletter);
-        return this;
-    }
-
-    public FormPage clickTermsCheckbox() {
-        getCommonHelper().moveAndClick(terms);
-        return this;
-    }
-
-    public FormPage clickBoxmachineDeliveryMethod() {
-        getCommonHelper().moveAndClick(deliveryTypeBoxmachine);
-        return this;
-    }
-
-    public FormPage clickAddressDeliveryMethod() {
-        getCommonHelper().moveAndClick(deliveryTypeAddress);
-        return this;
-    }
-
-    public FormPage clickParcelSizeA() {
-        getCommonHelper().moveAndClick(parcelSizeA);
-        return this;
-    }
-
-    public FormPage clickParcelSizeB() {
-        getCommonHelper().moveAndClick(parcelSizeB);
-        return this;
-    }
-
-    public FormPage clickParcelSizeC() {
-        getCommonHelper().moveAndClick(parcelSizeC);
-        return this;
-    }
-
-    public FormPage clickPolicyButton() {
-        getCommonHelper().waitAndClick(policyButton);
-        return this;
-    }
-
-    public FormPage clickSubmitButton() {
-        getCommonHelper().waitAndClick(submitButton);
-        return this;
-    }
-
-    public FormPage clickCookieButton() {
-        getCommonHelper().waitAndClick(cookieButton);
-        return this;
-    }
-
-    public FormPage clickInvoiceCheckbox() {
-        getCommonHelper().moveAndClick(invoiceCheckbox);
-        return this;
-    }
-
-    public FormPage clickHowToSendButton() {
-        getCommonHelper().moveAndClick(howToSendButton);
-        return this;
-    }
-
-    public FormPage clickHowToPackButton() {
-        getCommonHelper().moveAndClick(howToPackButton);
-        return this;
-    }
-    //endregion
-
-    //region Text methods
-    public String textSummarySizeDimension() {
-        return summarySizeDimension.getText();
-    }
-
-    public String textSummarySizeText() {
-        return summarySizeText.getText();
-    }
-    //endregion
-
-    //region Value methods
-    public String valueSenderName() {
-        return senderName.getAttribute("value");
-    }
-
-    public String valueSenderPhone() {
-        return senderPhone.getAttribute("value").replace(" ", "");
-    }
-
-    public String valueSenderEmail() {
-        return senderEmail.getAttribute("value");
-    }
-
-    public String valueReceiverName() {
-        return receiverName.getAttribute("value");
-    }
-
-    public String valueReceiverPhone() {
-        return receiverPhone.getAttribute("value").replace(" ", "");
-    }
-
-    public String valueReceiverEmail() {
-        return receiverEmail.getAttribute("value");
-    }
-    //endregion
-
-    //region Src methods
-    public String srcSummarySenderMethodIcon() {
-        return summarySenderMethodIcon.getAttribute("src");
-    }
-
-    public String srcSummaryReceiverMethodIcon() {
-        return summaryReceiverMethodIcon.getAttribute("src");
-    }
-
-    public String srcSummarySizeIcon() {
-        return summarySizeIcon.getAttribute("src");
-    }
-    //endregion
-
-    //region Get Error methods
-    public WebElement getErrorReceiverName() {
-        return errorReceiverName;
-    }
-
-    public WebElement getErrorReceiverEmail() {
-        return errorReceiverEmail;
-    }
-
-    public WebElement getErrorReceiverPhone() {
-
-        //getWaitHelper().waitUntilVisible(errorReceiverPhone);
-        return errorReceiverPhone;
-    }
-
-    public WebElement getErrorSenderName() {
-        return errorSenderName;
-    }
-
-    public WebElement getErrorSenderEmail() {
-        return errorSenderEmail;
-    }
-
-    public WebElement getErrorSenderPhone() {
-        return errorSenderPhone;
-    }
-    //endregion
-
-    //region Clear methods
-    public FormPage clearSenderName() {
-        senderName.clear();
-        return this;
-    }
-
-    public FormPage clearSenderEmail() {
-        senderEmail.clear();
-        return this;
-    }
-
-    public FormPage clearSenderPhone() {
-        senderPhone.clear();
-        return this;
-    }
-
-    public FormPage clearReceiverName() {
-        receiverName.clear();
-        return this;
-    }
-
-    public FormPage clearReceiverEmail() {
-        receiverEmail.clear();
-        return this;
-    }
-
-    public FormPage clearReceiverPhone() {
-        receiverPhone.clear();
-        return this;
-    }
-    //endregion
-
-     */
 
     //region Custom methods
     public boolean submit() {

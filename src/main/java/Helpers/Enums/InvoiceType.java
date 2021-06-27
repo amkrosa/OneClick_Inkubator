@@ -1,5 +1,5 @@
 package Helpers.Enums;
 
 public enum InvoiceType {
-    FOREIGN_COMPANY, COMPANY, INDIVIDUAL_PERSON;
+    FOREIGN_COMPANY, COMPANY, INDIVIDUAL_PERSON
 }

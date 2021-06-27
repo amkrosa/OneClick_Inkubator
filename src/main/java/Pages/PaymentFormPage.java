@@ -23,35 +23,23 @@ public class PaymentFormPage extends BasePage{
         return this;
     }
 
-    public Action dataProcessingAgreementCheckbox() {
-        return new Action(dataProcessingAgreementCheckbox);
+    //region Actions
+    public Action<PaymentFormPage> dataProcessingAgreementCheckbox() {
+        return new Action<>(dataProcessingAgreementCheckbox, this);
     }
 
-    public Action mtransferPaymentButton() {
-        return new Action(mtransferPaymentButton);
+    public Action<PaymentFormPage> mtransferPaymentButton() {
+        return new Action<>(mtransferPaymentButton, this);
     }
 
-    public Action emailField() {
-        return new Action(emailField);
+    public Action<PaymentFormPage> emailField() {
+        return new Action<>(emailField, this);
     }
 
-    public Action finishButton() {
-        return new Action(finishButton);
+    public Action<PaymentFormPage> finishButton() {
+        return new Action<>(finishButton, this);
     }
-
-    public PaymentFormPage clickDataProcessingAgreementCheckbox() {
-        return this;
-    }
-
-    public PaymentFormPage clickMtransferPaymentButton() {
-        getCommonHelper().moveAndClick(mtransferPaymentButton);
-        return this;
-    }
-
-    public PaymentFormPage clickFinishButton() {
-        getCommonHelper().moveAndClick(finishButton);
-        return this;
-    }
+    //endregion
 
     @Override
     public WebElement getInitElement() {

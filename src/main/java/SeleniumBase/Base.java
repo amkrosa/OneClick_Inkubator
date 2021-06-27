@@ -51,7 +51,7 @@ public class Base {
 
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
-        Map<String, Object> prefs = new HashMap<String, Object>();
+        Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadFolder);
         prefs.put("download.prompt_for_download", false);
         options.setExperimentalOption("prefs", prefs);

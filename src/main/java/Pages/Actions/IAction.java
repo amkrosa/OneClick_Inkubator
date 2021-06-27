@@ -1,13 +1,17 @@
 package Pages.Actions;
 
-public interface IAction {
+import Pages.BasePage;
 
-    IAction fill(String text);
-    IAction click();
-    IAction clear();
-    IAction waitVisible();
-    IAction waitClickable();
-    IAction confirmDropdown();
+public interface IAction<T extends BasePage> {
+
+    T page();
+
+    IAction<T> fill(String text);
+    IAction<T> click();
+    IAction<T> clear();
+    IAction<T> waitVisible();
+    IAction<T> waitClickable();
+    IAction<T> confirmDropdown();
 
     String text();
     String value();

@@ -45,52 +45,53 @@ public class AddressFormPage extends BasePage{
 
     public AddressFormPage(){  super();  }
 
-    public Action receiverZipCode() {
-        return new Action(receiverZipCode);
+    //region Actions
+    public Action<AddressFormPage> receiverZipCode() {
+        return new Action<>(receiverZipCode, this);
     }
 
-    public Action receiverTown() {
-        return new Action(receiverTown);
+    public Action<AddressFormPage> receiverTown() {
+        return new Action<>(receiverTown, this);
     }
 
-    public Action receiverTownValue() {
-        return new Action(receiverTownValue);
+    public Action<AddressFormPage> receiverTownValue() {
+        return new Action<>(receiverTownValue, this);
     }
 
-    public Action receiverStreet() {
-        return new Action(receiverStreet);
+    public Action<AddressFormPage> receiverStreet() {
+        return new Action<>(receiverStreet, this);
     }
 
-    public Action receiverStreetValue() {
-        return new Action(receiverStreetValue);
+    public Action<AddressFormPage> receiverStreetValue() {
+        return new Action<>(receiverStreetValue, this);
     }
 
-    public Action receiverBuildingNo() {
-        return new Action(receiverBuildingNo);
+    public Action<AddressFormPage> receiverBuildingNo() {
+        return new Action<>(receiverBuildingNo, this);
     }
 
-    public Action receiverFlatNo() {
-        return new Action(receiverFlatNo);
+    public Action<AddressFormPage> receiverFlatNo() {
+        return new Action<>(receiverFlatNo, this);
     }
 
-    public Action errorReceiverZipCode() {
-        return new Action(errorReceiverZipCode);
+    public Action<AddressFormPage> errorReceiverZipCode() {
+        return new Action<>(errorReceiverZipCode, this);
     }
 
-    public Action errorReceiverTown() {
-        return new Action(errorReceiverTown);
+    public Action<AddressFormPage> errorReceiverTown() {
+        return new Action<>(errorReceiverTown, this);
     }
 
-    public Action errorReceiverStreet() {
-        return new Action(errorReceiverStreet);
+    public Action<AddressFormPage> errorReceiverStreet() {
+        return new Action<>(errorReceiverStreet, this);
     }
 
-    public Action errorBuildingNo() {
-        return new Action(errorBuildingNo);
+    public Action<AddressFormPage> errorBuildingNo() {
+        return new Action<>(errorBuildingNo, this);
     }
 
-    public Action errorFlatNo() {
-        return new Action(errorFlatNo);
+    public Action<AddressFormPage> errorFlatNo() {
+        return new Action<>(errorFlatNo, this);
     }
 
     public AddressFormPage fillReceiverZipCode(String text) {
@@ -117,72 +118,7 @@ public class AddressFormPage extends BasePage{
         receiverFlatNo.sendKeys(text);
         return this;
     }
-
-
-    public String valueReceiverZipCode() {
-        return receiverZipCode.getAttribute("value");
-    }
-
-    public String textReceiverTownValue() {
-        return receiverTownValue.getText();
-    }
-
-    public String textReceiverStreetValue() {
-        return receiverStreetValue.getText();
-    }
-
-    public String valueReceiverBuildingNo() {
-        return receiverBuildingNo.getAttribute("value");
-    }
-
-    public String valueReceiverFlatNo() {
-        return receiverFlatNo.getAttribute("value");
-    }
-
-    public WebElement getErrorReceiverZipCode() {
-        return errorReceiverZipCode;
-    }
-
-    public WebElement getErrorReceiverTown() {
-        return errorReceiverTown;
-    }
-
-    public WebElement getErrorReceiverStreet() {
-        return errorReceiverStreet;
-    }
-
-    public WebElement getErrorBuildingNo() {
-        return errorBuildingNo;
-    }
-
-    public WebElement getErrorFlatNo() {
-        return errorFlatNo;
-    }
-
-    public AddressFormPage clearReceiverZipCode() {
-        receiverZipCode.clear();
-        return this;
-    }
-
-    public AddressFormPage clearReceiverTown() {
-        receiverTown.clear();
-        return this;
-    }
-
-    public AddressFormPage clearReceiverStreet() {
-        receiverStreet.clear();
-        return this;
-    }
-
-    public AddressFormPage clearReceiverBuildingNo() {
-        receiverBuildingNo.clear();
-        return this;
-    }
-
-    public AddressFormPage clearReceiverFlatNo() {
-        receiverFlatNo.clear();
-        return this;
-    }
+    //endregion
 
     @Override
     public WebElement getInitElement() {

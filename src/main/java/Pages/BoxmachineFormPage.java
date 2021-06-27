@@ -1,7 +1,6 @@
 package Pages;
 
 import Pages.Actions.Action;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -20,39 +19,23 @@ public class BoxmachineFormPage extends BasePage {
 
     public BoxmachineFormPage(){  super(); }
 
-    public Action parcelmachine() {
-        return new Action(parcelmachine);
+    //region Actions
+    public Action<BoxmachineFormPage> parcelmachine() {
+        return new Action<>(parcelmachine, this);
     }
 
-    public Action parcelmachineFieldValue() {
-        return new Action(parcelmachineFieldValue);
+    public Action<BoxmachineFormPage> parcelmachineFieldValue() {
+        return new Action<>(parcelmachineFieldValue, this);
     }
 
-    public Action geowidget() {
-        return new Action(geowidget);
+    public Action<BoxmachineFormPage> geowidget() {
+        return new Action<>(geowidget, this);
     }
 
-    public Action errorReceiverBoxmachine() {
-        return new Action(errorReceiverBoxmachine);
+    public Action<BoxmachineFormPage> errorReceiverBoxmachine() {
+        return new Action<>(errorReceiverBoxmachine, this);
     }
-
-    public BoxmachineFormPage setParcelmachine(String pm) {
-        getCommonHelper().writeAndConfirmDropdown(parcelmachine, pm);
-        return this;
-    }
-
-    public String textParcelmachineFieldValue() {
-        return parcelmachineFieldValue.getText();
-    }
-
-    public WebElement getErrorReceiverBoxmachine() {
-        return errorReceiverBoxmachine;
-    }
-
-    public BoxmachineFormPage clearParcelmachine() {
-        parcelmachine.clear();
-        return this;
-    }
+    //endregion
 
     @Override
     public WebElement getInitElement() {

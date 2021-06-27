@@ -16,32 +16,19 @@ public class PaymentRedirectPage extends BasePage {
 
     public PaymentRedirectPage(){super();}
 
-    public Action confirmedPaymentButton() {
-        return new Action(confirmedPaymentButton);
+    //region Actions
+    public Action<PaymentRedirectPage> confirmedPaymentButton() {
+        return new Action<>(confirmedPaymentButton, this);
     }
 
-    public Action rejectedPaymentButton() {
-        return new Action(rejectedPaymentButton);
+    public Action<PaymentRedirectPage> rejectedPaymentButton() {
+        return new Action<>(rejectedPaymentButton, this);
     }
 
-    public Action pendingPaymentButton() {
-        return new Action(pendingPaymentButton);
+    public Action<PaymentRedirectPage> pendingPaymentButton() {
+        return new Action<>(pendingPaymentButton, this);
     }
-
-    public PaymentRedirectPage clickConfirmedPaymentButton() {
-        getCommonHelper().moveAndClick(confirmedPaymentButton);
-        return this;
-    }
-
-    public PaymentRedirectPage clickRejectedPaymentButton() {
-        getCommonHelper().moveAndClick(rejectedPaymentButton);
-        return this;
-    }
-
-    public PaymentRedirectPage clickPendingPaymentButton() {
-        getCommonHelper().moveAndClick(pendingPaymentButton);
-        return this;
-    }
+    //endregion
 
     @Override
     public WebElement getInitElement() {

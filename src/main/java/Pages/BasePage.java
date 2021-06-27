@@ -43,6 +43,7 @@ public abstract class BasePage {
     public <T extends BasePage> T init(){
         waitHelper.waitUntilVisible(getInitElement());
         return (T)this;
-    };
+    }
+
     public abstract WebElement getInitElement();
 }

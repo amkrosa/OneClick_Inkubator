@@ -2,50 +2,57 @@ package Pages.Actions;
 
 import Helpers.CommonHelper;
 import Helpers.WaitHelper;
+import Pages.BasePage;
 import org.openqa.selenium.WebElement;
 
-public class Action implements IAction{
-
-    private WaitHelper waitHelper = new WaitHelper();
-    private CommonHelper commonHelper = new CommonHelper();
+public class Action<T extends BasePage> implements IAction<T>{
+    private final T page;
+    private final WaitHelper waitHelper = new WaitHelper();
+    private final CommonHelper commonHelper = new CommonHelper();
     private final WebElement element;
 
-    public Action(WebElement element){
+    public Action(WebElement element, BasePage page){
         this.element = element;
+        this.page = (T) page;
     }
 
     @Override
-    public IAction fill(String text) {
+    public T page() {
+        return page;
+    }
+
+    @Override
+    public IAction<T> fill(String text) {
         element.sendKeys(text);
         return this;
     }
 
     @Override
-    public IAction click() {
+    public IAction<T> click() {
         commonHelper.moveAndClick(element);
         return this;
     }
 
     @Override
-    public IAction clear() {
+    public IAction<T> clear() {
         element.clear();
         return this;
     }
 
     @Override
-    public IAction waitVisible() {
+    public IAction<T> waitVisible() {
         waitHelper.waitUntilVisible(element);
         return this;
     }
 
     @Override
-    public IAction waitClickable() {
+    public IAction<T> waitClickable() {
         waitHelper.waitUntilClickable(element);
         return this;
     }
 
     @Override
-    public IAction confirmDropdown() {
+    public IAction<T> confirmDropdown() {
         commonHelper.confirmDropdown(element);
         return this;
     }
