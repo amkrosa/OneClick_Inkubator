@@ -3,9 +3,11 @@ package SeleniumBase;
 import Configs.Config;
 import Configs.ConfigHandler;
 import Configs.Environment;
+import Configs.EnvironmentType;
 import Helpers.ActionHelper;
 import Helpers.CommonHelper;
 import Helpers.WaitHelper;
+import Pages.FormPage;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.WebDriver;
@@ -59,6 +61,11 @@ public class Base {
 
         driver.get(environment.getUrl());
         local.setItem("sn_lang", config.getLanguage());
+        FormPage formPage = new FormPage();
+        if (!(Base.environment.getEnv() == EnvironmentType.PRODUCTION)) {
+            formPage.clickPolicyButton();
+        }
+        formPage.clickCookieButton();
     }
 
     @AfterAll
