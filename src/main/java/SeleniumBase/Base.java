@@ -63,29 +63,32 @@ public class Base {
         local.setItem("sn_lang", config.getLanguage());
         FormPage formPage = new FormPage();
         if (!(Base.environment.getEnv() == EnvironmentType.PRODUCTION)) {
-            formPage.clickPolicyButton();
+            formPage.policyButton().click();
         }
-        formPage.clickCookieButton();
+        formPage.cookieButton().click();
     }
 
     @AfterAll
     public static void tearDown() throws IOException {
 
+        driver.quit();
+
         final Path targetFolder = Path.of(Base.downloadFolder);
         List<String> result;
-        try (Stream<Path> walk = Files.walk(targetFolder)) {
-            result = walk
-                    .filter(p -> !Files.isDirectory(p))
-                    .map(p -> p.toString().toLowerCase())
-                    .filter(f -> f.endsWith("crdownload"))
-                    .collect(Collectors.toList());
+        if (Files.exists(targetFolder) && Files.isDirectory(targetFolder)) {
+            try (Stream<Path> walk = Files.walk(targetFolder)) {
+                result = walk
+                        .filter(p -> !Files.isDirectory(p))
+                        .map(p -> p.toString().toLowerCase())
+                        .filter(f -> f.endsWith("crdownload"))
+                        .collect(Collectors.toList());
+            }
+            result.forEach(e -> {
+                try {
+                    Files.deleteIfExists(Path.of(e));
+                } catch (IOException ignored) {
+                }
+            });
         }
-        result.forEach(e-> {
-            try {
-                Files.delete(Path.of(e));
-            } catch (IOException ignored) {}
-        });
-
-        driver.quit();
     }
 }
