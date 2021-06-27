@@ -45,6 +45,12 @@ public class Action implements IAction{
     }
 
     @Override
+    public IAction confirmDropdown() {
+        commonHelper.confirmDropdown(element);
+        return this;
+    }
+
+    @Override
     public String text() {
         return element.getText();
     }
@@ -58,4 +64,12 @@ public class Action implements IAction{
     public String src(){
         return element.getAttribute("src");
     }
+
+    @Override
+    public boolean isDisplayed() {
+        return element.isDisplayed();
+    }
+
+
+
 }

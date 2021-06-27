@@ -7,8 +7,10 @@ public interface IAction {
     IAction clear();
     IAction waitVisible();
     IAction waitClickable();
+    IAction confirmDropdown();
 
     String text();
     String value();
     String src();
+    boolean isDisplayed();
 }
