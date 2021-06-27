@@ -9,7 +9,7 @@ import org.openqa.selenium.support.How;
 
 import java.util.List;
 
-public class FormPage extends BasePage{
+public class FormPage extends BasePage {
 
     @FindBy(how = How.ID, using = "onetrust-accept-btn-handler")
     WebElement policyButton;
@@ -64,6 +64,33 @@ public class FormPage extends BasePage{
     @FindBy(how = How.XPATH, using = "//*[@class='chosen-text-description']")
     WebElement summarySizeDimension;
 
+    //region Errors
+    @FindBy(xpath = "//*[@id='error-targetAddress.name']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverName;
+    @FindBy(xpath = "//*[@id='error-addresseeEmail']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverEmail;
+    @FindBy(xpath = "//*[@id='error-phoneNumber']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverPhone;
+    @FindBy(xpath = "//*[@id='error-boxMachineName']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverBoxmachine;
+    @FindBy(xpath = "//*[@id='error-targetAddress.zipCode']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverZipCode;
+    @FindBy(xpath = "//*[@id='error-targetAddress.town']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverTown;
+    @FindBy(xpath = "//*[@id='error-targetAddress.street']/..//*[contains(@class, 'errors')]")
+    WebElement errorReceiverStreet;
+    @FindBy(xpath = "//*[@id='error-targetAddress.buildingNo']/..//*[contains(@class, 'errors')]")
+    WebElement errorBuildingNo;
+    @FindBy(xpath = "//*[@id='error-targetAddress.flatNo']/..//*[contains(@class, 'errors')]")
+    WebElement errorFlatNo;
+    @FindBy(xpath = "//*[@id='error-senderAddress.name']/..//*[contains(@class, 'errors')]")
+    WebElement errorSenderName;
+    @FindBy(xpath = "//*[@id='error-senderAddress.email']/..//*[contains(@class, 'errors')]")
+    WebElement errorSenderEmail;
+    @FindBy(xpath = "//*[@id='error-senderAddress.phoneNum']/..//*[contains(@class, 'errors')]")
+    WebElement errorSenderPhone;
+    //endregion
+
 
     public FormPage() {
         super();
@@ -85,6 +112,11 @@ public class FormPage extends BasePage{
         return this;
     }
 
+    public FormPage clearSenderPhone() {
+        senderPhone.clear();
+        return this;
+    }
+
     public FormPage fillReceiverName(String text) {
         receiverName.sendKeys(text);
         return this;
@@ -97,6 +129,10 @@ public class FormPage extends BasePage{
 
     public FormPage fillReceiverPhone(String text) {
         receiverPhone.sendKeys(text);
+        return this;
+    }
+    public FormPage clearReceiverPhone() {
+        receiverPhone.clear();
         return this;
     }
 
@@ -233,6 +269,57 @@ public class FormPage extends BasePage{
 
     public String srcSummarySizeIcon() {
         return summarySizeIcon.getAttribute("src");
+    }
+
+    public WebElement getErrorReceiverName() {
+        return errorReceiverName;
+    }
+
+    public WebElement getErrorReceiverEmail() {
+        return errorReceiverEmail;
+    }
+
+    public WebElement getErrorReceiverPhone() {
+
+        getWaitHelper().waitUntilVisible(errorReceiverPhone);
+
+        return errorReceiverPhone;
+    }
+
+    public WebElement getErrorReceiverBoxmachine() {
+        return errorReceiverBoxmachine;
+    }
+
+    public WebElement getErrorReceiverZipCode() {
+        return errorReceiverZipCode;
+    }
+
+    public WebElement getErrorReceiverTown() {
+        return errorReceiverTown;
+    }
+
+    public WebElement getErrorReceiverStreet() {
+        return errorReceiverStreet;
+    }
+
+    public WebElement getErrorBuildingNo() {
+        return errorBuildingNo;
+    }
+
+    public WebElement getErrorFlatNo() {
+        return errorFlatNo;
+    }
+
+    public WebElement getErrorSenderName() {
+        return errorSenderName;
+    }
+
+    public WebElement getErrorSenderEmail() {
+        return errorSenderEmail;
+    }
+
+    public WebElement getErrorSenderPhone() {
+        return errorSenderPhone;
     }
 
     @Override
