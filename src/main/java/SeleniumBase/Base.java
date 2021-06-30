@@ -64,11 +64,11 @@ public class Base {
         driver.get(environment.getUrl());
         local.setItem("sn_lang", config.getLanguage());
         FormPage formPage = new FormPage();
+        formPage.init();
         if (!(Base.environment.getEnv() == EnvironmentType.PRODUCTION)) {
             formPage.policyButton().click();
         }
         formPage.cookieButton().click();
-        formPage.init();
     }
 
     @AfterAll
