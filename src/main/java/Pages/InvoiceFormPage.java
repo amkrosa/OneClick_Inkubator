@@ -1,21 +1,18 @@
 package Pages;
 
-import Helpers.ActionHelper;
-import Helpers.CommonHelper;
-import Helpers.WaitHelper;
+import Helpers.Enums.Types.InvoiceType;
+import Models.Invoice;
 import Pages.Actions.Action;
-import SeleniumBase.Base;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.xml.xpath.XPath;
+import java.util.List;
 
 public class InvoiceFormPage extends BasePage{
+
+    private boolean isOptionSelected;
 
     @FindBy(how = How.CSS, using = "[for=legalStatusforeignCompany]")
     private WebElement invoiceForeignCompanyCheckbox;
@@ -38,7 +35,7 @@ public class InvoiceFormPage extends BasePage{
     @FindBy(how = How.XPATH, using = "//*[@id='error-invoice.foreignCompany.countryCode']/../..//*[@class='ng-value']")
     private WebElement foreignCompanyCountryValue;
     @FindBy(how = How.NAME, using = "invoice.foreignCompany.zipCode")
-    private WebElement foreignCompanyPostalCode;
+    private WebElement foreignCompanyZipCode;
     @FindBy(how = How.NAME, using = "invoice.foreignCompany.town")
     private WebElement foreignCompanyTown;
     @FindBy(how = How.NAME, using = "invoice.foreignCompany.street")
@@ -56,6 +53,8 @@ public class InvoiceFormPage extends BasePage{
     private WebElement individualName;
     @FindBy(how = How.NAME, using = "invoice.individual.email")
     private WebElement individualEmail;
+    @FindBy(name = "invoice.individual.zipCode")
+    private WebElement individualZipCode;
     @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.town']//*/input")
     private WebElement individualTown;
     @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.town']//div[@class='ng-value']")
@@ -68,6 +67,8 @@ public class InvoiceFormPage extends BasePage{
     private WebElement individualBuildingNo;
     @FindBy(how = How.NAME, using = "invoice.individual.flatNo")
     private WebElement individualFlatNo;
+    @FindBy(xpath = "//*[contains(@class, 'link-action')]")
+    private WebElement copySenderData;
     //endregion
 
     //region Company WebElements
@@ -76,13 +77,13 @@ public class InvoiceFormPage extends BasePage{
     @FindBy(how = How.NAME, using = "invoice.company.companyName")
     private WebElement companyName;
     @FindBy(how = How.NAME, using = "invoice.company.zipCode")
-    private WebElement companyPostalCode;
-    @FindBy(how = How.XPATH, using = "//*[@name='invoice.company.town']//input")
-    private WebElement companyTownInput;
+    private WebElement companyZipCode;
+    @FindBy(how = How.XPATH, using = "//*[@name='invoice.company.town']//*/input")
+    private WebElement companyTown;
     @FindBy(how = How.XPATH, using = "//*[@name='invoice.company.town']//*[@class='ng-value']")
     private WebElement companyTownValue;
-    @FindBy(how = How.NAME, using = "//*[@name='invoice.company.street']//input")
-    private WebElement companyStreetInput;
+    @FindBy(how = How.NAME, using = "//*[@name='invoice.company.street']//*/input")
+    private WebElement companyStreet;
     @FindBy(how = How.XPATH, using = "//*[@name='invoice.company.street']//*[@class='ng-value']")
     private WebElement companyStreetValue;
     @FindBy(how = How.NAME, using = "invoice.company.buildingNo")
@@ -93,10 +94,63 @@ public class InvoiceFormPage extends BasePage{
     private WebElement companyEmail;
     //endregion
 
+    //region Errors
+
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.name']/..//*[contains(@class, 'errors')]")
+    private WebElement errorForeignCompanyName;
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.email']/..//*[contains(@class, 'errors')]")
+    private WebElement errorForeignCompanyEmail;
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.zipCode']/..//*[contains(@class, 'errors')]")
+    private WebElement errorForeignCompanyZipCode;
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.nip']/..//*[contains(@class, 'errors')]")
+    private WebElement errorForeignCompanyNip;
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.buildingNo']/..//*[contains(@class, 'errors')]")
+    private WebElement errorForeignCompanyBuildingNo;
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.flatNo']/..//*[contains(@class, 'errors')]")
+    private WebElement errorForeignCompanyFlatNo;
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.street']/..//*[contains(@class, 'errors')]")
+    private WebElement errorForeignCompanyStreet;
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.town']/..//*[contains(@class, 'errors')]")
+    private WebElement errorForeignCompanyTown;
+
+    @FindBy(xpath = "//*[@id='error-invoice.company.name']/..//*[contains(@class, 'errors')]")
+    private WebElement errorCompanyName;
+    @FindBy(xpath = "//*[@id='error-invoice.company.email']/..//*[contains(@class, 'errors')]")
+    private WebElement errorCompanyEmail;
+    @FindBy(xpath = "//*[@id='error-invoice.company.zipCode']/..//*[contains(@class, 'errors')]")
+    private WebElement errorCompanyZipCode;
+    @FindBy(xpath = "//*[@id='error-invoice.company.nip']/..//*[contains(@class, 'errors')]")
+    private WebElement errorCompanyNip;
+    @FindBy(xpath = "//*[@id='error-invoice.company.buildingNo']/..//*[contains(@class, 'errors')]")
+    private WebElement errorCompanyBuildingNo;
+    @FindBy(xpath = "//*[@id='error-invoice.company.flatNo']/..//*[contains(@class, 'errors')]")
+    private WebElement errorCompanyFlatNo;
+    @FindBy(xpath = "//*[@id='error-invoice.company.street']/..//*[contains(@class, 'errors')]")
+    private WebElement errorCompanyStreet;
+    @FindBy(xpath = "//*[@id='error-invoice.company.town']/..//*[contains(@class, 'errors')]")
+    private WebElement errorCompanyTown;
+
+    @FindBy(xpath = "//*[@id='error-invoice.individual.name']/..//*[contains(@class, 'errors')]")
+    private WebElement errorIndividualName;
+    @FindBy(xpath = "//*[@id='error-invoice.individual.email']/..//*[contains(@class, 'errors')]")
+    private WebElement errorIndividualEmail;
+    @FindBy(xpath = "//*[@id='error-invoice.individual.zipCode']/..//*[contains(@class, 'errors')]")
+    private WebElement errorIndividualZipCode;
+    @FindBy(xpath = "//*[@id='error-invoice.individual.buildingNo']/..//*[contains(@class, 'errors')]")
+    private WebElement errorIndividualBuildingNo;
+    @FindBy(xpath = "//*[@id='error-invoice.individual.flatNo']/..//*[contains(@class, 'errors')]")
+    private WebElement errorIndividualFlatNo;
+    @FindBy(xpath = "//*[@id='error-invoice.individual.street']/..//*[contains(@class, 'errors')]")
+    private WebElement errorIndividualStreet;
+    @FindBy(xpath = "//*[@id='error-invoice.individual.town']/..//*[contains(@class, 'errors')]")
+    private WebElement errorIndividualTown;
+    //endregion
+
     private WebElement initElement;
 
     public InvoiceFormPage() {
         super();
+        isOptionSelected = false;
     }
 
 
@@ -104,20 +158,24 @@ public class InvoiceFormPage extends BasePage{
     public InvoiceFormPage clickInvoiceForeignCompanyCheckbox(){
         getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
         initElement = foreignCompanyTown;
+        isOptionSelected = true;
         return this;
     }
 
     public InvoiceFormPage clickInvoiceIndividualCheckbox(){
-        getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
+        getCommonHelper().moveAndClick(invoiceIndividualCheckbox);
         initElement = individualTown;
+        isOptionSelected = true;
         return this;
     }
 
     public InvoiceFormPage clickInvoiceCompanyCheckbox(){
-        getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
-        initElement = companyTownInput;
+        getCommonHelper().moveAndClick(invoiceCompanyCheckbox);
+        initElement = companyTown;
+        isOptionSelected = true;
         return this;
     }
+
     //endregion
 
     //region Actions
@@ -145,8 +203,8 @@ public class InvoiceFormPage extends BasePage{
         return new Action<>(foreignCompanyCountryValue, this);
     }
 
-    public Action<InvoiceFormPage> foreignCompanyPostalCode() {
-        return new Action<>(foreignCompanyPostalCode, this);
+    public Action<InvoiceFormPage> foreignCompanyZipCode() {
+        return new Action<>(foreignCompanyZipCode, this);
     }
 
     public Action<InvoiceFormPage> foreignCompanyTown() {
@@ -175,6 +233,10 @@ public class InvoiceFormPage extends BasePage{
 
     public Action<InvoiceFormPage> individualEmail() {
         return new Action<>(individualEmail, this);
+    }
+
+    public Action<InvoiceFormPage> individualZipCode() {
+        return new Action<>(individualZipCode, this);
     }
 
     public Action<InvoiceFormPage> individualTown() {
@@ -209,20 +271,20 @@ public class InvoiceFormPage extends BasePage{
         return new Action<>(companyName, this);
     }
 
-    public Action<InvoiceFormPage> companyPostalCode() {
-        return new Action<>(companyPostalCode, this);
+    public Action<InvoiceFormPage> companyZipCode() {
+        return new Action<>(companyZipCode, this);
     }
 
-    public Action<InvoiceFormPage> companyTownInput() {
-        return new Action<>(companyTownInput, this);
+    public Action<InvoiceFormPage> companyTown() {
+        return new Action<>(companyTown, this);
     }
 
     public Action<InvoiceFormPage> companyTownValue() {
         return new Action<>(companyTownValue, this);
     }
 
-    public Action<InvoiceFormPage> companyStreetInput() {
-        return new Action<>(companyStreetInput, this);
+    public Action<InvoiceFormPage> companyStreet() {
+        return new Action<>(companyStreet, this);
     }
 
     public Action<InvoiceFormPage> companyStreetValue() {
@@ -240,7 +302,109 @@ public class InvoiceFormPage extends BasePage{
     public Action<InvoiceFormPage> companyEmail() {
         return new Action<>(companyEmail, this);
     }
+
+    public Action<InvoiceFormPage> errorForeignCompanyName() {
+        return new Action<>(errorForeignCompanyName, this);
+    }
+
+    public Action<InvoiceFormPage> errorForeignCompanyEmail() {
+        return new Action<>(errorForeignCompanyEmail, this);
+    }
+
+    public Action<InvoiceFormPage> errorForeignCompanyZipCode() {
+        return new Action<>(errorForeignCompanyZipCode, this);
+    }
+
+    public Action<InvoiceFormPage> errorForeignCompanyNip() {
+        return new Action<>(errorForeignCompanyNip, this);
+    }
+
+    public Action<InvoiceFormPage> errorForeignCompanyBuildingNo() {
+        return new Action<>(errorForeignCompanyBuildingNo, this);
+    }
+
+    public Action<InvoiceFormPage> errorForeignCompanyFlatNo() {
+        return new Action<>(errorForeignCompanyFlatNo, this);
+    }
+
+    public Action<InvoiceFormPage> errorForeignCompanyStreet() {
+        return new Action<>(errorForeignCompanyStreet, this);
+    }
+
+    public Action<InvoiceFormPage> errorForeignCompanyTown() {
+        return new Action<>(errorForeignCompanyTown, this);
+    }
+
+    public Action<InvoiceFormPage> errorCompanyName() {
+        return new Action<>(errorCompanyName, this);
+    }
+
+    public Action<InvoiceFormPage> errorCompanyEmail() {
+        return new Action<>(errorCompanyEmail, this);
+    }
+
+    public Action<InvoiceFormPage> errorCompanyZipCode() {
+        return new Action<>(errorCompanyZipCode, this);
+    }
+
+    public Action<InvoiceFormPage> errorCompanyNip() {
+        return new Action<>(errorCompanyNip, this);
+    }
+
+    public Action<InvoiceFormPage> errorCompanyBuildingNo() {
+        return new Action<>(errorCompanyBuildingNo, this);
+    }
+
+    public Action<InvoiceFormPage> errorCompanyFlatNo() {
+        return new Action<>(errorCompanyFlatNo, this);
+    }
+
+    public Action<InvoiceFormPage> errorCompanyStreet() {
+        return new Action<>(errorCompanyStreet, this);
+    }
+
+    public Action<InvoiceFormPage> errorCompanyTown() {
+        return new Action<>(errorCompanyTown, this);
+    }
+
+    public Action<InvoiceFormPage> errorIndividualName() {
+        return new Action<>(errorIndividualName, this);
+    }
+
+    public Action<InvoiceFormPage> errorIndividualEmail() {
+        return new Action<>(errorIndividualEmail, this);
+    }
+
+    public Action<InvoiceFormPage> errorIndividualZipCode() {
+        return new Action<>(errorIndividualZipCode, this);
+    }
+
+    public Action<InvoiceFormPage> errorIndividualBuildingNo() {
+        return new Action<>(errorIndividualBuildingNo, this);
+    }
+
+    public Action<InvoiceFormPage> errorIndividualFlatNo() {
+        return new Action<>(errorIndividualFlatNo, this);
+    }
+
+    public Action<InvoiceFormPage> errorIndividualStreet() {
+        return new Action<>(errorIndividualStreet, this);
+    }
+
+    public Action<InvoiceFormPage> errorIndividualTown() {
+        return new Action<>(errorIndividualTown, this);
+    }
+
+    public Action<InvoiceFormPage> copySenderData() {
+        return new Action<>(copySenderData, this);
+    }
+
     //endregion
+
+
+    public void waitNipLoad() {
+       getWaitHelper().waitUntilZeroElements(By.xpath("//*[contains(@class,'fixed-loader')]"));
+    }
 
     @Override
     public WebElement getInitElement() {
