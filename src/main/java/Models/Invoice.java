@@ -3,9 +3,9 @@ package Models;
 import java.io.Serializable;
 
 public class Invoice implements Serializable {
-    private String name, prefix, country, nip, email, zipCode, city, buildingNo, flatNo;
+    private String name, prefix, country, street, nip, email, zipCode, city, buildingNo, flatNo;
 
-    public Invoice(String name, String prefix, String country, String nip, String email, String zipCode, String city, String buildingNo, String flatNo) {
+    public Invoice(String name, String prefix, String country, String nip, String email, String zipCode, String city, String street, String buildingNo, String flatNo) {
         this.name = name;
         this.prefix = prefix;
         this.country = country;
@@ -17,7 +17,7 @@ public class Invoice implements Serializable {
         this.flatNo = flatNo;
     }
 
-    public Invoice(String name, String nip, String email, String zipCode, String city, String buildingNo, String flatNo) {
+    public Invoice(String name, String nip, String email, String zipCode, String city, String street, String buildingNo, String flatNo) {
         this.name = name;
         this.nip = nip;
         this.email = email;
@@ -27,7 +27,7 @@ public class Invoice implements Serializable {
         this.flatNo = flatNo;
     }
 
-    public Invoice(String name, String email, String zipCode, String city, String buildingNo, String flatNo) {
+    public Invoice(String name, String email, String zipCode, String city, String street, String buildingNo, String flatNo) {
         this.name = name;
         this.email = email;
         this.zipCode = zipCode;
@@ -115,5 +115,13 @@ public class Invoice implements Serializable {
     public Invoice setFlatNo(String flatNo) {
         this.flatNo = flatNo;
         return this;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }
