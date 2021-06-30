@@ -13,6 +13,7 @@ public class Invoice implements Serializable {
         this.email = email;
         this.zipCode = zipCode;
         this.city = city;
+        this.street = street;
         this.buildingNo = buildingNo;
         this.flatNo = flatNo;
     }
