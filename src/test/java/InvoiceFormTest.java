@@ -1,5 +1,6 @@
 import Helpers.Enums.Dictionaries.InvoiceDictionary;
 import Helpers.Enums.Statics.Icon;
+import Helpers.Enums.Statics.Message;
 import Helpers.Enums.Statics.StaticText;
 import Models.Client;
 import Models.Invoice;
@@ -142,6 +143,13 @@ public class InvoiceFormTest {
         }
 
         @ParameterizedTest
+        @ValueSource(strings = {"11-111", "random", "12345678999", "12345678"})
+        public void Should_InvoiceCompanyNipBeInvalid_When_FilledWithInvalidData(String str) {
+            page.Invoice.companyNip().click().clear().fill(str).clickAbove();
+            assertTrue(page.Invoice.errorCompanyNip().waitVisible().isDisplayed());
+        }
+
+        @ParameterizedTest
         @ValueSource(strings = {"11-111", "random", "00-000"})
         public void Should_InvoiceCompanyZipCodeBeInvalid_When_FilledWithInvalidData(String str) {
             page.Invoice.companyZipCode().click().clear().fill(str).clickAbove();
@@ -229,18 +237,60 @@ public class InvoiceFormTest {
             page.Invoice.clickInvoiceForeignCompanyCheckbox();
         }
 
-        @ParameterizedTest
-        @ValueSource(strings = {"11-111", "random", "12345678999", "12345678"})
-        public void Should_InvoiceForeignCompanyNipBeInvalid_When_FilledWithInvalidData(String str) {
-            page.Invoice.foreignCompanyNip().click().clear().fill(str).clickAbove();
-            assertTrue(page.Invoice.foreignCompanyNip().waitVisible().isDisplayed());
+        @Test
+        public void Should_NipBeRequired_When_PrefixIsSelected(){
+            page.Invoice.foreignCompanyPrefixInput().clear().page().foreignCompanyCountryInput().clear();
+            page.Invoice.foreignCompanyPrefixInput().clear().fill("be").confirmDropdown();
+            assertTrue(page.Invoice.errorForeignCompanyNip().waitVisible().isDisplayed());
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"11-111", "random", "00-000"})
+        @ValueSource(strings = {"11-111", "random", "12345678999", "12345678"})
+        public void Should_InvoiceForeignCompanyNipBeInvalid_When_FilledWithInvalidData(String str) {
+            page.Invoice.foreignCompanyPrefixInput().clear().fill("BE").waitClickable().confirmDropdown();
+            page.Invoice.foreignCompanyNip().click().clear().fill(str).clickAbove();
+            assertTrue(page.Invoice.errorForeignCompanyNip().waitVisible().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"123456789"})
+        public void Should_InvoiceForeignCompanyNipBeCorrect_When_FilledWithCorrectData(String str) {
+            page.Invoice.foreignCompanyPrefixInput().clear().fill("DE").waitClickable().confirmDropdown();
+            page.Invoice.foreignCompanyNip().clear().fill(str).clickAbove();
+            assertThrows(NoSuchElementException.class, () -> page.Invoice.errorForeignCompanyNip().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"be", "lu"})
+        public void Should_InvoiceForeignCompanyPrefixBeCorrect_When_FilledWithCorrectData(String str) {
+            page.Invoice.foreignCompanyPrefixInput().clear().fill(str).waitClickable().confirmDropdown();
+            assertEquals(str.toUpperCase(), page.Invoice.foreignCompanyPrefixInput().value());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"belgia", "luksemburg"})
+        public void Should_InvoiceForeignCompanyCountryBeCorrect_When_FilledWithCorrectData(String str) {
+            page.Invoice.foreignCompanyCountryInput().clear().fill(str).waitClickable().confirmDropdown();
+            assertThrows(NoSuchElementException.class, () -> page.Invoice.errorForeignCompanyCountry().isDisplayed());
+        }
+
+        @Order(2)
+        @ParameterizedTest
+        @ValueSource(strings = {"nieistniejace", "panstwo"})
+        public void Should_InvoiceForeignCompanyCountryBeInvalid_When_FilledWithInvalidData(String str) {
+            page.Invoice.foreignCompanyCountryInput().clear().fill(str);
+            boolean result = page.Invoice.isTextFound(Message.DROPDOWN_NOTFOUND.pl)
+                    || page.Invoice.isTextFound(Message.DROPDOWN_NOTFOUND.en);
+            assertTrue(result);
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {string251})
         public void Should_InvoiceForeignCompanyZipCodeBeInvalid_When_FilledWithInvalidData(String str) {
-            page.Invoice.foreignCompanyZipCode().click().clear().fill(str).clickAbove();
-            assertTrue(page.Invoice.errorForeignCompanyZipCode().waitVisible().isDisplayed());
+            page.Invoice.foreignCompanyZipCode().clear().click().fill(str).clickAbove();
+            assertDoesNotThrow(
+                    ()->assertTrue(page.Invoice.errorForeignCompanyZipCode().waitVisible().isDisplayed())
+            );
         }
 
         @ParameterizedTest
@@ -274,24 +324,21 @@ public class InvoiceFormTest {
         @ParameterizedTest
         @ValueSource(strings = {string51})
         public void Should_InvoiceForeignCompanyTownBeInvalid_When_FilledWithInvalidData(String str) {
-            page.Invoice.foreignCompanyTown().clear().fill(str).confirmDropdown();
+            page.Invoice.foreignCompanyTown().clear().fill(str);
             assertTrue(page.Invoice.errorForeignCompanyTown().isDisplayed());
         }
 
         @ParameterizedTest
         @ValueSource(strings = {"Warszawa", "cokolwiek"})
         public void Should_InvoiceForeignCompanyTownBeCorrect_When_FilledWithCorrectData(String str) {
-            page.Invoice
-                    .foreignCompanyZipCode().clear().fill("01-123")
-                    .page()
-                    .foreignCompanyTown().waitClickable().fill(str).confirmDropdown().clickAbove();
+            page.Invoice.foreignCompanyTown().clear().waitClickable().fill(str).clickAbove();
             assertThrows(NoSuchElementException.class, () -> page.Invoice.errorForeignCompanyTown().isDisplayed());
         }
 
         @ParameterizedTest
         @ValueSource(strings = {string51})
         public void Should_InvoiceForeignCompanyStreetBeInvalid_When_FilledWithInvalidData(String str) {
-            page.Invoice.foreignCompanyTown().clear().fill(str).confirmDropdown();
+            page.Invoice.foreignCompanyTown().clear().fill(str);
             assertTrue(page.Invoice.errorForeignCompanyTown().isDisplayed());
         }
 
