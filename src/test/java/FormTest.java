@@ -1,5 +1,5 @@
-import Helpers.Enums.Icon;
-import Helpers.Enums.StaticText;
+import Helpers.Enums.Statics.Icon;
+import Helpers.Enums.Statics.StaticText;
 import Models.Client;
 import Pages.*;
 import SeleniumBase.Base;
@@ -21,14 +21,6 @@ public class FormTest extends Base {
     private final String string10= "aaaaaaaaaa";
     private final String string51= "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private final String string11= "aaaaaaaaaaa";
-
-    @Test
-    @DisplayName("Page loaded")
-    public void Should_LoadPage() {
-        Assertions.assertDoesNotThrow(() ->
-                formPage.<FormPage>init()
-        );
-    }
 
     @Test
     public void Should_SelectDeliveryMethodBoxmachine_When_Clicked() {
@@ -181,7 +173,7 @@ public class FormTest extends Base {
         public void Should_ReceiverParcelmachineBeInvalid_When_FilledWithInvalidData(String str) {
             String pmBefore = boxmachineFormPage.parcelmachineFieldValue().text();
             boxmachineFormPage.parcelmachine().clear().fill(str).confirmDropdown();
-            assertTrue(pmBefore.equals(boxmachineFormPage.parcelmachineFieldValue().text()));
+            assertEquals(pmBefore, boxmachineFormPage.parcelmachineFieldValue().text());
         }
 
     }
@@ -210,7 +202,7 @@ public class FormTest extends Base {
         @ValueSource(strings = {"11-111", "random", "00-000"})
         public void Should_ReceiverZipCodeBeInvalid_When_FilledWithInvalidData(String str) {
             addressFormPage.receiverZipCode().click().clear().fill(str).clickAbove();
-            assertTrue(addressFormPage.errorReceiverZipCode().isDisplayed());
+            assertTrue(addressFormPage.errorReceiverZipCode().waitVisible().isDisplayed());
         }
 
         @ParameterizedTest
