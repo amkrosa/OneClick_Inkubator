@@ -29,13 +29,20 @@ public class WaitHelper {
 
     public WaitHelper(){
         fluentWait = new FluentWait<>(Base.driver);
-        fluentWait.withTimeout(Duration.ofSeconds(5))
+        fluentWait.withTimeout(Duration.ofSeconds(Base.config.getTimeout()))
                 .pollingEvery(Duration.ofMillis(1000))
                 .ignoring(Exception.class);
     }
 
     public void waitUntilVisible(WebElement element){
         fluentWait.until(ExpectedConditions.visibilityOf(element));
+    }
+    public void waitUntilInvisible(WebElement element){
+        fluentWait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    public void waitUntilZeroElements(By by){
+        fluentWait.until(ExpectedConditions.numberOfElementsToBe(by, 0));
     }
 
     public void waitUntilVisible(By by){
