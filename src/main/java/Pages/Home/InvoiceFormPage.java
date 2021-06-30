@@ -3,6 +3,7 @@ package Pages.Home;
 import Pages.Actions.Action;
 import Pages.Base.BasePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -52,15 +53,15 @@ public class InvoiceFormPage extends BasePage {
     private WebElement individualEmail;
     @FindBy(name = "invoice.individual.zipCode")
     private WebElement individualZipCode;
-    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.town']")
+    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.town']//input")
     private WebElement individualTown;
-    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.street']")
+    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.street']//input")
     private WebElement individualStreet;
     @FindBy(how = How.NAME, using = "invoice.individual.buildingNo")
     private WebElement individualBuildingNo;
     @FindBy(how = How.NAME, using = "invoice.individual.flatNo")
     private WebElement individualFlatNo;
-    @FindBy(xpath = "//*[contains(@class, 'link-action')]")
+    @FindBy(xpath = "//app-form-button")
     private WebElement copySenderData;
     //endregion
 
@@ -88,8 +89,9 @@ public class InvoiceFormPage extends BasePage {
     //endregion
 
     //region Errors
-
-    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.name']/..//*[contains(@class, 'errors')]")
+    @FindBy(xpath = "//*[contains(@class, 'ng-option-disabled')]")
+    private WebElement emptyDropdown;
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.companyName']/..//*[contains(@class, 'errors')]")
     private WebElement errorForeignCompanyName;
     @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.email']/..//*[contains(@class, 'errors')]")
     private WebElement errorForeignCompanyEmail;
@@ -108,7 +110,7 @@ public class InvoiceFormPage extends BasePage {
     @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.countryCode']/..//*[contains(@class, 'errors')]")
     private WebElement errorForeignCompanyCountry;
 
-    @FindBy(xpath = "//*[@id='error-invoice.company.name']/..//*[contains(@class, 'errors')]")
+    @FindBy(xpath = "//*[@id='error-invoice.company.companyName']/..//*[contains(@class, 'errors')]")
     private WebElement errorCompanyName;
     @FindBy(xpath = "//*[@id='error-invoice.company.email']/..//*[contains(@class, 'errors')]")
     private WebElement errorCompanyEmail;
@@ -125,7 +127,7 @@ public class InvoiceFormPage extends BasePage {
     @FindBy(xpath = "//*[@id='error-invoice.company.town']/..//*[contains(@class, 'errors')]")
     private WebElement errorCompanyTown;
 
-    @FindBy(xpath = "//*[@id='error-invoice.individual.name']/..//*[contains(@class, 'errors')]")
+    @FindBy(xpath = "//*[@id='error-invoice.individual.companyName']/..//*[contains(@class, 'errors')]")
     private WebElement errorIndividualName;
     @FindBy(xpath = "//*[@id='error-invoice.individual.email']/..//*[contains(@class, 'errors')]")
     private WebElement errorIndividualEmail;
@@ -143,8 +145,8 @@ public class InvoiceFormPage extends BasePage {
 
     private WebElement initElement;
 
-    public InvoiceFormPage() {
-        super();
+    public InvoiceFormPage(WebDriver driver){
+        super(driver);
         isOptionSelected = false;
     }
 
@@ -382,12 +384,16 @@ public class InvoiceFormPage extends BasePage {
         return new Action<>(errorIndividualTown, this);
     }
 
+    public Action<InvoiceFormPage> errorForeignCompanyCountry() {
+        return new Action<>(errorForeignCompanyCountry, this);
+    }
+
     public Action<InvoiceFormPage> copySenderData() {
         return new Action<>(copySenderData, this);
     }
 
-    public Action<InvoiceFormPage> errorForeignCompanyCountry() {
-        return new Action<>(errorForeignCompanyCountry, this);
+    public Action<InvoiceFormPage> emptyDropdown() {
+        return new Action<>(emptyDropdown, this);
     }
 
     //endregion

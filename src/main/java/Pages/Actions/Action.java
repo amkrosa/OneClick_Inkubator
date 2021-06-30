@@ -9,14 +9,17 @@ import org.openqa.selenium.WebElement;
 
 public class Action<T extends BasePage> implements IAction<T>{
     private final T page;
-    private final WaitHelper waitHelper = new WaitHelper();
-    private final CommonHelper commonHelper = new CommonHelper();
-    private final ActionHelper actionHelper = new ActionHelper();
+    private final WaitHelper waitHelper;
+    private final CommonHelper commonHelper;
+    private final ActionHelper actionHelper;
     private final WebElement element;
 
     public Action(WebElement element, BasePage page){
         this.element = element;
         this.page = (T) page;
+        waitHelper = page.getWaitHelper();
+        commonHelper = page.getCommonHelper();
+        actionHelper = page.getActionHelper();
     }
 
     @Override

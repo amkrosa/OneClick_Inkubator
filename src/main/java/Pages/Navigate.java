@@ -17,19 +17,21 @@ import Pages.Summary.SummaryPage;
 public class Navigate {
 
     public static void FromFormToFinalSummary(SummaryPage finalSummaryPage, Client receiver, Client sender){
-        FillFormPage(finalSummaryPage.getDeliveryMethod(), receiver, sender);
-        new FormPage().submit();
+        FormPage formPage = new FormPage(finalSummaryPage.getDriver());
+
+        FillFormPage(formPage, finalSummaryPage.getDeliveryMethod(), receiver, sender);
+        formPage.submit();
         FromModalSummaryToFinalSummary(finalSummaryPage);
     }
 
     public static void FromModalSummaryToFinalSummary(SummaryPage finalSummaryPage){
-        new SummaryPage(SummaryType.MODAL).payButton().click();
-        ThroughPaymentPage(StaticText.SUMMARY_TRANSACTION_SUCCESS);
+        new SummaryPage(SummaryType.MODAL, finalSummaryPage.getDriver()).payButton().click();
+        ThroughPaymentPage(new PaymentFormPage(finalSummaryPage.getDriver()), StaticText.SUMMARY_TRANSACTION_SUCCESS);
         finalSummaryPage.<SummaryPage>init();
     }
 
-    public static void FillFormPage(DeliveryMethod deliveryMethod, Client receiver, Client sender){
-            FormPage formPage = new FormPage().init();
+    public static void FillFormPage(FormPage formPage, DeliveryMethod deliveryMethod, Client receiver, Client sender){
+            formPage.init();
             formPage.receiverName().fill(receiver.getName())
                     .page()
                     .receiverEmail().fill(receiver.getEmail())
@@ -38,7 +40,7 @@ public class Navigate {
 
             if (deliveryMethod==DeliveryMethod.ADDRESS){
                 formPage.deliveryTypeAddress().click();
-                AddressFormPage addressFormPage = new AddressFormPage();
+                AddressFormPage addressFormPage = new AddressFormPage(formPage.getDriver());
                 addressFormPage.receiverZipCode().fill(receiver.getZipCode())
                         .page()
                         .receiverTown().confirmDropdown()
@@ -50,7 +52,7 @@ public class Navigate {
                         .receiverFlatNo().fill(receiver.getFlatNo());
             }else {
                 formPage.deliveryTypeBoxmachine().click();
-                new BoxmachineFormPage().parcelmachine().fill(receiver.getParcelmachine()).confirmDropdown();
+                new BoxmachineFormPage(formPage.getDriver()).parcelmachine().fill(receiver.getParcelmachine()).confirmDropdown();
             }
 
             formPage.senderName().fill(sender.getName())
@@ -64,9 +66,8 @@ public class Navigate {
                     .click();
     }
 
-    public static void FillInvoice(InvoiceType invoiceType, Invoice invoice){
-        FormPage formPage = new FormPage();
-        InvoiceFormPage invoiceFormPage = new InvoiceFormPage();
+    public static void FillInvoice(FormPage formPage, InvoiceType invoiceType, Invoice invoice){
+        InvoiceFormPage invoiceFormPage = new InvoiceFormPage(formPage.getDriver());
 
         formPage.invoiceCheckbox().click();
 
@@ -108,11 +109,11 @@ public class Navigate {
                 break;
             case FOREIGN_COMPANY:
                 invoiceFormPage.clickInvoiceForeignCompanyCheckbox()
-                        .foreignCompanyPrefixInput().fill(invoice.getPrefix())
+                        .foreignCompanyPrefixInput().fill(invoice.getPrefix()).confirmDropdown()
                         .page()
                         .foreignCompanyNip().fill(invoice.getNip())
                         .page()
-                        .foreignCompanyCountryInput().fill(invoice.getCountry())
+                        .foreignCompanyCountryInput().fill(invoice.getCountry()).confirmDropdown()
                         .page()
                         .foreignCompanyEmail().fill(invoice.getEmail())
                         .page()
@@ -120,9 +121,9 @@ public class Navigate {
                         .page()
                         .foreignCompanyZipCode().fill(invoice.getZipCode())
                         .page()
-                        .foreignCompanyTown().waitClickable().fill(invoice.getCity()).confirmDropdown().clickAbove()
+                        .foreignCompanyTown().waitClickable().fill(invoice.getCity())
                         .page()
-                        .foreignCompanyStreet().waitClickable().fill(invoice.getStreet()).confirmDropdown().clickAbove()
+                        .foreignCompanyStreet().waitClickable().fill(invoice.getStreet())
                         .page()
                         .foreignCompanyBuildingNo().fill(invoice.getBuildingNo())
                         .page()
@@ -132,8 +133,8 @@ public class Navigate {
 
     }
 
-    public static void ThroughPaymentPage(){
-        new PaymentFormPage()
+    public static void ThroughPaymentPage(PaymentFormPage paymentFormPage){
+        paymentFormPage
                 .<PaymentFormPage>init()
                 .emailField().fill("test@test.pl")
                 .page()
@@ -142,9 +143,9 @@ public class Navigate {
                 .finishButton().click();
     }
 
-    public static void ThroughPaymentPage(StaticText paymentStatus){
-        ThroughPaymentPage();
-        PaymentRedirectPage paymentRedirectPage = new PaymentRedirectPage();
+    public static void ThroughPaymentPage(PaymentFormPage paymentFormPage, StaticText paymentStatus){
+        ThroughPaymentPage(paymentFormPage);
+        PaymentRedirectPage paymentRedirectPage = new PaymentRedirectPage(paymentFormPage.getDriver());
         paymentRedirectPage.init();
         switch (paymentStatus){
             case SUMMARY_TRANSACTION_SUCCESS:

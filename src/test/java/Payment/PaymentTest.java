@@ -11,11 +11,14 @@ import Pages.Summary.SummaryPage;
 import Selenium.Base;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+@Execution(ExecutionMode.CONCURRENT)
 public class PaymentTest {
 
     private final Client receiverPm = ClientDictionary.BOXMACHINE.client;
@@ -27,18 +30,9 @@ public class PaymentTest {
     public class PaymentSuccessfulTest extends Base{
 
         @Test
-        @Order(1)
-        @DisplayName("Page loaded")
-        public void Should_LoadPage() {
-            Assertions.assertDoesNotThrow(() ->
-                    page.Form.<FormPage>init()
-            );
-        }
-
-        @Test
         @Order(2)
         public void Should_RedirectToPaymentPage_When_FilledFormIsSubmitted(){
-            Navigate.FillFormPage(DeliveryMethod.BOXMACHINE, receiverPm, sender);
+            Navigate.FillFormPage(page.Form, DeliveryMethod.BOXMACHINE, receiverPm, sender);
             page.Form.submit();
             page.ModalSummary.payButton().click();
             assertDoesNotThrow(() ->
@@ -48,7 +42,7 @@ public class PaymentTest {
         @Test
         @Order(3)
         public void Should_RedirectToFinalSummary_When_PaymentIsSuccessful(){
-            Navigate.ThroughPaymentPage();
+            Navigate.ThroughPaymentPage(page.PaymentForm);
             page.PaymentRedirect.confirmedPaymentButton().click();
             page.FinalSummary.setPaymentStatus(StaticText.SUMMARY_TRANSACTION_SUCCESS);
             assertDoesNotThrow((Executable)page.FinalSummary::<SummaryPage>init);
@@ -70,7 +64,7 @@ public class PaymentTest {
         @Test
         @Order(2)
         public void Should_RedirectToPaymentPage_When_FilledFormIsSubmitted(){
-            Navigate.FillFormPage(DeliveryMethod.BOXMACHINE, receiverPm, sender);
+            Navigate.FillFormPage(page.Form, DeliveryMethod.BOXMACHINE, receiverPm, sender);
             page.Form.submit();
             page.ModalSummary.payButton().click();
             assertDoesNotThrow(() ->
@@ -80,7 +74,7 @@ public class PaymentTest {
         @Test
         @Order(3)
         public void Should_RedirectToFinalSummary_When_PaymentIsFailed(){
-            Navigate.ThroughPaymentPage();
+            Navigate.ThroughPaymentPage(page.PaymentForm);
             page.PaymentRedirect.rejectedPaymentButton().click();
             page.FinalSummary.setPaymentStatus(StaticText.SUMMARY_TRANSACTION_FAILURE);
             assertDoesNotThrow((Executable)page.FinalSummary::<SummaryPage>init);
@@ -111,7 +105,7 @@ public class PaymentTest {
         @Test
         @Order(2)
         public void Should_RedirectToPaymentPage_When_FilledFormIsSubmitted(){
-            Navigate.FillFormPage(DeliveryMethod.BOXMACHINE, receiverPm, sender);
+            Navigate.FillFormPage(page.Form, DeliveryMethod.BOXMACHINE, receiverPm, sender);
             page.Form.submit();
             page.ModalSummary.payButton().click();
             assertDoesNotThrow((Executable)page.PaymentForm::<PaymentFormPage>init);
@@ -119,7 +113,7 @@ public class PaymentTest {
         @Test
         @Order(3)
         public void Should_RedirectToFinalSummary_When_PaymentIsPending(){
-            Navigate.ThroughPaymentPage();
+            Navigate.ThroughPaymentPage(page.PaymentForm);
             page.PaymentRedirect.pendingPaymentButton().click();
             assertTrue(page.FinalSummary.refreshButton().waitVisible().isDisplayed());
         }

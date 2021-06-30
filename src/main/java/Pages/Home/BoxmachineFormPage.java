@@ -2,6 +2,7 @@ package Pages.Home;
 
 import Pages.Actions.Action;
 import Pages.Base.BasePage;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -19,7 +20,7 @@ public class BoxmachineFormPage extends BasePage {
     @FindBy(xpath = "//*[@id='error-boxMachineName']/..//*[contains(@class, 'errors')]")
     WebElement errorReceiverBoxmachine;
 
-    public BoxmachineFormPage(){  super(); }
+    public BoxmachineFormPage(WebDriver driver){  super(driver); }
 
     //region Actions
     public Action<BoxmachineFormPage> parcelmachine() {

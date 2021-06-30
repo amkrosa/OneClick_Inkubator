@@ -1,6 +1,7 @@
 package Helpers;
 
 import Selenium.Base;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -8,8 +9,8 @@ public class ActionHelper {
 
     private final Actions actions;
 
-    public ActionHelper(){
-        this.actions = new Actions(Base.driver);
+    public ActionHelper(WebDriver driver){
+        this.actions = new Actions(driver);
     }
 
     public void moveToElement(WebElement element){

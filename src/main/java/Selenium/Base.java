@@ -9,6 +9,9 @@ import Pages.Home.FormPage;
 import Pages.Page;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -26,10 +29,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Base {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public abstract class Base {
 
-    public static WebDriver driver;
-    public final Page page = new Page();
+    public WebDriver driver;
+    public Page page;
     public static Environment environment;
     public static Config config;
     public static final String downloadFolder = System.getProperty("user.dir")+
@@ -39,7 +43,7 @@ public class Base {
             File.separator+"Download";
 
     @BeforeAll
-    public static void setUp() throws FileNotFoundException {
+    public void setUp() throws FileNotFoundException {
         ConfigHandler handler = ConfigHandler.getInstance();
         config = handler.getConfig();
 
@@ -54,22 +58,23 @@ public class Base {
         prefs.put("download.default_directory", downloadFolder);
         prefs.put("download.prompt_for_download", false);
         options.setExperimentalOption("prefs", prefs);
-        driver = new ChromeDriver(options);
+        this.driver = new ChromeDriver(options);
         LocalStorage local = ((WebStorage) driver).getLocalStorage();
         driver.manage().window().maximize();
-
         driver.get(environment.getUrl());
         local.setItem("sn_lang", config.getLanguage());
-        FormPage formPage = new FormPage();
-        formPage.init();
+
+        page = new Page(this.driver);
+
+        page.Form.init();
         if (!(Base.environment.getEnv() == EnvironmentType.PRODUCTION)) {
-            formPage.policyButton().click();
+            page.Form.policyButton().click();
         }
-        formPage.cookieButton().click();
+        page.Form.cookieButton().click();
     }
 
     @AfterAll
-    public static void tearDown() throws IOException {
+    public void tearDown() throws IOException {
         driver.quit();
         final Path targetFolder = Path.of(Base.downloadFolder);
         if (Files.exists(targetFolder) && Files.isDirectory(targetFolder)) {

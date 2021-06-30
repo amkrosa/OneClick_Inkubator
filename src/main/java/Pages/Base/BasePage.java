@@ -17,12 +17,12 @@ public abstract class BasePage {
     private WaitHelper waitHelper;
     private ActionHelper actionHelper;
 
-    public BasePage(){
-        driver = Base.driver;
+    public BasePage(WebDriver driver){
+        this.driver = driver;
         PageFactory.initElements(driver, this);
-        waitHelper = new WaitHelper();
-        actionHelper = new ActionHelper();
-        commonHelper = new CommonHelper(actionHelper, waitHelper);
+        waitHelper = new WaitHelper(driver);
+        actionHelper = new ActionHelper(driver);
+        commonHelper = new CommonHelper(driver, actionHelper, waitHelper);
     }
 
     public CommonHelper getCommonHelper() {
@@ -42,7 +42,7 @@ public abstract class BasePage {
     }
 
     public boolean isTextFound(String text) {
-        List<WebElement> element = this.getDriver().findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
+        List<WebElement> element = driver.findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
         return element.size() > 0;
     }
 

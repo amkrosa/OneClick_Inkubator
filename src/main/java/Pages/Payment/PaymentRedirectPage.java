@@ -2,6 +2,7 @@ package Pages.Payment;
 
 import Pages.Actions.Action;
 import Pages.Base.BasePage;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -15,7 +16,7 @@ public class PaymentRedirectPage extends BasePage {
     @FindBy(how = How.XPATH, using = "//button[@value='3']")
     WebElement pendingPaymentButton;
 
-    public PaymentRedirectPage(){super();}
+    public PaymentRedirectPage(WebDriver driver){  super(driver);}
 
     //region Actions
     public Action<PaymentRedirectPage> confirmedPaymentButton() {

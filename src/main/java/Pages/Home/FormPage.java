@@ -4,6 +4,7 @@ import Helpers.Enums.Statics.Banner;
 import Pages.Actions.Action;
 import Pages.Base.BasePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -62,14 +63,13 @@ public class FormPage extends BasePage {
     private
     WebElement parcelSizeC;
     @FindBy(how = How.CSS, using = "[for=in_changer]")
-    private
-    WebElement invoiceCheckbox;
+    private WebElement invoiceCheckbox;
     @FindBy(how = How.XPATH, using = "(//span[@class='custom-action-in-title'])[1]")
-    private
-    WebElement howToSendButton;
+    private WebElement howToSendButton;
     @FindBy(how = How.XPATH, using = "(//span[@class='custom-action-in-title'])[2]")
-    private
-    WebElement howToPackButton;
+    private WebElement howToPackButton;
+    @FindBy(xpath = "//modal-container[@role='dialog']")
+    private WebElement modal;
     //endregion
 
     //region Images
@@ -108,8 +108,7 @@ public class FormPage extends BasePage {
     //endregion
 
 
-    public FormPage() {
-        super();
+    public FormPage(WebDriver driver){  super(driver);
     }
 
     //region Actions
@@ -234,17 +233,21 @@ public class FormPage extends BasePage {
         return new Action<>(errorSenderPhone, this);
     }
 
+    public Action<FormPage> modal() {
+        return new Action<>(modal, this);
+    }
+
     //endregion
 
     //region isVisible methods
     public boolean isHowToSendModalVisible(){
         By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
-        return getCommonHelper().isModalVisible(xpath, howToSendButton);
+        return getCommonHelper().isModalVisible(xpath);
     }
 
     public boolean isHowToPackModalVisible(){
         By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
-        return getCommonHelper().isModalVisible(xpath, howToPackButton);
+        return getCommonHelper().isModalVisible(xpath);
     }
 
     public boolean isBannerImagesVisible(){
@@ -254,6 +257,10 @@ public class FormPage extends BasePage {
                 return false;
         }
         return true;
+    }
+
+    public void closeModal(){
+        getDriver().findElement(By.xpath("(//*[contains(@class, 'close')])[3]"));
     }
     //endregion
 

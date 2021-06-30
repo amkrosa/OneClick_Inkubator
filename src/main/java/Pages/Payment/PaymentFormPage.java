@@ -2,6 +2,7 @@ package Pages.Payment;
 
 import Pages.Actions.Action;
 import Pages.Base.BasePage;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -17,7 +18,7 @@ public class PaymentFormPage extends BasePage {
     @FindBy(how = How.XPATH, using = "//*[contains(@class,'finish-button')]")
     WebElement finishButton;
 
-    public PaymentFormPage(){super();}
+    public PaymentFormPage(WebDriver driver){  super(driver);}
 
     //region Actions
     public Action<PaymentFormPage> dataProcessingAgreementCheckbox() {

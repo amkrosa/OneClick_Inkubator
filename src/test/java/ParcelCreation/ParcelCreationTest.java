@@ -28,7 +28,6 @@ public class ParcelCreationTest {
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     @DisplayName("Parcelmachine delivery method")
     public class ParcelmachineDeliveryTest extends Base {
-        private FormPage formPage = new FormPage();
 
         @Test
         @Order(1)
@@ -42,7 +41,7 @@ public class ParcelCreationTest {
         @Test
         @Order(2)
         public void Should_FormBeFilledCorrectly_When_FilledWithCorrectData() {
-            Navigate.FillFormPage(DeliveryMethod.BOXMACHINE, receiverPm, sender);
+            Navigate.FillFormPage(page.Form, DeliveryMethod.BOXMACHINE, receiverPm, sender);
         }
 
         @Test
@@ -63,7 +62,7 @@ public class ParcelCreationTest {
         @Test
         @Order(5)
         public void Should_RedirectToFinalSummary_When_PaymentIsDone() {
-            Navigate.ThroughPaymentPage(StaticText.SUMMARY_TRANSACTION_SUCCESS);
+            Navigate.ThroughPaymentPage(page.PaymentForm, StaticText.SUMMARY_TRANSACTION_SUCCESS);
             assertDoesNotThrow(() ->
                     page.FinalSummary.<SummaryPage>init()
             );
@@ -72,8 +71,8 @@ public class ParcelCreationTest {
         @Test
         @Order(6)
         public void Should_DownloadLabel_When_ButtonClicked() throws IOException {
-            page.FinalSummary.downloadLabelButton().click();
             FileHelper fileHelper = new FileHelper();
+            assertTrue(page.FinalSummary.downloadLabel());
             assertTrue(fileHelper.isLatestFileNew());
         }
     }
@@ -98,7 +97,7 @@ public class ParcelCreationTest {
         @Test
         @Order(2)
         public void Should_FormBeFilledCorrectly_When_FilledWithCorrectData() {
-            Navigate.FillFormPage(DeliveryMethod.ADDRESS, receiverAddress, sender);
+            Navigate.FillFormPage(page.Form, DeliveryMethod.ADDRESS, receiverAddress, sender);
         }
 
         @Test
@@ -119,7 +118,7 @@ public class ParcelCreationTest {
         @Test
         @Order(5)
         public void Should_RedirectToFinalSummary_When_PaymentIsDone() {
-            Navigate.ThroughPaymentPage(StaticText.SUMMARY_TRANSACTION_SUCCESS);
+            Navigate.ThroughPaymentPage(page.PaymentForm, StaticText.SUMMARY_TRANSACTION_SUCCESS);
             assertDoesNotThrow(() ->
                     page.FinalSummary.<SummaryPage>init()
             );
@@ -128,8 +127,8 @@ public class ParcelCreationTest {
         @Test
         @Order(6)
         public void Should_DownloadLabel_When_ButtonClicked() throws IOException {
-            page.FinalSummary.downloadLabelButton().click();
             FileHelper fileHelper = new FileHelper();
+            assertTrue(page.FinalSummary.downloadLabel());
             assertTrue(fileHelper.isLatestFileNew());
         }
     }

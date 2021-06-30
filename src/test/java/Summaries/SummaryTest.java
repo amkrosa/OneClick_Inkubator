@@ -1,6 +1,7 @@
 package Summaries;
 
 import Helpers.Enums.Dictionaries.ClientDictionary;
+import Helpers.Enums.Statics.StaticText;
 import Helpers.Enums.Types.DeliveryMethod;
 import Helpers.Enums.Dictionaries.InvoiceDictionary;
 import Helpers.Enums.Types.InvoiceType;
@@ -9,9 +10,12 @@ import Models.Client;
 import Models.Invoice;
 import Selenium.Base;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Execution(ExecutionMode.CONCURRENT)
 public class SummaryTest {
 
     private final Client receiverPm = ClientDictionary.BOXMACHINE.client;
@@ -26,15 +30,13 @@ public class SummaryTest {
         @Order(1)
         public void Should_DisplayModalSummary_When_FormFilledWithCorrectData_And_SubmitIsClicked() {
             page.ModalSummary.setDeliveryMethod(DeliveryMethod.BOXMACHINE);
-            Navigate.FillFormPage(DeliveryMethod.BOXMACHINE, receiverPm, sender);
+            Navigate.FillFormPage(page.Form, DeliveryMethod.BOXMACHINE, receiverPm, sender);
             assertTrue(page.Form.submit(), "Modal was not displayed.");
         }
 
         @Test
         @Order(2)
         public void Should_DisplayCorrectDataInModalSummary_When_FilledWithCorrectDataBoxmachineDeliveryType() {
-            Navigate.FillFormPage(DeliveryMethod.BOXMACHINE, receiverPm, sender);
-            page.Form.submit();
             page.ModalSummary.setDeliveryMethod(DeliveryMethod.BOXMACHINE);
             page.ModalSummary.setReceiverParcelmachineFields();
             assertAll(() -> assertEquals(receiverPm.getName(), page.ModalSummary.receiverName().text()),
@@ -57,6 +59,7 @@ public class SummaryTest {
         @Order(4)
         public void Should_DisplayCorrectReceiverDataInFinalSummary_When_FilledWithCorrectDataBoxmachineDeliveryType() {
             page.FinalSummary.setDeliveryMethod(DeliveryMethod.BOXMACHINE);
+            page.FinalSummary.setPaymentStatus(StaticText.SUMMARY_TRANSACTION_SUCCESS);
             Navigate.FromModalSummaryToFinalSummary(page.FinalSummary);
             page.FinalSummary.setReceiverParcelmachineFields();
             assertAll(() -> assertEquals(receiverPm.getName(), page.FinalSummary.receiverName().text()),
@@ -84,7 +87,7 @@ public class SummaryTest {
         @Order(1)
         public void Should_DisplayModalSummary_When_FormFilledWithCorrectData_And_SubmitIsClicked() {
             page.ModalSummary.setDeliveryMethod(DeliveryMethod.ADDRESS);
-            Navigate.FillFormPage(DeliveryMethod.ADDRESS, receiverAddress, sender);
+            Navigate.FillFormPage(page.Form, DeliveryMethod.ADDRESS, receiverAddress, sender);
             assertTrue(page.Form.submit(), "Modal was not displayed.");
         }
         @Test
@@ -112,7 +115,7 @@ public class SummaryTest {
         @Order(3)
         public void Should_DisplayCorrectReceiverDataInFinalSummary_When_FilledWithCorrectDataAddressDeliveryType() {
             page.FinalSummary.setDeliveryMethod(DeliveryMethod.ADDRESS);
-
+            page.FinalSummary.setPaymentStatus(StaticText.SUMMARY_TRANSACTION_SUCCESS);
             Navigate.FromModalSummaryToFinalSummary(page.FinalSummary);
             assertAll(() -> assertEquals(receiverAddress.getName(), page.FinalSummary.receiverName().text()),
                     ()->  assertEquals(receiverAddress.getPhone(), page.FinalSummary.receiverPhone().text().replace(" ", "")),
@@ -142,8 +145,8 @@ public class SummaryTest {
         @Test
         @Order(1)
         public void Should_DisplayModalSummary_When_FormFilledWithCorrectData_And_SubmitIsClicked() {
-            Navigate.FillFormPage(DeliveryMethod.BOXMACHINE, receiverPm, sender);
-            Navigate.FillInvoice(InvoiceType.INDIVIDUAL_PERSON, invoice);
+            Navigate.FillFormPage(page.Form, DeliveryMethod.BOXMACHINE, receiverPm, sender);
+            Navigate.FillInvoice(page.Form, InvoiceType.INDIVIDUAL_PERSON, invoice);
             assertTrue(page.Form.submit(), "Modal was not displayed.");
         }
 
@@ -160,6 +163,7 @@ public class SummaryTest {
         @Test
         @Order(3)
         public void Should_DisplayCorrectIndividualInvoiceDataInFinalSummary_When_Submitted() {
+            page.FinalSummary.setPaymentStatus(StaticText.SUMMARY_TRANSACTION_SUCCESS);
             Navigate.FromModalSummaryToFinalSummary(page.FinalSummary);
             page.FinalSummary.setInvoiceType(InvoiceType.INDIVIDUAL_PERSON).setInvoiceFields();
             assertAll(() -> assertEquals(invoice.getName(), page.FinalSummary.invoiceCompanyName().text()),

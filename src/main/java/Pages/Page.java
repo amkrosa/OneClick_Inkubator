@@ -8,6 +8,7 @@ import Pages.Home.InvoiceFormPage;
 import Pages.Payment.PaymentFormPage;
 import Pages.Payment.PaymentRedirectPage;
 import Pages.Summary.SummaryPage;
+import org.openqa.selenium.WebDriver;
 
 public class Page {
 
@@ -19,14 +20,14 @@ public class Page {
     public final AddressFormPage AddressForm;
     public final PaymentRedirectPage PaymentRedirect;
 
-    public Page() {
-        ModalSummary = new SummaryPage(SummaryType.MODAL);
-        FinalSummary = new SummaryPage(SummaryType.FINAL);
-        Form = new FormPage();
-        Invoice = new InvoiceFormPage();
-        BoxmachineForm = new BoxmachineFormPage();
-        PaymentForm = new PaymentFormPage();
-        AddressForm = new AddressFormPage();
-        PaymentRedirect = new PaymentRedirectPage();
+    public Page(WebDriver driver) {
+        ModalSummary = new SummaryPage(SummaryType.MODAL, driver);
+        FinalSummary = new SummaryPage(SummaryType.FINAL, driver);
+        Form = new FormPage(driver);
+        Invoice = new InvoiceFormPage(driver);
+        BoxmachineForm = new BoxmachineFormPage(driver);
+        PaymentForm = new PaymentFormPage(driver);
+        AddressForm = new AddressFormPage(driver);
+        PaymentRedirect = new PaymentRedirectPage(driver);
     }
 }

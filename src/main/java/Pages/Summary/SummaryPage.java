@@ -8,11 +8,13 @@ import Pages.Actions.Action;
 import Pages.Base.BasePage;
 import Selenium.Base;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
+import java.io.IOException;
 import java.util.List;
 
 public class SummaryPage extends BasePage {
@@ -112,29 +114,25 @@ public class SummaryPage extends BasePage {
         return this;
     }
 
-    public SummaryPage(SummaryType summaryType){
-        super();
+    public SummaryPage(SummaryType summaryType, WebDriver driver){
+        super(driver);
         this.summaryType = summaryType;
         this.deliveryMethod = null;
         this.invoiceType = null;
         this.paymentStatus = StaticText.SUMMARY_TRANSACTION_SUCCESS;
     }
 
-    public SummaryPage(SummaryPage summaryPage){
-        super();
-        this.summaryType = summaryPage.summaryType;
-        this.deliveryMethod = summaryPage.deliveryMethod;
-        this.invoiceType = summaryPage.invoiceType;
-        this.paymentStatus = summaryPage.paymentStatus;
-    }
-
     //region Custom Actions
     public void refreshUntilPaymentIsDone(){
-        int iterationTimeout = 20;
-        String text = Base.config.getLanguage().equals("pl") ? paymentStatus.pl
-                : paymentStatus.en;
+        String text = paymentStatus.current();
         policyButton().waitVisible().click();
+        if (this.isTextFound(text))
+            return;
         getWaitHelper().waitUntilTextIsPresent(refreshButton, text);
+    }
+
+    public boolean downloadLabel() throws IOException {
+        return getWaitHelper().waitUntilDownloaded(downloadLabelButton);
     }
     //endregion
 

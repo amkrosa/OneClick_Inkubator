@@ -6,13 +6,15 @@ import org.openqa.selenium.*;
 public class CommonHelper {
     ActionHelper actionHelper;
     WaitHelper waitHelper;
+    private WebDriver driver;
 
-    public CommonHelper() {
-        this.actionHelper = new ActionHelper();
-        this.waitHelper = new WaitHelper();
+    public CommonHelper(WebDriver driver) {
+        this.driver = driver;
+        this.actionHelper = new ActionHelper(driver);
+        this.waitHelper = new WaitHelper(driver);
     }
 
-    public CommonHelper(ActionHelper actionHelper, WaitHelper waitHelper){
+    public CommonHelper(WebDriver driver, ActionHelper actionHelper, WaitHelper waitHelper){
         this.actionHelper = actionHelper;
         this.waitHelper = waitHelper;
     }
@@ -47,11 +49,10 @@ public class CommonHelper {
     }
 
     public boolean isVisible(By by){
-        return !Base.driver.findElements(by).isEmpty();
+        return !driver.findElements(by).isEmpty();
     }
 
-    public boolean isModalVisible(By byxpath, WebElement openModalButton){
-            moveAndClick(openModalButton);
+    public boolean isModalVisible(By byxpath){
             try {
                 waitHelper.waitUntilLocated(byxpath);
                 return true;

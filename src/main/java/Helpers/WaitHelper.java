@@ -2,6 +2,7 @@ package Helpers;
 
 import Selenium.Base;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,12 +16,14 @@ import java.time.Duration;
 
 public class WaitHelper {
 
-    FluentWait<WebDriver> fluentWait;
+    private FluentWait<WebDriver> fluentWait;
+    private WebDriver driver;
 
-    public WaitHelper(){
-        fluentWait = new FluentWait<>(Base.driver);
+    public WaitHelper(WebDriver driver){
+        this.driver = driver;
+        fluentWait = new FluentWait<>(driver);
         fluentWait.withTimeout(Duration.ofSeconds(Base.config.getTimeout()))
-                .pollingEvery(Duration.ofMillis(1000))
+                .pollingEvery(Duration.ofMillis(750))
                 .ignoring(Exception.class);
     }
 
@@ -46,10 +49,22 @@ public class WaitHelper {
     }
 
     public void waitUntilTextIsPresent(WebElement element, String text){
-        new FluentWait<>(Base.driver).withTimeout(Duration.ofSeconds(Base.config.getTimeout()+10))
-                .pollingEvery(Duration.ofMillis(1000))
-                .ignoring(Exception.class)
-                .until(driver -> driver.findElement(By.xpath("//*[contains(text(),'"+text+"')]")));
+        int iterationTimeout = 10;
+        while (iterationTimeout!=0) {
+            try {
+                new FluentWait<>(driver)
+                        .withTimeout(Duration.ofSeconds(Base.config.getTimeout()/4))
+                        .pollingEvery(Duration.ofMillis(500))
+                        .ignoring(Exception.class)
+                        .until(driver ->
+                                driver.findElement(By.xpath("//*[contains(text(),'" + text + "')]")));
+                return;
+            }catch (Exception e){
+                element.click();
+                iterationTimeout--;
+            }
+        }
+        throw new TimeoutException();
     }
 
     public boolean waitUntilDownloaded(WebElement elementInitializingDownload) throws IOException {
