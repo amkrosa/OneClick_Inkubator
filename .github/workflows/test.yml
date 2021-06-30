@@ -9,6 +9,10 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
+      - name: Install Google Chrome # Using shell script to install Google Chrome
+        run: |
+          chmod +x ./scripts/InstallChrome.sh
+          ./scripts/InstallChrome.sh
       - name: Build and Run Tests
         run: mvn test --batch-mode --fail-at-end
       - name: Publish Test Report
