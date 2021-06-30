@@ -5,21 +5,24 @@ import Helpers.Enums.Statics.Message;
 import Models.Invoice;
 import Selenium.Base;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.NoSuchElementException;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
+@Execution(ExecutionMode.CONCURRENT)
 public class InvoiceFormTest {
 
     private final String string251= "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private final String string250= "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private final String string10= "aaaaaaaaaa";
     private final String string51= "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private final String string11= "aaaaaaaaaaa";
 
     @Nested
+    @Tag("iksde")
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     public class IndividualInvoiceTest extends Base{
 
@@ -37,11 +40,39 @@ public class InvoiceFormTest {
         public void Should_CopySenderData_When_LinkActionClicked(){
             page.Form.senderEmail().fill(individual.getEmail())
                     .page().senderName().fill(individual.getName());
-            page.Invoice.copySenderData().click();
+            page.Invoice.copySenderData().waitClickable().click();
             assertAll(
                     ()->assertEquals(individual.getEmail(), page.Invoice.individualEmail().value()),
                     ()->assertEquals(individual.getName(), page.Invoice.individualName().value())
                     );
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {string251, "\\\\\\aaaa", "aaa$$", "aaaaa%%%", "AAAA\\%", "bbb^"})
+        public void Should_InvoiceIndividualNameBeInvalid_When_FilledWithInvalidData(String str) {
+            page.Invoice.individualName().clear().fill(str).clickAbove();
+            assertTrue(page.Invoice.errorIndividualName().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {string250, "Anna Krasowska", "z"})
+        public void Should_InvoiceIndividualNameBeCorrect_When_FilledWithCorrectData(String str) {
+            page.Invoice.individualName().click().clear().fill(str).clickAbove();
+            assertThrows(NoSuchElementException.class, () -> page.Invoice.errorIndividualName().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"a@a.pl", "anna@anna.pl"})
+        public void Should_InvoiceIndividualEmailBeCorrect_When_FilledWithCorrectData(String str) {
+            page.Invoice.individualEmail().clear().fill(str);
+            assertThrows(NoSuchElementException.class, () -> page.Invoice.errorIndividualEmail().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"a@a.p", "anna", "aaa@aaa", "###@###.pl"})
+        public void Should_InvoiceIndividualEmailBeInvalid_When_FilledWithInvalidData(String str) {
+            page.Invoice.individualEmail().clear().fill(str);
+            assertTrue(page.Invoice.errorIndividualEmail().isDisplayed());
         }
 
         @ParameterizedTest
@@ -219,6 +250,34 @@ public class InvoiceFormTest {
             assertThrows(NoSuchElementException.class, () -> page.Invoice.errorCompanyStreet().isDisplayed());
         }
 
+        @ParameterizedTest
+        @ValueSource(strings = {string251, "\\\\\\aaaa", "aaa$$", "aaaaa%%%", "AAAA\\%", "bbb^"})
+        public void Should_InvoiceCompanyNameBeInvalid_When_FilledWithInvalidData(String str) {
+            page.Invoice.companyName().clear().fill(str).clickAbove();
+            assertTrue(page.Invoice.errorCompanyName().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {string250, "Anna Krasowska", "z"})
+        public void Should_InvoiceCompanyNameBeCorrect_When_FilledWithCorrectData(String str) {
+            page.Invoice.companyName().click().clear().fill(str).clickAbove();
+            assertThrows(NoSuchElementException.class, () -> page.Invoice.errorCompanyName().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"a@a.pl", "anna@anna.pl"})
+        public void Should_InvoiceCompanyEmailBeCorrect_When_FilledWithCorrectData(String str) {
+            page.Invoice.companyEmail().clear().fill(str);
+            assertThrows(NoSuchElementException.class, () -> page.Invoice.errorCompanyEmail().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"a@a.p", "anna", "aaa@aaa", "###@###.pl"})
+        public void Should_InvoiceCompanyEmailBeInvalid_When_FilledWithInvalidData(String str) {
+            page.Invoice.companyEmail().clear().fill(str);
+            assertTrue(page.Invoice.errorCompanyEmail().isDisplayed());
+        }
+
 
     }
 
@@ -277,9 +336,8 @@ public class InvoiceFormTest {
         @ValueSource(strings = {"nieistniejace", "panstwo"})
         public void Should_InvoiceForeignCompanyCountryBeInvalid_When_FilledWithInvalidData(String str) {
             page.Invoice.foreignCompanyCountryInput().clear().fill(str);
-            boolean result = page.Invoice.isTextFound(Message.DROPDOWN_NOTFOUND.pl)
-                    || page.Invoice.isTextFound(Message.DROPDOWN_NOTFOUND.en);
-            assertTrue(result);
+            boolean result = page.Invoice.isTextFound(Message.DROPDOWN_NOTFOUND.current());
+            assertTrue(result, "Text "+Message.DROPDOWN_NOTFOUND.current()+" was not found.");
         }
 
         @ParameterizedTest
@@ -345,6 +403,34 @@ public class InvoiceFormTest {
         public void Should_InvoiceForeignCompanyStreetBeCorrect_When_FilledWithCorrectData(String str) {
 
             assertThrows(NoSuchElementException.class, () -> page.Invoice.errorForeignCompanyStreet().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {string251, "\\\\\\aaaa", "aaa$$", "aaaaa%%%", "AAAA\\%", "bbb^"})
+        public void Should_InvoiceForeignCompanyNameBeInvalid_When_FilledWithInvalidData(String str) {
+            page.Invoice.foreignCompanyName().clear().fill(str).clickAbove();
+            assertTrue(page.Invoice.errorForeignCompanyName().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {string250, "Anna Krasowska", "z"})
+        public void Should_InvoiceForeignCompanyNameBeCorrect_When_FilledWithCorrectData(String str) {
+            page.Invoice.foreignCompanyName().click().clear().fill(str).clickAbove();
+            assertThrows(NoSuchElementException.class, () -> page.Invoice.errorForeignCompanyName().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"a@a.pl", "anna@anna.pl"})
+        public void Should_InvoiceForeignCompanyEmailBeCorrect_When_FilledWithCorrectData(String str) {
+            page.Invoice.foreignCompanyEmail().clear().fill(str);
+            assertThrows(NoSuchElementException.class, () -> page.Invoice.errorForeignCompanyEmail().isDisplayed());
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"a@a.p", "anna", "aaa@aaa", "###@###.pl"})
+        public void Should_InvoiceForeignCompanyEmailBeInvalid_When_FilledWithInvalidData(String str) {
+            page.Invoice.foreignCompanyEmail().clear().fill(str);
+            assertTrue(page.Invoice.errorForeignCompanyEmail().isDisplayed());
         }
 
 
