@@ -18,11 +18,6 @@ public class PaymentFormPage extends BasePage{
 
     public PaymentFormPage(){super();}
 
-    public PaymentFormPage fillEmailField(String text) {
-        emailField.sendKeys(text);
-        return this;
-    }
-
     //region Actions
     public Action<PaymentFormPage> dataProcessingAgreementCheckbox() {
         return new Action<>(dataProcessingAgreementCheckbox, this);
@@ -40,6 +35,7 @@ public class PaymentFormPage extends BasePage{
         return new Action<>(finishButton, this);
     }
     //endregion
+
 
     @Override
     public WebElement getInitElement() {
