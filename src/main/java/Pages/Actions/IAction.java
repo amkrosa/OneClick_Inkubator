@@ -11,6 +11,7 @@ public interface IAction<T extends BasePage> {
     IAction<T> clear();
     IAction<T> waitVisible();
     IAction<T> waitClickable();
+    IAction<T> waitInvisible();
     IAction<T> confirmDropdown();
     IAction<T> enter();
     IAction<T> clickAbove();
