@@ -8,6 +8,7 @@ import Helpers.ActionHelper;
 import Helpers.CommonHelper;
 import Helpers.WaitHelper;
 import Pages.FormPage;
+import Pages.Page;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.WebDriver;
@@ -31,6 +32,7 @@ import java.util.stream.Stream;
 public class Base {
 
     public static WebDriver driver;
+    public final Page page = new Page();
     public static Environment environment;
     public static Config config;
     public static final String downloadFolder = System.getProperty("user.dir")+
@@ -66,6 +68,7 @@ public class Base {
             formPage.policyButton().click();
         }
         formPage.cookieButton().click();
+        formPage.init();
     }
 
     @AfterAll
