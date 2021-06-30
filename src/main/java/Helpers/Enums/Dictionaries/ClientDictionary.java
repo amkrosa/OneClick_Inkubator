@@ -1,7 +1,6 @@
 package Helpers.Enums.Dictionaries;
 
 import Models.Client;
-import SeleniumBase.Base;
 
 public enum ClientDictionary {
 

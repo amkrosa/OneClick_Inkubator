@@ -1,11 +1,15 @@
+package ParcelCreation;
+
 import Helpers.Enums.Dictionaries.ClientDictionary;
 import Helpers.Enums.Types.DeliveryMethod;
 import Helpers.Enums.Statics.StaticText;
 import Helpers.FileHelper;
-import Helpers.Navigate;
+import Pages.Navigate;
 import Models.Client;
-import Pages.*;
-import SeleniumBase.Base;
+import Pages.Home.FormPage;
+import Pages.Payment.PaymentFormPage;
+import Pages.Summary.SummaryPage;
+import Selenium.Base;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;

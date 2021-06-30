@@ -1,6 +1,6 @@
 package Helpers;
 
-import SeleniumBase.Base;
+import Selenium.Base;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 

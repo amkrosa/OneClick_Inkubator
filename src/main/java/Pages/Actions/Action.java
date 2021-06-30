@@ -3,12 +3,9 @@ package Pages.Actions;
 import Helpers.ActionHelper;
 import Helpers.CommonHelper;
 import Helpers.WaitHelper;
-import Pages.BasePage;
-import org.openqa.selenium.By;
+import Pages.Base.BasePage;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class Action<T extends BasePage> implements IAction<T>{
     private final T page;

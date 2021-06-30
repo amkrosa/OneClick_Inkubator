@@ -1,6 +1,6 @@
 package Helpers.Enums.Statics;
 
-import SeleniumBase.Base;
+import Selenium.Base;
 
 public enum Banner {
     BANNER_PARCEL("assets/icons/paczka.svg?v=1.10.0"),

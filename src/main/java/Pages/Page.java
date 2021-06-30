@@ -1,6 +1,13 @@
 package Pages;
 
 import Helpers.Enums.Types.SummaryType;
+import Pages.Home.AddressFormPage;
+import Pages.Home.BoxmachineFormPage;
+import Pages.Home.FormPage;
+import Pages.Home.InvoiceFormPage;
+import Pages.Payment.PaymentFormPage;
+import Pages.Payment.PaymentRedirectPage;
+import Pages.Summary.SummaryPage;
 
 public class Page {
 

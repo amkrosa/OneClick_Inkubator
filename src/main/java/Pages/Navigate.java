@@ -1,13 +1,18 @@
-package Helpers;
+package Pages;
 
-import Helpers.Enums.Dictionaries.ClientDictionary;
 import Helpers.Enums.Types.DeliveryMethod;
 import Helpers.Enums.Types.InvoiceType;
 import Helpers.Enums.Statics.StaticText;
 import Helpers.Enums.Types.SummaryType;
 import Models.Client;
 import Models.Invoice;
-import Pages.*;
+import Pages.Home.AddressFormPage;
+import Pages.Home.BoxmachineFormPage;
+import Pages.Home.FormPage;
+import Pages.Home.InvoiceFormPage;
+import Pages.Payment.PaymentFormPage;
+import Pages.Payment.PaymentRedirectPage;
+import Pages.Summary.SummaryPage;
 
 public class Navigate {
 

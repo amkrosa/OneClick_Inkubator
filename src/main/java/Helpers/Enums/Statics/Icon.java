@@ -1,6 +1,6 @@
 package Helpers.Enums.Statics;
 
-import SeleniumBase.Base;
+import Selenium.Base;
 
 public enum Icon {
 

@@ -1,6 +1,6 @@
 package Pages.Actions;
 
-import Pages.BasePage;
+import Pages.Base.BasePage;
 
 public interface IAction<T extends BasePage> {
 

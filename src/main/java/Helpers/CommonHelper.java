@@ -1,9 +1,7 @@
 package Helpers;
 
-import SeleniumBase.Base;
+import Selenium.Base;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CommonHelper {
     ActionHelper actionHelper;
