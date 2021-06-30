@@ -134,18 +134,8 @@ public class SummaryPage extends BasePage{
         int iterationTimeout = 20;
         String text = Base.config.getLanguage().equals("pl") ? paymentStatus.pl
                 : paymentStatus.en;
-        policyButton().click();
-
-        while (!this.isTextFound(text)){
-            if (refreshButton.isEnabled()) {
-                refreshButton().waitClickable().click();
-                iterationTimeout--;
-            }
-            if (iterationTimeout<1){
-                throw new TimeoutException("Refresh iteration timeout exceeded");
-
-            }
-        }
+        policyButton().waitVisible().click();
+        getWaitHelper().waitUntilTextIsPresent(refreshButton, text);
     }
     //endregion
 
