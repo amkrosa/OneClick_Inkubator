@@ -263,7 +263,7 @@ public class FormTest extends Base {
             addressFormPage
                     .receiverZipCode().click().clear().fill("01-123")
                     .page()
-                    .receiverTown().waitClickable().confirmDropdown()
+                    .receiverTown().waitClickable().click().confirmDropdown()
                     .page()
                     .receiverStreet().waitClickable().fill(str).confirmDropdown().clickAbove();
 
