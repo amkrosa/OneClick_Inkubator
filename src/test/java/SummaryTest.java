@@ -1,6 +1,7 @@
 import Helpers.Enums.Dictionaries.ClientDictionary;
 import Helpers.Enums.Types.DeliveryMethod;
 import Helpers.Enums.Dictionaries.InvoiceDictionary;
+import Helpers.Enums.Types.InvoiceType;
 import Helpers.Navigate;
 import Models.Client;
 import Models.Invoice;
@@ -87,7 +88,7 @@ public class SummaryTest {
             assertTrue(page.Form.submit(), "Modal was not displayed.");
         }
         @Test
-        @Order(1)
+        @Order(2)
         public void Should_DisplayCorrectReceiverDataInModalSummary_When_Submitted() {
             assertAll(() -> assertEquals(receiverAddress.getName(), page.ModalSummary.receiverName().text()),
                     ()->  assertEquals(receiverAddress.getPhone(), page.ModalSummary.receiverPhone().text().replace(" ", "")),
@@ -128,6 +129,42 @@ public class SummaryTest {
                     () -> assertEquals(sender.getName(), page.FinalSummary.senderName().text()),
                     () -> assertEquals(sender.getPhone(), page.FinalSummary.senderPhone().text().replace(" ", "")),
                     () -> assertEquals(sender.getEmail(), page.FinalSummary.senderEmail().text())
+            );
+        }
+    }
+
+    @Nested
+    @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+    class SummaryInvoiceIndividualTest extends Base {
+
+        private final Invoice invoice = InvoiceDictionary.INDIVIDUAL.invoice;
+
+        @Test
+        @Order(1)
+        public void Should_DisplayModalSummary_When_FormFilledWithCorrectData_And_SubmitIsClicked() {
+            Navigate.FillFormPage(DeliveryMethod.BOXMACHINE, receiverPm, sender);
+            Navigate.FillInvoice(InvoiceType.INDIVIDUAL_PERSON, invoice);
+            assertTrue(page.Form.submit(), "Modal was not displayed.");
+        }
+
+        @Test
+        @Order(2)
+        public void Should_DisplayCorrectIndividualInvoiceDataInModalSummary_When_Submitted() {
+            page.ModalSummary.setInvoiceType(InvoiceType.INDIVIDUAL_PERSON).setInvoiceFields();
+            assertAll(() -> assertEquals(invoice.getName(), page.ModalSummary.invoiceCompanyName().text()),
+                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.ModalSummary.invoiceZipCodeCity().text()),
+                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.ModalSummary.invoiceStreetBuildingNo().text())
+            );
+        }
+
+        @Test
+        @Order(3)
+        public void Should_DisplayCorrectIndividualInvoiceDataInFinalSummary_When_Submitted() {
+            Navigate.FromModalSummaryToFinalSummary(page.FinalSummary);
+            page.FinalSummary.setInvoiceType(InvoiceType.INDIVIDUAL_PERSON).setInvoiceFields();
+            assertAll(() -> assertEquals(invoice.getName(), page.FinalSummary.invoiceCompanyName().text()),
+                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.FinalSummary.invoiceZipCodeCity().text()),
+                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.FinalSummary.invoiceStreetBuildingNo().text())
             );
         }
     }
