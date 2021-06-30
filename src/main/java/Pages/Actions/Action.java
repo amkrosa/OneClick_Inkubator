@@ -35,6 +35,7 @@ public class Action<T extends BasePage> implements IAction<T>{
 
     @Override
     public IAction<T> click() {
+        //waitHelper.waitUntilVisible(element);
         commonHelper.moveAndClick(element);
         return this;
     }
@@ -54,6 +55,12 @@ public class Action<T extends BasePage> implements IAction<T>{
     @Override
     public IAction<T> waitClickable() {
         waitHelper.waitUntilClickable(element);
+        return this;
+    }
+
+    @Override
+    public IAction<T> waitInvisible() {
+        waitHelper.waitUntilInvisible(element);
         return this;
     }
 
