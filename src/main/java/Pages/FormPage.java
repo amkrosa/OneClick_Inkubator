@@ -1,8 +1,6 @@
 package Pages;
 
-import Helpers.Enums.Banner;
-import Helpers.Enums.DeliveryMethod;
-import Models.Client;
+import Helpers.Enums.Statics.Banner;
 import Pages.Actions.Action;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -265,38 +263,6 @@ public class FormPage extends BasePage {
         return !getDriver().findElements(By.cssSelector(".parcel-form-whole-summary-modal")).isEmpty();
     }
 
-    public FormPage fillForm(DeliveryMethod deliveryMethod, Client receiver, Client sender){
-        receiverName().fill(receiver.getName())
-                .page()
-                .receiverEmail().fill(receiver.getEmail())
-                .page()
-                .receiverPhone().fill(receiver.getPhone());
-
-        if (deliveryMethod==DeliveryMethod.ADDRESS){
-            AddressFormPage addressFormPage = new AddressFormPage();
-            addressFormPage.receiverZipCode().fill(receiver.getZipCode())
-                    .page()
-                    .receiverTown().fill(receiver.getCity())
-                    .page()
-                    .receiverStreet().fill(receiver.getStreet())
-                    .page()
-                    .receiverBuildingNo().fill(receiver.getBuildingNo())
-                    .page()
-                    .receiverFlatNo().fill(receiver.getFlatNo());
-        }else {
-            new BoxmachineFormPage().parcelmachine().fill(receiver.getParcelmachine()).confirmDropdown();
-        }
-
-        senderName().fill(sender.getName())
-                .page()
-                .senderEmail().fill(sender.getEmail())
-                .page()
-                .senderPhone().fill(sender.getPhone());
-
-        terms().click();
-
-        return this;
-    }
     //endregion
 
     @Override
