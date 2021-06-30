@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Config {
     private String language;
+    private int timeout;
     private Map<String, Environment> envs = new HashMap<>();
 
     public Map<String, Environment> getEnvs() {
@@ -21,6 +22,14 @@ public class Config {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
     }
 
     @Override
