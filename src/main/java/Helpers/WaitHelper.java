@@ -55,6 +55,13 @@ public class WaitHelper {
         return fluentWait.until(driver -> driver.findElement(by));
     }
 
+    public void waitUntilTextIsPresent(WebElement element, String text){
+        new FluentWait<>(Base.driver).withTimeout(Duration.ofSeconds(Base.config.getTimeout()+10))
+                .pollingEvery(Duration.ofMillis(1000))
+                .ignoring(Exception.class)
+                .until(driver -> driver.findElement(By.xpath("//*[contains(text(),'"+text+"')]")));
+    }
+
     public boolean waitUntilDownloaded(WebElement elementInitializingDownload) throws IOException {
         FileHelper fileHelper = new FileHelper();
         final Path targetFolder = Path.of(Base.downloadFolder);
@@ -79,10 +86,5 @@ public class WaitHelper {
     public void waitUntilClickable(By by){
         fluentWait.until(ExpectedConditions.elementToBeClickable(by));
     }
-
-    public void waitUntilTextIsPresent(WebElement webElement, String text) {
-        fluentWait.until(ExpectedConditions.textToBePresentInElement(webElement, text));
-    }
-
 
 }
