@@ -1,27 +1,27 @@
 package Pages;
 
-import Helpers.Enums.DeliveryMethod;
-import Helpers.Enums.InvoiceType;
-import Helpers.Enums.StaticText;
+import Helpers.Enums.Types.DeliveryMethod;
+import Helpers.Enums.Types.InvoiceType;
+import Helpers.Enums.Statics.StaticText;
+import Helpers.Enums.Types.SummaryType;
 import Pages.Actions.Action;
 import SeleniumBase.Base;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.io.IOException;
 import java.util.List;
 
 public class SummaryPage extends BasePage{
 
-    private final DeliveryMethod deliveryMethod;
-    private final InvoiceType invoiceType;
-    private final StaticText paymentStatus;
-    private final String summaryType;
+    private DeliveryMethod deliveryMethod;
+    private InvoiceType invoiceType;
+    private StaticText paymentStatus;
+    private final SummaryType summaryType;
 
     //region Receiver data
     @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'first-column') and not(contains(@class, 'summary-column'))])[1]/div[1]")
@@ -76,6 +76,8 @@ public class SummaryPage extends BasePage{
     WebElement fixDataButton;
     @FindBy(how = How.XPATH, using = "(//div[contains(@class, 'parcel-form-whole-summary-modal')]//button)[2]")
     WebElement payButton;
+    @FindBy(xpath = "//div[contains(@class, 'parcel-summary-container')]//button")
+    WebElement refreshButton;
     //endregion
 
     //region Policy
@@ -83,52 +85,67 @@ public class SummaryPage extends BasePage{
     WebElement policyButton;
     //endregion
 
-    public SummaryPage(String summaryType, DeliveryMethod deliveryMethod){
+
+    public DeliveryMethod getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    public SummaryPage setDeliveryMethod(DeliveryMethod deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
+        return this;
+    }
+
+    public InvoiceType getInvoiceType() {
+        return invoiceType;
+    }
+
+    public SummaryPage setInvoiceType(InvoiceType invoiceType) {
+        this.invoiceType = invoiceType;
+        return this;
+    }
+
+    public StaticText getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public SummaryPage setPaymentStatus(StaticText paymentStatus) {
+        this.paymentStatus = paymentStatus;
+        return this;
+    }
+
+    public SummaryPage(SummaryType summaryType){
         super();
         this.summaryType = summaryType;
-        this.deliveryMethod = deliveryMethod;
+        this.deliveryMethod = null;
         this.invoiceType = null;
         this.paymentStatus = StaticText.SUMMARY_TRANSACTION_SUCCESS;
     }
 
-    public SummaryPage(String summaryType, DeliveryMethod deliveryMethod, StaticText paymentStatus){
+    public SummaryPage(SummaryPage summaryPage){
         super();
-        this.summaryType = summaryType;
-        this.deliveryMethod = deliveryMethod;
-        this.invoiceType = null;
-        this.paymentStatus = paymentStatus;
+        this.summaryType = summaryPage.summaryType;
+        this.deliveryMethod = summaryPage.deliveryMethod;
+        this.invoiceType = summaryPage.invoiceType;
+        this.paymentStatus = summaryPage.paymentStatus;
     }
 
-    public SummaryPage(String summaryType, DeliveryMethod deliveryMethod, InvoiceType invoiceType, StaticText paymentStatus){
-        super();
-        this.summaryType = summaryType;
-        this.deliveryMethod = deliveryMethod;
-        this.invoiceType = invoiceType;
-        this.paymentStatus = paymentStatus;
-    }
-
-    public SummaryPage(String summaryType, DeliveryMethod deliveryMethod, InvoiceType invoiceType){
-        super();
-        this.summaryType = summaryType;
-        this.deliveryMethod = deliveryMethod;
-        this.invoiceType = invoiceType;
-        this.paymentStatus = StaticText.SUMMARY_TRANSACTION_SUCCESS;
-    }
     //region Custom Actions
     public void refreshUntilPaymentIsDone(){
-        int iterationTimeout = 15;
+        int iterationTimeout = 20;
         String text = Base.config.getLanguage().equals("pl") ? paymentStatus.pl
                 : paymentStatus.en;
-        while (iterationTimeout!=0){
-            getDriver().navigate().refresh();
-            getCommonHelper().waitAndClick(policyButton);
-            getWaitHelper().waitUntilVisible(By.xpath("//*[contains(@class, 'mat-wrapper')]"));
-            List<WebElement> element = getDriver().findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
-            if (element.size() > 0)
-                return;
-            iterationTimeout--;
+        policyButton().click();
+
+        while (!this.isTextFound(text)){
+            if (refreshButton.isEnabled()) {
+                refreshButton().waitClickable().click();
+                iterationTimeout--;
+            }
+            if (iterationTimeout<1){
+                throw new TimeoutException("Refresh iteration timeout exceeded");
+
+            }
         }
-        throw new TimeoutException("Refresh iteration timeout exceeded");
     }
     //endregion
 
@@ -163,6 +180,10 @@ public class SummaryPage extends BasePage{
 
     public Action<SummaryPage> senderEmail() {
         return new Action<>(senderEmail, this);
+    }
+
+    public Action<SummaryPage> refreshButton() {
+        return new Action<>(refreshButton, this);
     }
 
     public Action<SummaryPage> receiverParcelmachineName() {
@@ -255,11 +276,14 @@ public class SummaryPage extends BasePage{
 
     @Override
     public WebElement getInitElement() {
-        if (summaryType.equals("modal"))
+        if (summaryType == SummaryType.MODAL)
             return payButton;
         else {
             refreshUntilPaymentIsDone();
-            return printLabelButton;
+            if(paymentStatus == StaticText.SUMMARY_TRANSACTION_SUCCESS)
+                return printLabelButton;
+            else
+                return getDriver().findElement(By.xpath("//*[contains(@class, 'btn')]"));
         }
     }
 }
