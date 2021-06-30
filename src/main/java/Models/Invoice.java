@@ -25,6 +25,7 @@ public class Invoice implements Serializable {
         this.city = city;
         this.buildingNo = buildingNo;
         this.flatNo = flatNo;
+        this.street = street;
     }
 
     public Invoice(String name, String email, String zipCode, String city, String street, String buildingNo, String flatNo) {
@@ -34,6 +35,7 @@ public class Invoice implements Serializable {
         this.city = city;
         this.buildingNo = buildingNo;
         this.flatNo = flatNo;
+        this.street = street;
     }
 
     public String getName() {
