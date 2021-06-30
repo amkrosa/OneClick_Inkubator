@@ -55,14 +55,10 @@ public class InvoiceFormPage extends BasePage{
     private WebElement individualEmail;
     @FindBy(name = "invoice.individual.zipCode")
     private WebElement individualZipCode;
-    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.town']//*/input")
+    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.town']")
     private WebElement individualTown;
-    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.town']//div[@class='ng-value']")
-    private WebElement individualTownValue;
-    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.street']//*/input")
+    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.street']")
     private WebElement individualStreet;
-    @FindBy(how = How.XPATH, using = "//*[@name='invoice.individual.street']//div[@class='ng-value']")
-    private WebElement individualStreetValue;
     @FindBy(how = How.NAME, using = "invoice.individual.buildingNo")
     private WebElement individualBuildingNo;
     @FindBy(how = How.NAME, using = "invoice.individual.flatNo")
@@ -82,7 +78,7 @@ public class InvoiceFormPage extends BasePage{
     private WebElement companyTown;
     @FindBy(how = How.XPATH, using = "//*[@name='invoice.company.town']//*[@class='ng-value']")
     private WebElement companyTownValue;
-    @FindBy(how = How.NAME, using = "//*[@name='invoice.company.street']//*/input")
+    @FindBy(how = How.XPATH, using = "//*[@name='invoice.company.street']//*/input")
     private WebElement companyStreet;
     @FindBy(how = How.XPATH, using = "//*[@name='invoice.company.street']//*[@class='ng-value']")
     private WebElement companyStreetValue;
@@ -112,6 +108,8 @@ public class InvoiceFormPage extends BasePage{
     private WebElement errorForeignCompanyStreet;
     @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.town']/..//*[contains(@class, 'errors')]")
     private WebElement errorForeignCompanyTown;
+    @FindBy(xpath = "//*[@id='error-invoice.foreignCompany.countryCode']/..//*[contains(@class, 'errors')]")
+    private WebElement errorForeignCompanyCountry;
 
     @FindBy(xpath = "//*[@id='error-invoice.company.name']/..//*[contains(@class, 'errors')]")
     private WebElement errorCompanyName;
@@ -243,16 +241,8 @@ public class InvoiceFormPage extends BasePage{
         return new Action<>(individualTown, this);
     }
 
-    public Action<InvoiceFormPage> individualTownValue() {
-        return new Action<>(individualTownValue, this);
-    }
-
     public Action<InvoiceFormPage> individualStreet() {
         return new Action<>(individualStreet, this);
-    }
-
-    public Action<InvoiceFormPage> individualStreetValue() {
-        return new Action<>(individualStreetValue, this);
     }
 
     public Action<InvoiceFormPage> individualBuildingNo() {
@@ -397,6 +387,10 @@ public class InvoiceFormPage extends BasePage{
 
     public Action<InvoiceFormPage> copySenderData() {
         return new Action<>(copySenderData, this);
+    }
+
+    public Action<InvoiceFormPage> errorForeignCompanyCountry() {
+        return new Action<>(errorForeignCompanyCountry, this);
     }
 
     //endregion
