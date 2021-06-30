@@ -47,7 +47,7 @@ public class FileHelper {
         assert result != null;
         result.forEach(e-> {
             try {
-                Files.delete(Path.of(e));
+                Files.deleteIfExists(Path.of(e));
             } catch (IOException ignored) {}
         });
     }

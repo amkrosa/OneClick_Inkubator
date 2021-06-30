@@ -4,6 +4,7 @@ import Configs.Config;
 import Configs.ConfigHandler;
 import Configs.Environment;
 import Configs.EnvironmentType;
+import Helpers.FileHelper;
 import Pages.Home.FormPage;
 import Pages.Page;
 import org.junit.jupiter.api.AfterAll;
@@ -69,25 +70,10 @@ public class Base {
 
     @AfterAll
     public static void tearDown() throws IOException {
-
         driver.quit();
-
         final Path targetFolder = Path.of(Base.downloadFolder);
-        List<String> result;
         if (Files.exists(targetFolder) && Files.isDirectory(targetFolder)) {
-            try (Stream<Path> walk = Files.walk(targetFolder)) {
-                result = walk
-                        .filter(p -> !Files.isDirectory(p))
-                        .map(p -> p.toString().toLowerCase())
-                        .filter(f -> f.endsWith("crdownload"))
-                        .collect(Collectors.toList());
-            }
-            result.forEach(e -> {
-                try {
-                    Files.deleteIfExists(Path.of(e));
-                } catch (IOException ignored) {
-                }
-            });
+            new FileHelper().deleteFilesWithExtension("crdownload");
         }
     }
 }
