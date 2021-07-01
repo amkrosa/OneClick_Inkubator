@@ -22,7 +22,6 @@ public class InvoiceFormTest {
     private final String string11= "aaaaaaaaaaa";
 
     @Nested
-    @Tag("iksde")
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     public class IndividualInvoiceTest extends Base{
 
@@ -33,6 +32,7 @@ public class InvoiceFormTest {
         public void Should_DisplayIndividualInvoiceForm_When_CheckboxClicked(){
             page.Form.invoiceCheckbox().click();
             page.Invoice.clickInvoiceIndividualCheckbox();
+            assertDoesNotThrow(()->page.Invoice.init());
         }
 
         @Test
@@ -161,6 +161,7 @@ public class InvoiceFormTest {
         public void Should_DisplayCompanyInvoiceForm_When_CheckboxClicked(){
             page.Form.invoiceCheckbox().click();
             page.Invoice.clickInvoiceCompanyCheckbox();
+            assertDoesNotThrow(()->page.Invoice.init());
         }
 
         @Test
@@ -292,6 +293,7 @@ public class InvoiceFormTest {
         public void Should_DisplayForeignCompanyInvoiceForm_When_CheckboxClicked(){
             page.Form.invoiceCheckbox().click();
             page.Invoice.clickInvoiceForeignCompanyCheckbox();
+            assertDoesNotThrow(()->page.Invoice.init());
         }
 
         @Test
