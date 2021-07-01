@@ -7,7 +7,6 @@ import Configs.EnvironmentType;
 import Helpers.FileHelper;
 import Pages.Home.FormPage;
 import Pages.Page;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
@@ -52,18 +51,11 @@ public abstract class Base {
             if (entry.getValue().isActive())
                 environment = entry.getValue();
         }
-        boolean isWin = System.getProperty("os.name").toLowerCase().contains("win");
-        String executable = isWin ? "chromedriver.exe" : "chromedriver";
-        ChromeOptions options = new ChromeOptions();
-        if (isWin) {
-            System.setProperty("webdriver.chrome.driver", "src/main/resources/" + executable);
+        String executable = System.getProperty("os.name").toLowerCase().contains("win") ?
+                "chromedriver.exe" : "chromedriver";
 
-        }else {
-            WebDriverManager.chromedriver().setup();
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--headless");
-        }
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/"+executable);
+        ChromeOptions options = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadFolder);
         prefs.put("download.prompt_for_download", false);
