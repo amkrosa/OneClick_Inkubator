@@ -1,6 +1,6 @@
 ### Needed files/directories
 
-* Chrome driver in `src/main/resources`
+* Chrome driver in `src/main/resources`. System is detected automatically, no need to add/remove `.exe` extension.
 * `environment.yaml` in `src/main/resources`. Example settings below</br>
     ```yaml
     language: pl    #Language set in LocalStorage
