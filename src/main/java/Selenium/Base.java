@@ -58,8 +58,10 @@ public abstract class Base {
         System.setProperty("webdriver.chrome.silentOutput", "true");
         java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("--disable-gpu");
+        if (config.isHeadless()) {
+            options.addArguments("--headless");
+            options.addArguments("--disable-gpu");
+        }
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadFolder);
         prefs.put("download.prompt_for_download", false);
@@ -74,7 +76,7 @@ public abstract class Base {
 
         page.Form.init();
         if (!(Base.environment.getEnv() == EnvironmentType.PRODUCTION)) {
-            page.Form.policyButton().click();
+            page.Form.policyButton().waitVisible().click();
         }
         page.Form.cookieButton().click();
     }
