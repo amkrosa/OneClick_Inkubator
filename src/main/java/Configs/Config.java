@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Config {
     private String language;
+    private boolean headless;
     private int timeout;
     private Map<String, Environment> envs = new HashMap<>();
 
@@ -30,6 +31,14 @@ public class Config {
 
     public void setTimeout(int timeout) {
         this.timeout = timeout;
+    }
+
+    public boolean isHeadless() {
+        return headless;
+    }
+
+    public void setHeadless(boolean headless) {
+        this.headless = headless;
     }
 
     @Override
