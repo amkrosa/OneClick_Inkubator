@@ -58,7 +58,7 @@ public class FileHelper {
                 .sorted((p1, p2)-> Long.compare(p2.toFile().lastModified(), p1.toFile().lastModified()))
                 .findFirst();
 
-        return opPath.orElse(null);
+        return opPath.orElse(Path.of("."));
     }
 
     public int getFileSizeInKb(Path file) throws IOException {
