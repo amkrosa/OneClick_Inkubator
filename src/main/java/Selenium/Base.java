@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -26,6 +27,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -53,14 +55,18 @@ public abstract class Base {
         }
 
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.silentOutput", "true");
+        java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--disable-gpu");
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadFolder);
         prefs.put("download.prompt_for_download", false);
         options.setExperimentalOption("prefs", prefs);
         this.driver = new ChromeDriver(options);
         LocalStorage local = ((WebStorage) driver).getLocalStorage();
-        driver.manage().window().maximize();
+        driver.manage().window().setSize(new Dimension(1366, 768));
         driver.get(environment.getUrl());
         local.setItem("sn_lang", config.getLanguage());
 
@@ -74,11 +80,15 @@ public abstract class Base {
     }
 
     @AfterAll
-    public void tearDown() throws IOException {
+    public void tearDown() {
         driver.quit();
         final Path targetFolder = Path.of(Base.downloadFolder);
+        FileHelper fileHelper = new FileHelper();
+
         if (Files.exists(targetFolder) && Files.isDirectory(targetFolder)) {
-            new FileHelper().deleteFilesWithExtension("crdownload");
+            fileHelper.deleteFilesWithExtension("crdownload");
+            fileHelper.deleteFilesWithExtension("tmp");
+            fileHelper.deleteFilesWithExtension("pdf");
         }
     }
 }
