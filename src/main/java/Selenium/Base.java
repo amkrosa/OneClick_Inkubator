@@ -54,19 +54,8 @@ public abstract class Base {
                 environment = entry.getValue();
         }
 
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        System.setProperty("webdriver.chrome.silentOutput", "true");
-        java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
-        ChromeOptions options = new ChromeOptions();
-        if (config.isHeadless()) {
-            options.addArguments("--headless");
-            options.addArguments("--disable-gpu");
-        }
-        Map<String, Object> prefs = new HashMap<>();
-        prefs.put("download.default_directory", downloadFolder);
-        prefs.put("download.prompt_for_download", false);
-        options.setExperimentalOption("prefs", prefs);
-        this.driver = new ChromeDriver(options);
+        this.driver = configDriver();
+
         LocalStorage local = ((WebStorage) driver).getLocalStorage();
         driver.manage().window().setSize(new Dimension(1366, 768));
         driver.get(environment.getUrl());
@@ -92,5 +81,34 @@ public abstract class Base {
             fileHelper.deleteFilesWithExtension("tmp");
             fileHelper.deleteFilesWithExtension("pdf");
         }
+    }
+
+    private WebDriver configDriver(){
+        String os = System.getProperty("os.name").toLowerCase();
+        String webDriverPath = "src/main/resources/chromedriver";
+        ChromeOptions options = new ChromeOptions();
+
+        if (os.contains("win"))
+            webDriverPath+=".exe";
+
+        System.setProperty("webdriver.chrome.driver", webDriverPath);
+
+        if(config.isHeadless()){
+            options.addArguments("--headless");
+        }
+        if (config.isHeadless() && os.contains("win")) {
+            options.addArguments("--disable-gpu");
+        }
+
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", downloadFolder);
+        prefs.put("download.prompt_for_download", false);
+        options.setExperimentalOption("prefs", prefs);
+
+        //Logging options
+        System.setProperty("webdriver.chrome.silentOutput", "true");
+        java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
+
+        return new ChromeDriver(options);
     }
 }
