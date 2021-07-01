@@ -63,6 +63,7 @@ public class ParcelCreationTest {
         @Order(5)
         public void Should_RedirectToFinalSummary_When_PaymentIsDone() {
             Navigate.ThroughPaymentPage(page.PaymentForm, StaticText.SUMMARY_TRANSACTION_SUCCESS);
+            page.FinalSummary.setPaymentStatus(StaticText.SUMMARY_TRANSACTION_SUCCESS);
             assertDoesNotThrow(() ->
                     page.FinalSummary.<SummaryPage>init()
             );
@@ -119,6 +120,7 @@ public class ParcelCreationTest {
         @Order(5)
         public void Should_RedirectToFinalSummary_When_PaymentIsDone() {
             Navigate.ThroughPaymentPage(page.PaymentForm, StaticText.SUMMARY_TRANSACTION_SUCCESS);
+            page.FinalSummary.setPaymentStatus(StaticText.SUMMARY_TRANSACTION_SUCCESS);
             assertDoesNotThrow(() ->
                     page.FinalSummary.<SummaryPage>init()
             );
