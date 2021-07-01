@@ -10,7 +10,6 @@ import org.openqa.selenium.support.How;
 
 public class InvoiceFormPage extends BasePage {
 
-    private boolean isOptionSelected;
 
     @FindBy(how = How.CSS, using = "[for=legalStatusforeignCompany]")
     private WebElement invoiceForeignCompanyCheckbox;
@@ -147,7 +146,6 @@ public class InvoiceFormPage extends BasePage {
 
     public InvoiceFormPage(WebDriver driver){
         super(driver);
-        isOptionSelected = false;
     }
 
 
@@ -155,21 +153,18 @@ public class InvoiceFormPage extends BasePage {
     public InvoiceFormPage clickInvoiceForeignCompanyCheckbox(){
         getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
         initElement = foreignCompanyTown;
-        isOptionSelected = true;
         return this;
     }
 
     public InvoiceFormPage clickInvoiceIndividualCheckbox(){
         getCommonHelper().moveAndClick(invoiceIndividualCheckbox);
         initElement = individualTown;
-        isOptionSelected = true;
         return this;
     }
 
     public InvoiceFormPage clickInvoiceCompanyCheckbox(){
         getCommonHelper().moveAndClick(invoiceCompanyCheckbox);
         initElement = companyTown;
-        isOptionSelected = true;
         return this;
     }
 
@@ -405,7 +400,5 @@ public class InvoiceFormPage extends BasePage {
     }
 
     @Override
-    public WebElement getInitElement() {
-        return null;
-    }
+    public WebElement getInitElement() { return initElement; }
 }
