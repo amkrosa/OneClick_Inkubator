@@ -51,10 +51,8 @@ public abstract class Base {
             if (entry.getValue().isActive())
                 environment = entry.getValue();
         }
-        String executable = System.getProperty("os.name").toLowerCase().contains("win") ?
-                "chromedriver.exe" : "chromedriver";
 
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/"+executable);
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadFolder);
@@ -81,8 +79,6 @@ public abstract class Base {
         final Path targetFolder = Path.of(Base.downloadFolder);
         if (Files.exists(targetFolder) && Files.isDirectory(targetFolder)) {
             new FileHelper().deleteFilesWithExtension("crdownload");
-            new FileHelper().deleteFilesWithExtension("tmp");
-            new FileHelper().deleteFilesWithExtension("pdf");
         }
     }
 }
