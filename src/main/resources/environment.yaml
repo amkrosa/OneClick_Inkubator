@@ -4,11 +4,11 @@ envs:
   production:
     url: https://inpost.pl/SzybkieNadania/
     env: PRODUCTION
-    active: true
+    active: false
   test:
     url: https://test-oneclick-pl.easypack24.net/SzybkieNadania/
     env: TEST
-    active: false
+    active: true
   check:
     url: null
     env: CHECK
