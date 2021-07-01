@@ -1,7 +1,7 @@
 ### Needed files/directories
 
 * Chrome driver in `src/main/resources`
-* `environment.yaml` in `src/main/resources`. Example settings below
+* `environment.yaml` in `src/main/resources`. Example settings below</br>
     ```yaml
     language: pl    #Language set in LocalStorage
     headless: true  #Should WebDriver run headless browser 
@@ -19,7 +19,7 @@
 * `Download` directory in `src/test/resources`
 #### Optional
 * JUnit properties for parallel testing.</br>
-`junit-platform.properties` in `src/test/resources`
+`junit-platform.properties` in `src/test/resources`</br>
     ```properties
     junit.jupiter.execution.parallel.enabled = true
     junit.jupiter.execution.parallel.mode.default = same_thread
@@ -31,9 +31,9 @@
 ### Tests
 Run tests with 
 ```shell
-mvn -q clean test
+mvn clean test
 ```
-or for report in .html
+or for report in .html (report will be located in ```target/site```)
 ```shell
 mvn clean surefire-report:report
 ```
