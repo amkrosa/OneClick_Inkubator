@@ -399,8 +399,9 @@ public class InvoiceFormPage extends BasePage {
     //endregion
 
 
-    public void waitNipLoad() {
+    public InvoiceFormPage waitNipLoad() {
        getWaitHelper().waitUntilZeroElements(By.xpath("//*[contains(@class,'fixed-loader')]"));
+       return this;
     }
 
     @Override
