@@ -92,20 +92,20 @@ public class Navigate {
             case COMPANY:
                 invoiceFormPage.clickInvoiceCompanyCheckbox()
                         .companyNip().fill(invoice.getNip())
+                        .page().waitNipLoad()
+                        .companyEmail().waitClickable().clear().fill(invoice.getEmail())
                         .page()
-                        .companyEmail().fill(invoice.getEmail())
+                        .companyName().clear().fill(invoice.getName())
                         .page()
-                        .companyName().fill(invoice.getName())
-                        .page()
-                        .companyZipCode().fill(invoice.getZipCode())
+                        .companyZipCode().clear().fill(invoice.getZipCode())
                         .page()
                         .companyTown().waitClickable().fill(invoice.getCity()).confirmDropdown().clickAbove()
                         .page()
                         .companyStreet().waitClickable().fill(invoice.getStreet()).confirmDropdown().clickAbove()
                         .page()
-                        .companyBuildingNo().fill(invoice.getBuildingNo())
+                        .companyBuildingNo().clear().fill(invoice.getBuildingNo())
                         .page()
-                        .companyFlatNo().fill(invoice.getFlatNo());
+                        .companyFlatNo().clear().fill(invoice.getFlatNo());
                 break;
             case FOREIGN_COMPANY:
                 invoiceFormPage.clickInvoiceForeignCompanyCheckbox()
