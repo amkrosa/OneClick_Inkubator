@@ -26,7 +26,13 @@ public class WaitHelper {
                 .pollingEvery(Duration.ofMillis(750))
                 .ignoring(Exception.class);
     }
-
+    public void waitUntilVisibleLong(WebElement element){
+        new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(Base.config.getTimeout()*2))
+                .pollingEvery(Duration.ofMillis(500))
+                .ignoring(Exception.class)
+                .until(ExpectedConditions.visibilityOf(element));
+    }
     public void waitUntilVisible(WebElement element){
         fluentWait.until(ExpectedConditions.visibilityOf(element));
     }
