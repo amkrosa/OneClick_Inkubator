@@ -7,6 +7,21 @@ import Pages.Base.BasePage;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+/**
+ *
+ * Action class defining typical actions made on Page Object Models extending IAction interface.
+ * <p>
+ *
+ * Example for  WebElement invoiceCompanyName in SummaryPage POM class:
+ * <pre>{@code
+ *     public Action<SummaryPage> invoiceCompanyName() {
+ *         return new Action<>(invoiceCompanyName, this);
+ *     }
+ * }</pre>
+ * @see Pages.Actions.IAction
+ * @param <T> PageObjectModel that extends BasePage
+ */
+
 public class Action<T extends BasePage> implements IAction<T> {
     private final T page;
     private final WaitHelper waitHelper;
