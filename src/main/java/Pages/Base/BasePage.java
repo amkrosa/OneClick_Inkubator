@@ -10,6 +10,11 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
+/**
+ * Base from which all Page classes inherits. Stores helpers and <code>init()</code>
+ * methods for initializing Page, by waiting until specified element from child
+ * class is visible.
+ */
 public abstract class BasePage {
     private WebDriver driver;
     private CommonHelper commonHelper;
@@ -45,10 +50,21 @@ public abstract class BasePage {
         return element.size() > 0;
     }
 
+    /**
+     * Wait until element from <code>getInitElement()</code> method is visible,
+     * with timeout twice of that specified in config
+     * @param <T> Page class
+     * @return <code>T</code> parameter
+     */
     public <T extends BasePage> T init() {
         waitHelper.waitUntilVisibleLong(getInitElement());
         return (T) this;
     }
 
+    /**
+     * Specifies element which <code>init()</code> should apply to <code>waitUntilVisibleLong()</code>
+     * method.
+     * @return <code>WebElement</code> specified in child class
+     */
     public abstract WebElement getInitElement();
 }

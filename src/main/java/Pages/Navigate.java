@@ -14,6 +14,10 @@ import Pages.Payment.PaymentFormPage;
 import Pages.Payment.PaymentRedirectPage;
 import Pages.Summary.SummaryPage;
 
+
+/**
+ * Class with static methods for help with navigation through page and filling out forms.
+ */
 public class Navigate {
 
     public static void FromFormToFinalSummary(SummaryPage finalSummaryPage, Client receiver, Client sender) {

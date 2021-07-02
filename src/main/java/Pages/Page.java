@@ -10,6 +10,10 @@ import Pages.Payment.PaymentRedirectPage;
 import Pages.Summary.SummaryPage;
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Class storing all pages for current test instance.
+ */
+
 public class Page {
 
     public final SummaryPage ModalSummary, FinalSummary;

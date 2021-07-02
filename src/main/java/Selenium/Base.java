@@ -24,9 +24,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+/**
+ * Base Test class from which all tests using Selenium will inherit.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class Base {
-
     public WebDriver driver;
     public Page page;
     public static Environment environment;
@@ -76,6 +78,12 @@ public abstract class Base {
         }
     }
 
+    /**
+     * Configures WebDriver (ChromeDriver). Specifies OS, sets appriopriate
+     * extension, turns of some of the spam logs. Turns on <code>--headless</code>
+     * mode if specified in config.
+     * @return <code>WebDriver</code> which will be used.
+     */
     private WebDriver configDriver() {
         String os = System.getProperty("os.name").toLowerCase();
         String webDriverPath = "src/main/resources/chromedriver";

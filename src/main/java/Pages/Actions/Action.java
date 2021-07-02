@@ -48,76 +48,127 @@ public class Action<T extends BasePage> implements IAction<T> {
         return this;
     }
 
+    /**
+     * Move to element and click it.
+     * @return <code>this</code>
+     */
     @Override
     public IAction<T> click() {
-        //waitHelper.waitUntilVisible(element);
         commonHelper.moveAndClick(element);
         return this;
     }
 
+    /**
+     * Clear element (if input).
+     * @return <code>this</code>
+     */
     @Override
     public IAction<T> clear() {
         element.clear();
         return this;
     }
 
+    /**
+     * Wait until element is visible.
+     * @return <code>this</code>
+     */
     @Override
     public IAction<T> waitVisible() {
         waitHelper.waitUntilVisible(element);
         return this;
     }
 
+    /**
+     * Wait until element is clickable.
+     * @return <code>this</code>
+     */
     @Override
     public IAction<T> waitClickable() {
         waitHelper.waitUntilClickable(element);
         return this;
     }
 
+    /**
+     * Wait until element is invisible.
+     * @return <code>this</code>
+     */
     @Override
     public IAction<T> waitInvisible() {
         waitHelper.waitUntilInvisible(element);
         return this;
     }
 
+    /**
+     * Confirms dropdown if combobox was displayed.
+     * @return <code>this</code>
+     */
     @Override
     public IAction<T> confirmDropdown() {
         commonHelper.confirmDropdown(element);
         return this;
     }
 
+    /**
+     * Inputs <code>ENTER</code> key.
+     * @return <code>this</code>
+     */
     @Override
     public IAction<T> enter() {
         element.sendKeys(Keys.ENTER);
         return this;
     }
 
+    /**
+     * Clicks 30 pixels above element.
+     * @return <code>this</code>
+     */
     @Override
     public IAction<T> clickAbove() {
         actionHelper.clickWithOffset(element, 0, -30);
         return this;
     }
 
+    /**
+     * Inputs <code>TAB</code> key.
+     * @return <code>this</code>
+     */
     @Override
     public IAction<T> tab() {
         element.sendKeys(Keys.TAB);
         return this;
     }
 
+    /**
+     * Gets text value from element.
+     * @return <code>String</code>
+     */
     @Override
     public String text() {
         return element.getText();
     }
 
+    /**
+     * Gets attribute <code>value</code> from element as <code>String</code>.
+     * @return <code>String</code>
+     */
     @Override
     public String value() {
         return element.getAttribute("value");
     }
 
+    /**
+     * Gets attribute <code>src</code> from element as <code>String</code>.
+     * @return <code>String</code>
+     */
     @Override
     public String src() {
         return element.getAttribute("src");
     }
 
+    /**
+     * Allows to ascertain if element is displayed.
+     * @return <code>true</code> if element is displayed.
+     */
     @Override
     public boolean isDisplayed() {
         return element.isDisplayed();
