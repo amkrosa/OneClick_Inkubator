@@ -1,8 +1,8 @@
 package Pages;
 
+import Helpers.Enums.Statics.StaticText;
 import Helpers.Enums.Types.DeliveryMethod;
 import Helpers.Enums.Types.InvoiceType;
-import Helpers.Enums.Statics.StaticText;
 import Helpers.Enums.Types.SummaryType;
 import Models.Client;
 import Models.Invoice;
@@ -16,7 +16,7 @@ import Pages.Summary.SummaryPage;
 
 public class Navigate {
 
-    public static void FromFormToFinalSummary(SummaryPage finalSummaryPage, Client receiver, Client sender){
+    public static void FromFormToFinalSummary(SummaryPage finalSummaryPage, Client receiver, Client sender) {
         FormPage formPage = new FormPage(finalSummaryPage.getDriver());
 
         FillFormPage(formPage, finalSummaryPage.getDeliveryMethod(), receiver, sender);
@@ -24,54 +24,54 @@ public class Navigate {
         FromModalSummaryToFinalSummary(finalSummaryPage);
     }
 
-    public static void FromModalSummaryToFinalSummary(SummaryPage finalSummaryPage){
+    public static void FromModalSummaryToFinalSummary(SummaryPage finalSummaryPage) {
         new SummaryPage(SummaryType.MODAL, finalSummaryPage.getDriver()).payButton().click();
         ThroughPaymentPage(new PaymentFormPage(finalSummaryPage.getDriver()), StaticText.SUMMARY_TRANSACTION_SUCCESS);
         finalSummaryPage.<SummaryPage>init();
     }
 
-    public static void FillFormPage(FormPage formPage, DeliveryMethod deliveryMethod, Client receiver, Client sender){
-            formPage.init();
-            formPage.receiverName().fill(receiver.getName())
-                    .page()
-                    .receiverEmail().fill(receiver.getEmail())
-                    .page()
-                    .receiverPhone().fill(receiver.getPhone());
+    public static void FillFormPage(FormPage formPage, DeliveryMethod deliveryMethod, Client receiver, Client sender) {
+        formPage.init();
+        formPage.receiverName().fill(receiver.getName())
+                .page()
+                .receiverEmail().fill(receiver.getEmail())
+                .page()
+                .receiverPhone().fill(receiver.getPhone());
 
-            if (deliveryMethod==DeliveryMethod.ADDRESS){
-                formPage.deliveryTypeAddress().click();
-                AddressFormPage addressFormPage = new AddressFormPage(formPage.getDriver());
-                addressFormPage.receiverZipCode().fill(receiver.getZipCode())
-                        .page()
-                        .receiverTown().confirmDropdown()
-                        .page()
-                        .receiverStreet().confirmDropdown()
-                        .page()
-                        .receiverBuildingNo().fill(receiver.getBuildingNo())
-                        .page()
-                        .receiverFlatNo().fill(receiver.getFlatNo());
-            }else {
-                formPage.deliveryTypeBoxmachine().click();
-                new BoxmachineFormPage(formPage.getDriver()).parcelmachine().fill(receiver.getParcelmachine()).confirmDropdown();
-            }
-
-            formPage.senderName().fill(sender.getName())
+        if (deliveryMethod == DeliveryMethod.ADDRESS) {
+            formPage.deliveryTypeAddress().click();
+            AddressFormPage addressFormPage = new AddressFormPage(formPage.getDriver());
+            addressFormPage.receiverZipCode().fill(receiver.getZipCode())
                     .page()
-                    .senderEmail().fill(sender.getEmail())
+                    .receiverTown().confirmDropdown()
                     .page()
-                    .senderPhone().fill(sender.getPhone());
+                    .receiverStreet().confirmDropdown()
+                    .page()
+                    .receiverBuildingNo().fill(receiver.getBuildingNo())
+                    .page()
+                    .receiverFlatNo().fill(receiver.getFlatNo());
+        } else {
+            formPage.deliveryTypeBoxmachine().click();
+            new BoxmachineFormPage(formPage.getDriver()).parcelmachine().fill(receiver.getParcelmachine()).confirmDropdown();
+        }
 
-            formPage
-                    .terms()
-                    .click();
+        formPage.senderName().fill(sender.getName())
+                .page()
+                .senderEmail().fill(sender.getEmail())
+                .page()
+                .senderPhone().fill(sender.getPhone());
+
+        formPage
+                .terms()
+                .click();
     }
 
-    public static void FillInvoice(FormPage formPage, InvoiceType invoiceType, Invoice invoice){
+    public static void FillInvoice(FormPage formPage, InvoiceType invoiceType, Invoice invoice) {
         InvoiceFormPage invoiceFormPage = new InvoiceFormPage(formPage.getDriver());
 
         formPage.invoiceCheckbox().click();
 
-        switch (invoiceType){
+        switch (invoiceType) {
             case INDIVIDUAL_PERSON:
                 invoiceFormPage
                         .clickInvoiceIndividualCheckbox()
@@ -133,7 +133,7 @@ public class Navigate {
 
     }
 
-    public static void ThroughPaymentPage(PaymentFormPage paymentFormPage){
+    public static void ThroughPaymentPage(PaymentFormPage paymentFormPage) {
         paymentFormPage
                 .<PaymentFormPage>init()
                 .emailField().fill("test@test.pl")
@@ -143,11 +143,11 @@ public class Navigate {
                 .finishButton().click();
     }
 
-    public static void ThroughPaymentPage(PaymentFormPage paymentFormPage, StaticText paymentStatus){
+    public static void ThroughPaymentPage(PaymentFormPage paymentFormPage, StaticText paymentStatus) {
         ThroughPaymentPage(paymentFormPage);
         PaymentRedirectPage paymentRedirectPage = new PaymentRedirectPage(paymentFormPage.getDriver());
         paymentRedirectPage.init();
-        switch (paymentStatus){
+        switch (paymentStatus) {
             case SUMMARY_TRANSACTION_SUCCESS:
                 paymentRedirectPage.confirmedPaymentButton().click();
                 break;
@@ -160,8 +160,8 @@ public class Navigate {
         }
     }
 
-    public static void ClearInvoiceForm(InvoiceType invoiceType, InvoiceFormPage invoiceFormPage){
-        switch (invoiceType){
+    public static void ClearInvoiceForm(InvoiceType invoiceType, InvoiceFormPage invoiceFormPage) {
+        switch (invoiceType) {
             case INDIVIDUAL_PERSON:
                 invoiceFormPage.individualEmail().clear()
                         .page()
@@ -178,7 +178,7 @@ public class Navigate {
                         .individualFlatNo().clear();
                 break;
             case COMPANY:
-                invoiceFormPage    .companyNip().clear()
+                invoiceFormPage.companyNip().clear()
                         .page()
                         .companyEmail().clear()
                         .page()
@@ -195,7 +195,7 @@ public class Navigate {
                         .companyFlatNo().clear();
                 break;
             case FOREIGN_COMPANY:
-                invoiceFormPage    .foreignCompanyPrefixInput().clear()
+                invoiceFormPage.foreignCompanyPrefixInput().clear()
                         .page()
                         .foreignCompanyNip().clear()
                         .page()

@@ -20,7 +20,9 @@ public class BoxmachineFormPage extends BasePage {
     @FindBy(xpath = "//*[@id='error-boxMachineName']/..//*[contains(@class, 'errors')]")
     WebElement errorReceiverBoxmachine;
 
-    public BoxmachineFormPage(WebDriver driver){  super(driver); }
+    public BoxmachineFormPage(WebDriver driver) {
+        super(driver);
+    }
 
     //region Actions
     public Action<BoxmachineFormPage> parcelmachine() {
@@ -38,6 +40,7 @@ public class BoxmachineFormPage extends BasePage {
     public Action<BoxmachineFormPage> errorReceiverBoxmachine() {
         return new Action<>(errorReceiverBoxmachine, this);
     }
+
     public Action<BoxmachineFormPage> parcelmachineDropDownDisabled() {
         return new Action<BoxmachineFormPage>(parcelmachineDropDownDisabled, this);
     }

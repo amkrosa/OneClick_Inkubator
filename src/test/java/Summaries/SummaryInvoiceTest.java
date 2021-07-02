@@ -12,7 +12,6 @@ import Selenium.Base;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SummaryInvoiceTest {
 
@@ -39,8 +38,8 @@ public class SummaryInvoiceTest {
         public void Should_DisplayCorrectIndividualInvoiceDataInModalSummary_When_Submitted() {
             page.ModalSummary.setInvoiceType(InvoiceType.INDIVIDUAL_PERSON).setInvoiceFields();
             assertAll(() -> assertEquals(invoice.getName(), page.ModalSummary.invoiceCompanyName().text()),
-                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.ModalSummary.invoiceZipCodeCity().text()),
-                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.ModalSummary.invoiceStreetBuildingNo().text())
+                    () -> assertEquals(invoice.getZipCode() + " " + invoice.getCity(), page.ModalSummary.invoiceZipCodeCity().text()),
+                    () -> assertEquals(invoice.getStreet() + " " + invoice.getBuildingNo() + "/" + invoice.getFlatNo(), page.ModalSummary.invoiceStreetBuildingNo().text())
             );
         }
 
@@ -51,11 +50,12 @@ public class SummaryInvoiceTest {
             Navigate.FromModalSummaryToFinalSummary(page.FinalSummary);
             page.FinalSummary.setInvoiceType(InvoiceType.INDIVIDUAL_PERSON).setInvoiceFields();
             assertAll(() -> assertEquals(invoice.getName(), page.FinalSummary.invoiceCompanyName().text()),
-                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.FinalSummary.invoiceZipCodeCity().text()),
-                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.FinalSummary.invoiceStreetBuildingNo().text())
+                    () -> assertEquals(invoice.getZipCode() + " " + invoice.getCity(), page.FinalSummary.invoiceZipCodeCity().text()),
+                    () -> assertEquals(invoice.getStreet() + " " + invoice.getBuildingNo() + "/" + invoice.getFlatNo(), page.FinalSummary.invoiceStreetBuildingNo().text())
             );
         }
     }
+
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     class SummaryCompanyInvoiceTest extends Base {
@@ -75,9 +75,9 @@ public class SummaryInvoiceTest {
         public void Should_DisplayCorrectCompanyInvoiceDataInModalSummary_When_Submitted() {
             page.ModalSummary.setInvoiceType(InvoiceType.COMPANY).setInvoiceFields();
             assertAll(() -> assertEquals(invoice.getName(), page.ModalSummary.invoiceCompanyName().text()),
-                    () -> assertEquals("NIP: "+invoice.getNip(), page.ModalSummary.invoiceNip().text()),
-                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.ModalSummary.invoiceZipCodeCity().text()),
-                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.ModalSummary.invoiceStreetBuildingNo().text())
+                    () -> assertEquals("NIP: " + invoice.getNip(), page.ModalSummary.invoiceNip().text()),
+                    () -> assertEquals(invoice.getZipCode() + " " + invoice.getCity(), page.ModalSummary.invoiceZipCodeCity().text()),
+                    () -> assertEquals(invoice.getStreet() + " " + invoice.getBuildingNo() + "/" + invoice.getFlatNo(), page.ModalSummary.invoiceStreetBuildingNo().text())
             );
         }
 
@@ -88,12 +88,13 @@ public class SummaryInvoiceTest {
             Navigate.FromModalSummaryToFinalSummary(page.FinalSummary);
             page.FinalSummary.setInvoiceType(InvoiceType.COMPANY).setInvoiceFields();
             assertAll(() -> assertEquals(invoice.getName(), page.FinalSummary.invoiceCompanyName().text()),
-                    () -> assertEquals("NIP: PL"+invoice.getNip(), page.FinalSummary.invoiceNip().text()),
-                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.FinalSummary.invoiceZipCodeCity().text()),
-                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.FinalSummary.invoiceStreetBuildingNo().text())
+                    () -> assertEquals("NIP: PL" + invoice.getNip(), page.FinalSummary.invoiceNip().text()),
+                    () -> assertEquals(invoice.getZipCode() + " " + invoice.getCity(), page.FinalSummary.invoiceZipCodeCity().text()),
+                    () -> assertEquals(invoice.getStreet() + " " + invoice.getBuildingNo() + "/" + invoice.getFlatNo(), page.FinalSummary.invoiceStreetBuildingNo().text())
             );
         }
     }
+
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     class SummaryForeignCompanyIndividualTest extends Base {
@@ -113,9 +114,9 @@ public class SummaryInvoiceTest {
         public void Should_DisplayCorrectIndividualInvoiceDataInModalSummary_When_Submitted() {
             page.ModalSummary.setInvoiceType(InvoiceType.FOREIGN_COMPANY).setInvoiceFields();
             assertAll(() -> assertEquals(invoice.getName(), page.ModalSummary.invoiceCompanyName().text()),
-                    () -> assertEquals("NIP: "+invoice.getNip(), page.ModalSummary.invoiceNip().text()),
-                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.ModalSummary.invoiceZipCodeCity().text()),
-                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.ModalSummary.invoiceStreetBuildingNo().text())
+                    () -> assertEquals("NIP: " + invoice.getNip(), page.ModalSummary.invoiceNip().text()),
+                    () -> assertEquals(invoice.getZipCode() + " " + invoice.getCity(), page.ModalSummary.invoiceZipCodeCity().text()),
+                    () -> assertEquals(invoice.getStreet() + " " + invoice.getBuildingNo() + "/" + invoice.getFlatNo(), page.ModalSummary.invoiceStreetBuildingNo().text())
             );
         }
 
@@ -126,9 +127,9 @@ public class SummaryInvoiceTest {
             Navigate.FromModalSummaryToFinalSummary(page.FinalSummary);
             page.FinalSummary.setInvoiceType(InvoiceType.FOREIGN_COMPANY).setInvoiceFields();
             assertAll(() -> assertEquals(invoice.getName(), page.FinalSummary.invoiceCompanyName().text()),
-                    () -> assertEquals("NIP: "+invoice.getPrefix()+invoice.getNip(), page.FinalSummary.invoiceNip().text()),
-                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.FinalSummary.invoiceZipCodeCity().text()),
-                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.FinalSummary.invoiceStreetBuildingNo().text())
+                    () -> assertEquals("NIP: " + invoice.getPrefix() + invoice.getNip(), page.FinalSummary.invoiceNip().text()),
+                    () -> assertEquals(invoice.getZipCode() + " " + invoice.getCity(), page.FinalSummary.invoiceZipCodeCity().text()),
+                    () -> assertEquals(invoice.getStreet() + " " + invoice.getBuildingNo() + "/" + invoice.getFlatNo(), page.FinalSummary.invoiceStreetBuildingNo().text())
             );
         }
     }

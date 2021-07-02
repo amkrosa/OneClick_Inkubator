@@ -5,7 +5,8 @@ public class Environment {
     private EnvironmentType env;
     private boolean active;
 
-    Environment(){}
+    Environment() {
+    }
 
     public String getUrl() {
         return url;

@@ -10,7 +10,7 @@ public enum Banner {
 
     public final String url;
 
-    Banner( String url) {
-        this.url = Base.environment.getUrl()+url;
+    Banner(String url) {
+        this.url = Base.environment.getUrl() + url;
     }
 }

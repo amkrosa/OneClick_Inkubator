@@ -1,12 +1,11 @@
 package Pages.Summary;
 
+import Helpers.Enums.Statics.StaticText;
 import Helpers.Enums.Types.DeliveryMethod;
 import Helpers.Enums.Types.InvoiceType;
-import Helpers.Enums.Statics.StaticText;
 import Helpers.Enums.Types.SummaryType;
 import Pages.Actions.Action;
 import Pages.Base.BasePage;
-import Selenium.Base;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -114,7 +113,7 @@ public class SummaryPage extends BasePage {
         return this;
     }
 
-    public SummaryPage(SummaryType summaryType, WebDriver driver){
+    public SummaryPage(SummaryType summaryType, WebDriver driver) {
         super(driver);
         this.summaryType = summaryType;
         this.deliveryMethod = null;
@@ -123,7 +122,7 @@ public class SummaryPage extends BasePage {
     }
 
     //region Custom Actions
-    public void refreshUntilPaymentIsDone(){
+    public void refreshUntilPaymentIsDone() {
         String text = paymentStatus.current();
         policyButton().waitVisible().click();
         if (this.isTextFound(text))
@@ -227,12 +226,12 @@ public class SummaryPage extends BasePage {
     //endregion
 
     //region Set methods for invoice and parcelmachine fields
-    public SummaryPage setInvoiceFields(){
-        if (invoiceType==null)
+    public SummaryPage setInvoiceFields() {
+        if (invoiceType == null)
             return null;
         invoiceCompanyName = invoiceFields.get(0);
 
-        switch (invoiceType){
+        switch (invoiceType) {
             case INDIVIDUAL_PERSON:
                 invoiceZipCodeCity = invoiceFields.get(1);
                 invoiceStreetBuildingNo = invoiceFields.get(2);
@@ -249,8 +248,8 @@ public class SummaryPage extends BasePage {
         return this;
     }
 
-    public SummaryPage setReceiverParcelmachineFields(){
-        if (deliveryMethod==DeliveryMethod.BOXMACHINE){
+    public SummaryPage setReceiverParcelmachineFields() {
+        if (deliveryMethod == DeliveryMethod.BOXMACHINE) {
             receiverParcelmachineName = receiverParcelmachineFields.get(0);
             receiverParcelmachineStreetBuldingNo = receiverParcelmachineFields.get(1);
             receiverParcelmachineZipCodeCity = receiverParcelmachineFields.get(2);
@@ -267,7 +266,7 @@ public class SummaryPage extends BasePage {
             return payButton;
         else {
             refreshUntilPaymentIsDone();
-            if(paymentStatus == StaticText.SUMMARY_TRANSACTION_SUCCESS)
+            if (paymentStatus == StaticText.SUMMARY_TRANSACTION_SUCCESS)
                 return printLabelButton;
             else
                 return getDriver().findElement(By.xpath("//*[contains(@class, 'btn')]"));

@@ -41,7 +41,9 @@ public class AddressFormPage extends BasePage {
     //endregion
 
 
-    public AddressFormPage(WebDriver driver){  super(driver);  }
+    public AddressFormPage(WebDriver driver) {
+        super(driver);
+    }
 
     //region Actions
     public Action<AddressFormPage> receiverZipCode() {
@@ -92,30 +94,6 @@ public class AddressFormPage extends BasePage {
         return new Action<>(errorFlatNo, this);
     }
 
-    public AddressFormPage fillReceiverZipCode(String text) {
-        receiverZipCode.sendKeys(text);
-        return this;
-    }
-
-    public AddressFormPage fillReceiverTown(String text) {
-        getCommonHelper().confirmDropdown(receiverTown);
-        return this;
-    }
-
-    public AddressFormPage fillReceiverStreet(String text) {
-        getCommonHelper().confirmDropdown(receiverStreet);
-        return this;
-    }
-
-    public AddressFormPage fillReceiverBuildingNo(String text) {
-        receiverBuildingNo.sendKeys(text);
-        return this;
-    }
-
-    public AddressFormPage fillReceiverFlatNo(String text) {
-        receiverFlatNo.sendKeys(text);
-        return this;
-    }
     //endregion
 
     @Override

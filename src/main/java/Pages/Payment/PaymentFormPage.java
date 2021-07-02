@@ -18,7 +18,9 @@ public class PaymentFormPage extends BasePage {
     @FindBy(how = How.XPATH, using = "//*[contains(@class,'finish-button')]")
     WebElement finishButton;
 
-    public PaymentFormPage(WebDriver driver){  super(driver);}
+    public PaymentFormPage(WebDriver driver) {
+        super(driver);
+    }
 
     //region Actions
     public Action<PaymentFormPage> dataProcessingAgreementCheckbox() {

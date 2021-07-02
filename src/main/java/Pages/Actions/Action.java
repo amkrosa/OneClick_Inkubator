@@ -7,14 +7,14 @@ import Pages.Base.BasePage;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-public class Action<T extends BasePage> implements IAction<T>{
+public class Action<T extends BasePage> implements IAction<T> {
     private final T page;
     private final WaitHelper waitHelper;
     private final CommonHelper commonHelper;
     private final ActionHelper actionHelper;
     private final WebElement element;
 
-    public Action(WebElement element, BasePage page){
+    public Action(WebElement element, BasePage page) {
         this.element = element;
         this.page = (T) page;
         waitHelper = page.getWaitHelper();
@@ -99,7 +99,7 @@ public class Action<T extends BasePage> implements IAction<T>{
     }
 
     @Override
-    public String src(){
+    public String src() {
         return element.getAttribute("src");
     }
 

@@ -17,9 +17,11 @@
         active: true  #only one env can be active, errors will probably occur otherwise
     ```
 * `Download` directory in `src/test/resources`
+
 #### Optional
+
 * JUnit properties for parallel testing.</br>
-`junit-platform.properties` in `src/test/resources`</br>
+  `junit-platform.properties` in `src/test/resources`</br>
     ```properties
     junit.jupiter.execution.parallel.enabled = true
     junit.jupiter.execution.parallel.mode.default = same_thread
@@ -29,11 +31,15 @@
     ```
 
 ### Tests
-Run tests with 
+
+Run tests with
+
 ```shell
 mvn clean test
 ```
+
 or for report in .html (report will be located in ```target/site```)
+
 ```shell
 mvn clean surefire-report:report
 ```

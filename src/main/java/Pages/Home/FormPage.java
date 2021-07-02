@@ -108,7 +108,8 @@ public class FormPage extends BasePage {
     //endregion
 
 
-    public FormPage(WebDriver driver){  super(driver);
+    public FormPage(WebDriver driver) {
+        super(driver);
     }
 
     //region Actions
@@ -240,26 +241,26 @@ public class FormPage extends BasePage {
     //endregion
 
     //region isVisible methods
-    public boolean isHowToSendModalVisible(){
+    public boolean isHowToSendModalVisible() {
         By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
         return getCommonHelper().isModalVisible(xpath);
     }
 
-    public boolean isHowToPackModalVisible(){
+    public boolean isHowToPackModalVisible() {
         By xpath = By.xpath("(//*[@role='dialog'])[last()]//*[@class='modal-content']");
         return getCommonHelper().isModalVisible(xpath);
     }
 
-    public boolean isBannerImagesVisible(){
+    public boolean isBannerImagesVisible() {
         Banner[] banners = Banner.values();
-        for (int i=0; i<bannerImages.size(); i++){
+        for (int i = 0; i < bannerImages.size(); i++) {
             if (!bannerImages.get(i).getAttribute("src").equals(banners[i].url))
                 return false;
         }
         return true;
     }
 
-    public void closeModal(){
+    public void closeModal() {
         getDriver().findElement(By.xpath("(//*[contains(@class, 'close')])[3]"));
     }
     //endregion

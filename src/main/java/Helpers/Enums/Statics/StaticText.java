@@ -11,7 +11,7 @@ public enum StaticText {
     SUMMARY_TRANSACTION_PENDING("Twoja transakcja nie została jeszcze zakończona.",
             "Your transaction has not been concluded"),
     SUMMARY_TRANSACTION_SUCCESS("Twoja płatność została potwierdzona", "Your payment was confirmed"),
-    SUMMARY_TRANSACTION_FAILURE("Ups, mamy problem.","Oops, we have a problem."),
+    SUMMARY_TRANSACTION_FAILURE("Ups, mamy problem.", "Oops, we have a problem."),
     MODAL_HOWTOSEND("Jak nadać paczkę?", "How to send the parcel?"),
     MODAL_HOWTOPACK("Jak spakować paczkę?", "How to pack the parcel?");
 
@@ -23,7 +23,7 @@ public enum StaticText {
         this.en = en;
     }
 
-    public String current(){
+    public String current() {
         return Base.config.getLanguage().equals("pl") ? pl : en;
     }
 }

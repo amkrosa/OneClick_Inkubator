@@ -1,13 +1,13 @@
 package Summaries;
 
 import Helpers.Enums.Dictionaries.ClientDictionary;
+import Helpers.Enums.Dictionaries.InvoiceDictionary;
 import Helpers.Enums.Statics.StaticText;
 import Helpers.Enums.Types.DeliveryMethod;
-import Helpers.Enums.Dictionaries.InvoiceDictionary;
 import Helpers.Enums.Types.InvoiceType;
-import Pages.Navigate;
 import Models.Client;
 import Models.Invoice;
+import Pages.Navigate;
 import Selenium.Base;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.parallel.Execution;
@@ -45,6 +45,7 @@ public class SummaryTest {
                     () -> assertEquals(receiverPm.getParcelmachine(), page.ModalSummary.receiverParcelmachineName().text())
             );
         }
+
         @Test
         @Order(3)
         public void Should_DisplayCorrectSenderDataInModalSummary_When_FilledWithCorrectDataBoxmachineDeliveryType() {
@@ -68,6 +69,7 @@ public class SummaryTest {
                     () -> assertEquals(receiverPm.getParcelmachine(), page.FinalSummary.receiverParcelmachineName().text())
             );
         }
+
         @Test
         @Order(5)
         public void Should_DisplayCorrectSenderDataInFinalSummary_When_FilledWithCorrectDataBoxmachineDeliveryType() {
@@ -90,14 +92,15 @@ public class SummaryTest {
             Navigate.FillFormPage(page.Form, DeliveryMethod.ADDRESS, receiverAddress, sender);
             assertTrue(page.Form.submit(), "Modal was not displayed.");
         }
+
         @Test
         @Order(2)
         public void Should_DisplayCorrectReceiverDataInModalSummary_When_Submitted() {
             assertAll(() -> assertEquals(receiverAddress.getName(), page.ModalSummary.receiverName().text()),
-                    ()->  assertEquals(receiverAddress.getPhone(), page.ModalSummary.receiverPhone().text().replace(" ", "")),
-                    ()->  assertEquals(receiverAddress.getEmail(), page.ModalSummary.receiverEmail().text()),
-                    ()->  assertEquals(receiverAddress.getZipCode()+" "+receiverAddress.getCity(), page.ModalSummary.receiverZipCodeCity().text()),
-                    ()->  assertEquals(receiverAddress.getStreet()+" "+receiverAddress.getBuildingNo()+"/"+receiverAddress.getFlatNo(), page.ModalSummary.receiverStreetBuildingNo().text())
+                    () -> assertEquals(receiverAddress.getPhone(), page.ModalSummary.receiverPhone().text().replace(" ", "")),
+                    () -> assertEquals(receiverAddress.getEmail(), page.ModalSummary.receiverEmail().text()),
+                    () -> assertEquals(receiverAddress.getZipCode() + " " + receiverAddress.getCity(), page.ModalSummary.receiverZipCodeCity().text()),
+                    () -> assertEquals(receiverAddress.getStreet() + " " + receiverAddress.getBuildingNo() + "/" + receiverAddress.getFlatNo(), page.ModalSummary.receiverStreetBuildingNo().text())
             );
         }
 
@@ -118,10 +121,10 @@ public class SummaryTest {
             page.FinalSummary.setPaymentStatus(StaticText.SUMMARY_TRANSACTION_SUCCESS);
             Navigate.FromModalSummaryToFinalSummary(page.FinalSummary);
             assertAll(() -> assertEquals(receiverAddress.getName(), page.FinalSummary.receiverName().text()),
-                    ()->  assertEquals(receiverAddress.getPhone(), page.FinalSummary.receiverPhone().text().replace(" ", "")),
-                    ()->  assertEquals(receiverAddress.getEmail(), page.FinalSummary.receiverEmail().text()),
-                    ()->  assertEquals(receiverAddress.getZipCode()+" "+receiverAddress.getCity(), page.FinalSummary.receiverZipCodeCity().text()),
-                    ()->  assertEquals(receiverAddress.getStreet()+" "+receiverAddress.getBuildingNo()+"/"+receiverAddress.getFlatNo(), page.FinalSummary.receiverStreetBuildingNo().text())
+                    () -> assertEquals(receiverAddress.getPhone(), page.FinalSummary.receiverPhone().text().replace(" ", "")),
+                    () -> assertEquals(receiverAddress.getEmail(), page.FinalSummary.receiverEmail().text()),
+                    () -> assertEquals(receiverAddress.getZipCode() + " " + receiverAddress.getCity(), page.FinalSummary.receiverZipCodeCity().text()),
+                    () -> assertEquals(receiverAddress.getStreet() + " " + receiverAddress.getBuildingNo() + "/" + receiverAddress.getFlatNo(), page.FinalSummary.receiverStreetBuildingNo().text())
             );
         }
 
@@ -155,8 +158,8 @@ public class SummaryTest {
         public void Should_DisplayCorrectIndividualInvoiceDataInModalSummary_When_Submitted() {
             page.ModalSummary.setInvoiceType(InvoiceType.INDIVIDUAL_PERSON).setInvoiceFields();
             assertAll(() -> assertEquals(invoice.getName(), page.ModalSummary.invoiceCompanyName().text()),
-                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.ModalSummary.invoiceZipCodeCity().text()),
-                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.ModalSummary.invoiceStreetBuildingNo().text())
+                    () -> assertEquals(invoice.getZipCode() + " " + invoice.getCity(), page.ModalSummary.invoiceZipCodeCity().text()),
+                    () -> assertEquals(invoice.getStreet() + " " + invoice.getBuildingNo() + "/" + invoice.getFlatNo(), page.ModalSummary.invoiceStreetBuildingNo().text())
             );
         }
 
@@ -167,8 +170,8 @@ public class SummaryTest {
             Navigate.FromModalSummaryToFinalSummary(page.FinalSummary);
             page.FinalSummary.setInvoiceType(InvoiceType.INDIVIDUAL_PERSON).setInvoiceFields();
             assertAll(() -> assertEquals(invoice.getName(), page.FinalSummary.invoiceCompanyName().text()),
-                    ()->  assertEquals(invoice.getZipCode()+" "+invoice.getCity(), page.FinalSummary.invoiceZipCodeCity().text()),
-                    ()->  assertEquals(invoice.getStreet()+" "+invoice.getBuildingNo()+"/"+invoice.getFlatNo(), page.FinalSummary.invoiceStreetBuildingNo().text())
+                    () -> assertEquals(invoice.getZipCode() + " " + invoice.getCity(), page.FinalSummary.invoiceZipCodeCity().text()),
+                    () -> assertEquals(invoice.getStreet() + " " + invoice.getBuildingNo() + "/" + invoice.getFlatNo(), page.FinalSummary.invoiceStreetBuildingNo().text())
             );
         }
     }

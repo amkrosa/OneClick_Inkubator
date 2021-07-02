@@ -4,7 +4,7 @@ import Helpers.Enums.Statics.StaticText;
 import Selenium.Base;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ModalTest {
 
@@ -28,7 +28,7 @@ public class ModalTest {
 
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-    class HowToPackModalTest extends Base{
+    class HowToPackModalTest extends Base {
 
         @Test
         @Order(1)

@@ -5,13 +5,10 @@ import Configs.ConfigHandler;
 import Configs.Environment;
 import Configs.EnvironmentType;
 import Helpers.FileHelper;
-import Pages.Home.FormPage;
 import Pages.Page;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,15 +18,11 @@ import org.openqa.selenium.html5.WebStorage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class Base {
@@ -38,18 +31,18 @@ public abstract class Base {
     public Page page;
     public static Environment environment;
     public static Config config;
-    public static final String downloadFolder = System.getProperty("user.dir")+
-            File.separator+"src"+
-            File.separator+"test"+
-            File.separator+"resources"+
-            File.separator+"Download";
+    public static final String downloadFolder = System.getProperty("user.dir") +
+            File.separator + "src" +
+            File.separator + "test" +
+            File.separator + "resources" +
+            File.separator + "Download";
 
     @BeforeAll
     public void setUp() throws FileNotFoundException {
         ConfigHandler handler = ConfigHandler.getInstance();
         config = handler.getConfig();
 
-        for(var entry : config.getEnvs().entrySet()){
+        for (var entry : config.getEnvs().entrySet()) {
             if (entry.getValue().isActive())
                 environment = entry.getValue();
         }
@@ -83,17 +76,17 @@ public abstract class Base {
         }
     }
 
-    private WebDriver configDriver(){
+    private WebDriver configDriver() {
         String os = System.getProperty("os.name").toLowerCase();
         String webDriverPath = "src/main/resources/chromedriver";
         ChromeOptions options = new ChromeOptions();
 
         if (os.contains("win"))
-            webDriverPath+=".exe";
+            webDriverPath += ".exe";
 
         System.setProperty("webdriver.chrome.driver", webDriverPath);
 
-        if(config.isHeadless()){
+        if (config.isHeadless()) {
             options.addArguments("--headless");
         }
         if (config.isHeadless() && os.contains("win")) {

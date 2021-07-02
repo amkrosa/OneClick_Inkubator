@@ -16,7 +16,9 @@ public class PaymentRedirectPage extends BasePage {
     @FindBy(how = How.XPATH, using = "//button[@value='3']")
     WebElement pendingPaymentButton;
 
-    public PaymentRedirectPage(WebDriver driver){  super(driver);}
+    public PaymentRedirectPage(WebDriver driver) {
+        super(driver);
+    }
 
     //region Actions
     public Action<PaymentRedirectPage> confirmedPaymentButton() {

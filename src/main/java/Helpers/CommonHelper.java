@@ -1,7 +1,9 @@
 package Helpers;
 
-import Selenium.Base;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class CommonHelper {
     ActionHelper actionHelper;
@@ -14,23 +16,23 @@ public class CommonHelper {
         this.waitHelper = new WaitHelper(driver);
     }
 
-    public CommonHelper(WebDriver driver, ActionHelper actionHelper, WaitHelper waitHelper){
+    public CommonHelper(WebDriver driver, ActionHelper actionHelper, WaitHelper waitHelper) {
         this.actionHelper = actionHelper;
         this.waitHelper = waitHelper;
     }
 
-    public void waitAndClick(WebElement elementToClick, WebElement elementToWait){
+    public void waitAndClick(WebElement elementToClick, WebElement elementToWait) {
         waitHelper.waitUntilVisible(elementToWait);
         elementToClick.click();
     }
 
-    public void waitAndClick(WebElement elementToClick){
+    public void waitAndClick(WebElement elementToClick) {
         WebElement elementToWait = elementToClick;
         waitHelper.waitUntilVisible(elementToWait);
         elementToClick.click();
     }
 
-    public void moveAndClick(WebElement element){
+    public void moveAndClick(WebElement element) {
         actionHelper.moveToElement(element);
         waitHelper.waitUntilClickable(element);
         element.click();
@@ -41,24 +43,24 @@ public class CommonHelper {
         confirmDropdown(inputElement);
     }
 
-    public void confirmDropdown(WebElement inputElement) throws UnsupportedOperationException{
+    public void confirmDropdown(WebElement inputElement) throws UnsupportedOperationException {
         inputElement.click();
         By path = By.xpath("//div[@role='option']");
         waitHelper.waitUntilVisible(waitHelper.waitUntilLocated(path));
         inputElement.sendKeys(Keys.ENTER);
     }
 
-    public boolean isVisible(By by){
+    public boolean isVisible(By by) {
         return !driver.findElements(by).isEmpty();
     }
 
-    public boolean isModalVisible(By byxpath){
-            try {
-                waitHelper.waitUntilLocated(byxpath);
-                return true;
-            }catch (Exception e){
-                return false;
-            }
+    public boolean isModalVisible(By byxpath) {
+        try {
+            waitHelper.waitUntilLocated(byxpath);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

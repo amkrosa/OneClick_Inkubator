@@ -10,41 +10,42 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @Execution(ExecutionMode.CONCURRENT)
 public class InvoiceFormTest {
 
-    private final String string251= "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    private final String string250= "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    private final String string10= "aaaaaaaaaa";
-    private final String string51= "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    private final String string11= "aaaaaaaaaaa";
+    private final String string251 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private final String string250 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private final String string10 = "aaaaaaaaaa";
+    private final String string51 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private final String string11 = "aaaaaaaaaaa";
 
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-    public class IndividualInvoiceTest extends Base{
+    public class IndividualInvoiceTest extends Base {
 
         private final Invoice individual = InvoiceDictionary.INDIVIDUAL.invoice;
 
         @Test
         @Order(1)
-        public void Should_DisplayIndividualInvoiceForm_When_CheckboxClicked(){
+        public void Should_DisplayIndividualInvoiceForm_When_CheckboxClicked() {
             page.Form.invoiceCheckbox().click();
             page.Invoice.clickInvoiceIndividualCheckbox();
-            assertDoesNotThrow(()->page.Invoice.init());
+            assertDoesNotThrow(() -> page.Invoice.init());
         }
 
         @Test
         @Order(2)
-        public void Should_CopySenderData_When_LinkActionClicked(){
+        public void Should_CopySenderData_When_LinkActionClicked() {
             page.Form.senderEmail().fill(individual.getEmail())
                     .page().senderName().fill(individual.getName());
             page.Invoice.copySenderData().waitClickable().click();
             assertAll(
-                    ()->assertEquals(individual.getEmail(), page.Invoice.individualEmail().value()),
-                    ()->assertEquals(individual.getName(), page.Invoice.individualName().value())
-                    );
+                    () -> assertEquals(individual.getEmail(), page.Invoice.individualEmail().value()),
+                    () -> assertEquals(individual.getName(), page.Invoice.individualName().value())
+            );
         }
 
         @ParameterizedTest
@@ -152,24 +153,24 @@ public class InvoiceFormTest {
 
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-    public class CompanyInvoiceTest extends Base{
+    public class CompanyInvoiceTest extends Base {
 
         private final Invoice company = InvoiceDictionary.COMPANY.invoice;
 
         @Test
         @Order(1)
-        public void Should_DisplayCompanyInvoiceForm_When_CheckboxClicked(){
+        public void Should_DisplayCompanyInvoiceForm_When_CheckboxClicked() {
             page.Form.invoiceCheckbox().click();
             page.Invoice.clickInvoiceCompanyCheckbox();
-            assertDoesNotThrow(()->page.Invoice.init());
+            assertDoesNotThrow(() -> page.Invoice.init());
         }
 
         @Test
         @Order(2)
-        public void Should_LoadCompanyData_When_ValidNipIsEntered(){
+        public void Should_LoadCompanyData_When_ValidNipIsEntered() {
             page.Invoice.companyNip().fill("6793087624");
             page.Invoice.waitNipLoad();
-            assertTrue(page.Invoice.companyName().value().contains("INPOST"), "Company name contains "+page.Invoice.companyName().value());
+            assertTrue(page.Invoice.companyName().value().contains("INPOST"), "Company name contains " + page.Invoice.companyName().value());
         }
 
         @ParameterizedTest
@@ -284,20 +285,20 @@ public class InvoiceFormTest {
 
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-    public class ForeignCompanyInvoiceTest extends Base{
+    public class ForeignCompanyInvoiceTest extends Base {
 
         private final Invoice foreignCompany = InvoiceDictionary.FOREIGN_COMPANY.invoice;
 
         @Test
         @Order(1)
-        public void Should_DisplayForeignCompanyInvoiceForm_When_CheckboxClicked(){
+        public void Should_DisplayForeignCompanyInvoiceForm_When_CheckboxClicked() {
             page.Form.invoiceCheckbox().click();
             page.Invoice.clickInvoiceForeignCompanyCheckbox();
-            assertDoesNotThrow(()->page.Invoice.init());
+            assertDoesNotThrow(() -> page.Invoice.init());
         }
 
         @Test
-        public void Should_NipBeRequired_When_PrefixIsSelected(){
+        public void Should_NipBeRequired_When_PrefixIsSelected() {
             page.Invoice.foreignCompanyPrefixInput().clear().page().foreignCompanyCountryInput().clear();
             page.Invoice.foreignCompanyPrefixInput().clear().fill("be").confirmDropdown();
             assertTrue(page.Invoice.errorForeignCompanyNip().waitVisible().isDisplayed());
@@ -339,7 +340,7 @@ public class InvoiceFormTest {
         public void Should_InvoiceForeignCompanyCountryBeInvalid_When_FilledWithInvalidData(String str) {
             page.Invoice.foreignCompanyCountryInput().clear().fill(str);
             boolean result = page.Invoice.isTextFound(Message.DROPDOWN_NOTFOUND.current());
-            assertTrue(result, "Text "+Message.DROPDOWN_NOTFOUND.current()+" was not found.");
+            assertTrue(result, "Text " + Message.DROPDOWN_NOTFOUND.current() + " was not found.");
         }
 
         @ParameterizedTest
@@ -347,7 +348,7 @@ public class InvoiceFormTest {
         public void Should_InvoiceForeignCompanyZipCodeBeInvalid_When_FilledWithInvalidData(String str) {
             page.Invoice.foreignCompanyZipCode().clear().click().fill(str).clickAbove();
             assertDoesNotThrow(
-                    ()->assertTrue(page.Invoice.errorForeignCompanyZipCode().waitVisible().isDisplayed())
+                    () -> assertTrue(page.Invoice.errorForeignCompanyZipCode().waitVisible().isDisplayed())
             );
         }
 

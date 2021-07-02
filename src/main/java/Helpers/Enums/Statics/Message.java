@@ -12,7 +12,8 @@ public enum Message {
         this.pl = pl;
         this.en = en;
     }
-    public String current(){
+
+    public String current() {
         return Base.config.getLanguage().equals("pl") ? pl : en;
     }
 }

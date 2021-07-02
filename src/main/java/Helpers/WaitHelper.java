@@ -19,53 +19,56 @@ public class WaitHelper {
     private FluentWait<WebDriver> fluentWait;
     private WebDriver driver;
 
-    public WaitHelper(WebDriver driver){
+    public WaitHelper(WebDriver driver) {
         this.driver = driver;
         fluentWait = new FluentWait<>(driver);
         fluentWait.withTimeout(Duration.ofSeconds(Base.config.getTimeout()))
                 .pollingEvery(Duration.ofMillis(750))
                 .ignoring(Exception.class);
     }
-    public void waitUntilVisibleLong(WebElement element){
+
+    public void waitUntilVisibleLong(WebElement element) {
         new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(Base.config.getTimeout()*2))
+                .withTimeout(Duration.ofSeconds(Base.config.getTimeout() * 2))
                 .pollingEvery(Duration.ofMillis(500))
                 .ignoring(Exception.class)
                 .until(ExpectedConditions.visibilityOf(element));
     }
-    public void waitUntilVisible(WebElement element){
+
+    public void waitUntilVisible(WebElement element) {
         fluentWait.until(ExpectedConditions.visibilityOf(element));
     }
-    public void waitUntilInvisible(WebElement element){
+
+    public void waitUntilInvisible(WebElement element) {
         fluentWait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    public void waitUntilZeroElements(By by){
+    public void waitUntilZeroElements(By by) {
         fluentWait.until(ExpectedConditions.numberOfElementsToBe(by, 0));
     }
 
-    public void waitUntilVisible(By by){
+    public void waitUntilVisible(By by) {
         fluentWait.until(ExpectedConditions.visibilityOf(
                 waitUntilLocated(by)
         ));
     }
 
-    public WebElement waitUntilLocated(By by){
+    public WebElement waitUntilLocated(By by) {
         return fluentWait.until(driver -> driver.findElement(by));
     }
 
-    public void waitUntilTextIsPresent(WebElement element, String text){
+    public void waitUntilTextIsPresent(WebElement element, String text) {
         int iterationTimeout = 10;
-        while (iterationTimeout!=0) {
+        while (iterationTimeout != 0) {
             try {
                 new FluentWait<>(driver)
-                        .withTimeout(Duration.ofSeconds(Base.config.getTimeout()/4))
+                        .withTimeout(Duration.ofSeconds(Base.config.getTimeout() / 4))
                         .pollingEvery(Duration.ofMillis(500))
                         .ignoring(Exception.class)
                         .until(driver ->
                                 driver.findElement(By.xpath("//*[contains(text(),'" + text + "')]")));
                 return;
-            }catch (Exception e){
+            } catch (Exception e) {
                 element.click();
                 iterationTimeout--;
             }
@@ -83,18 +86,19 @@ public class WaitHelper {
             try {
                 FileTime after = Files.getLastModifiedTime(fileHelper.getLatestFile());
                 int result = fileHelper.countFilesWithExtension("crdownload");
-                if (before.compareTo(after)<0 && result==0)
+                if (before.compareTo(after) < 0 && result == 0)
                     return true;
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
             return false;
         });
     }
 
-    public void waitUntilClickable(WebElement element){
+    public void waitUntilClickable(WebElement element) {
         fluentWait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void waitUntilClickable(By by){
+    public void waitUntilClickable(By by) {
         fluentWait.until(ExpectedConditions.elementToBeClickable(by));
     }
 

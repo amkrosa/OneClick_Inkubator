@@ -15,27 +15,29 @@ public class FileHelper {
 
     private final Path directory;
 
-    public FileHelper(String directory){
+    public FileHelper(String directory) {
         this.directory = Path.of(directory);
     }
-    public FileHelper(){
+
+    public FileHelper() {
         this.directory = Path.of(Base.downloadFolder);
     }
 
-    public int countFilesWithExtension(String extension){
-        long result=-1;
+    public int countFilesWithExtension(String extension) {
+        long result = -1;
         try (Stream<Path> walk = Files.walk(directory)) {
             result = walk
                     .filter(p -> !Files.isDirectory(p))
                     .map(p -> p.toString().toLowerCase())
                     .filter(f -> f.endsWith(extension))
                     .count();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
 
-        return (int)result;
+        return (int) result;
     }
 
-    public void deleteFilesWithExtension(String extension){
+    public void deleteFilesWithExtension(String extension) {
         List<String> result = null;
         try (Stream<Path> walk = Files.walk(directory)) {
             result = walk
@@ -43,33 +45,35 @@ public class FileHelper {
                     .map(p -> p.toString().toLowerCase())
                     .filter(f -> f.endsWith(extension))
                     .collect(Collectors.toList());
-        } catch (IOException ignored) { }
+        } catch (IOException ignored) {
+        }
         assert result != null;
-        result.forEach(e-> {
+        result.forEach(e -> {
             try {
                 Files.deleteIfExists(Path.of(e));
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
         });
     }
 
     public Path getLatestFile() throws IOException {
         Optional<Path> opPath = Files.list(directory)
                 .filter(p -> !Files.isDirectory(p))
-                .sorted((p1, p2)-> Long.compare(p2.toFile().lastModified(), p1.toFile().lastModified()))
+                .sorted((p1, p2) -> Long.compare(p2.toFile().lastModified(), p1.toFile().lastModified()))
                 .findFirst();
 
         return opPath.orElse(Path.of("."));
     }
 
     public int getFileSizeInKb(Path file) throws IOException {
-        return (int)Files.size(file)/1024;
+        return (int) Files.size(file) / 1024;
     }
 
     public boolean isLatestFileNew() throws IOException {
         FileTime currentTime = FileTime.fromMillis(System.currentTimeMillis() - 5000);
         FileTime lastFile = Files.getLastModifiedTime(getLatestFile());
         int result = currentTime.compareTo(lastFile);
-        if(result>0)
+        if (result > 0)
             return false;
         else return result < 0;
     }

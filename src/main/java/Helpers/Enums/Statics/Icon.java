@@ -15,6 +15,6 @@ public enum Icon {
     public final String url;
 
     Icon(String url) {
-        this.url = Base.environment.getUrl()+url;
+        this.url = Base.environment.getUrl() + url;
     }
 }

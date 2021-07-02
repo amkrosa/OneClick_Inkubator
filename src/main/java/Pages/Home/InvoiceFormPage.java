@@ -144,25 +144,25 @@ public class InvoiceFormPage extends BasePage {
 
     private WebElement initElement;
 
-    public InvoiceFormPage(WebDriver driver){
+    public InvoiceFormPage(WebDriver driver) {
         super(driver);
     }
 
 
     //region Custom actions
-    public InvoiceFormPage clickInvoiceForeignCompanyCheckbox(){
+    public InvoiceFormPage clickInvoiceForeignCompanyCheckbox() {
         getCommonHelper().moveAndClick(invoiceForeignCompanyCheckbox);
         initElement = foreignCompanyTown;
         return this;
     }
 
-    public InvoiceFormPage clickInvoiceIndividualCheckbox(){
+    public InvoiceFormPage clickInvoiceIndividualCheckbox() {
         getCommonHelper().moveAndClick(invoiceIndividualCheckbox);
         initElement = individualTown;
         return this;
     }
 
-    public InvoiceFormPage clickInvoiceCompanyCheckbox(){
+    public InvoiceFormPage clickInvoiceCompanyCheckbox() {
         getCommonHelper().moveAndClick(invoiceCompanyCheckbox);
         initElement = companyTown;
         return this;
@@ -395,10 +395,12 @@ public class InvoiceFormPage extends BasePage {
 
 
     public InvoiceFormPage waitNipLoad() {
-       getWaitHelper().waitUntilZeroElements(By.xpath("//*[contains(@class,'fixed-loader')]"));
-       return this;
+        getWaitHelper().waitUntilZeroElements(By.xpath("//*[contains(@class,'fixed-loader')]"));
+        return this;
     }
 
     @Override
-    public WebElement getInitElement() { return initElement; }
+    public WebElement getInitElement() {
+        return initElement;
+    }
 }

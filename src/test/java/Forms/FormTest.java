@@ -1,32 +1,29 @@
 package Forms;
 
+import Helpers.Enums.Dictionaries.ClientDictionary;
 import Helpers.Enums.Statics.Icon;
 import Helpers.Enums.Statics.StaticText;
 import Models.Client;
-import Pages.Home.AddressFormPage;
-import Pages.Home.BoxmachineFormPage;
-import Pages.Home.FormPage;
 import Selenium.Base;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
 public class FormTest extends Base {
 
-    private Client receiverPm = new Client("Anna Krasowska", "123123123", "anna@anna.pl", "KRA01M");
-    private Client receiverAddress = new Client("Anna Krasowska", "123123123", "anna@anna.pl", "01-123", "Warszawa", "Elekcyjna", "1", "1");
-    private Client sender = new Client("Magda Asowska", "321321321", "magda@magda.pl");
-    private final String string251= "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    private final String string10= "aaaaaaaaaa";
-    private final String string51= "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    private final String string11= "aaaaaaaaaaa";
+    private final Client receiverPm = ClientDictionary.BOXMACHINE.client;
+    private final Client sender = ClientDictionary.SENDER.client;
+    private final String string251 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private final String string10 = "aaaaaaaaaa";
+    private final String string51 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private final String string11 = "aaaaaaaaaaa";
 
     @Test
     public void Should_SelectDeliveryMethodBoxmachine_When_Clicked() {
@@ -46,7 +43,7 @@ public class FormTest extends Base {
         page.Form.parcelSizeA().click();
         String text = page.Form.summarySizeText().text();
         boolean result = text.contains(StaticText.SIZE_PARCEL_A.current());
-        assertTrue(result, "Text "+text+" does not contain "+StaticText.SIZE_PARCEL_A.current());
+        assertTrue(result, "Text " + text + " does not contain " + StaticText.SIZE_PARCEL_A.current());
     }
 
     @Test
@@ -54,7 +51,7 @@ public class FormTest extends Base {
         page.Form.parcelSizeB().click();
         String text = page.Form.summarySizeText().text();
         boolean result = text.contains(StaticText.SIZE_PARCEL_B.current());
-        assertTrue(result, "Text "+text+" does not contain "+StaticText.SIZE_PARCEL_B.current());
+        assertTrue(result, "Text " + text + " does not contain " + StaticText.SIZE_PARCEL_B.current());
     }
 
     @Test
@@ -62,7 +59,7 @@ public class FormTest extends Base {
         page.Form.parcelSizeC().click();
         String text = page.Form.summarySizeText().text();
         boolean result = text.contains(StaticText.SIZE_PARCEL_C.current());
-        assertTrue(result, "Text "+text+" does not contain "+StaticText.SIZE_PARCEL_C.current());
+        assertTrue(result, "Text " + text + " does not contain " + StaticText.SIZE_PARCEL_C.current());
     }
 
     @Test
@@ -81,8 +78,8 @@ public class FormTest extends Base {
     @Test
     public void Should_ReceiverPhoneBeCorrect_When_FilledWithCorrectData() {
         page.Form.receiverPhone().clear().fill(receiverPm.getPhone());
-        String phone = page.Form.receiverPhone().value().replace(" ","");
-        assertEquals("+48"+receiverPm.getPhone(), phone);
+        String phone = page.Form.receiverPhone().value().replace(" ", "");
+        assertEquals("+48" + receiverPm.getPhone(), phone);
     }
 
     @ParameterizedTest
@@ -117,7 +114,7 @@ public class FormTest extends Base {
     public void Should_SenderPhoneBeCorrect_When_FilledWithCorrectData() {
         page.Form.senderPhone().clear().fill(sender.getPhone());
         String phone = page.Form.senderPhone().value().replace(" ", "");
-        assertEquals("+48"+sender.getPhone(), phone);
+        assertEquals("+48" + sender.getPhone(), phone);
     }
 
     @ParameterizedTest
@@ -149,16 +146,16 @@ public class FormTest extends Base {
     }
 
     @Test
-    public void Should_CheckNewsletterCheckbox_When_Clicked(){
-        assertDoesNotThrow(()->page.Form.newsletter().click());
+    public void Should_CheckNewsletterCheckbox_When_Clicked() {
+        assertDoesNotThrow(() -> page.Form.newsletter().click());
     }
 
     @Nested
     @DisplayName("Parcelmachine delivery method")
-    public class ReceiverParcelmachineFormTest{
+    public class ReceiverParcelmachineFormTest {
 
         @BeforeEach
-        public void setup(){
+        public void setup() {
             if (!page.Form.summaryReceiverMethodIcon().src().equals(Icon.BOXMACHINE.url))
                 page.Form.deliveryTypeBoxmachine().click();
         }
@@ -181,10 +178,10 @@ public class FormTest extends Base {
 
     @Nested
     @DisplayName("Address delivery method")
-    public class ReceiverAddresseFormTest{
+    public class ReceiverAddresseFormTest {
 
         @BeforeEach
-        public void setup(){
+        public void setup() {
             if (!page.Form.summaryReceiverMethodIcon().src().equals(Icon.ADDRESS.url))
                 page.Form.deliveryTypeAddress().click();
         }

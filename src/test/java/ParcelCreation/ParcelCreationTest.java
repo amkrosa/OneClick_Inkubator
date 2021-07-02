@@ -1,12 +1,12 @@
 package ParcelCreation;
 
 import Helpers.Enums.Dictionaries.ClientDictionary;
-import Helpers.Enums.Types.DeliveryMethod;
 import Helpers.Enums.Statics.StaticText;
+import Helpers.Enums.Types.DeliveryMethod;
 import Helpers.FileHelper;
-import Pages.Navigate;
 import Models.Client;
 import Pages.Home.FormPage;
+import Pages.Navigate;
 import Pages.Payment.PaymentFormPage;
 import Pages.Summary.SummaryPage;
 import Selenium.Base;
@@ -14,7 +14,8 @@ import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ParcelCreationTest {
@@ -32,8 +33,8 @@ public class ParcelCreationTest {
         @Test
         @Order(1)
         @DisplayName("Page loaded")
-        public void Should_LoadPage(){
-            Assertions.assertDoesNotThrow(()->
+        public void Should_LoadPage() {
+            Assertions.assertDoesNotThrow(() ->
                     page.Form.<FormPage>init()
             );
         }
@@ -46,7 +47,7 @@ public class ParcelCreationTest {
 
         @Test
         @Order(3)
-        public void Should_DisplaySummaryModal_When_FormIsSubmitted(){
+        public void Should_DisplaySummaryModal_When_FormIsSubmitted() {
             assertTrue(page.Form.submit());
         }
 
@@ -79,18 +80,17 @@ public class ParcelCreationTest {
     }
 
 
-
     @Nested
     @Order(2)
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     @DisplayName("Address delivery method")
-    public class AddressDeliveryTest extends Base{
+    public class AddressDeliveryTest extends Base {
 
         @Test
         @Order(1)
         @DisplayName("Page loaded")
-        public void Should_LoadPage(){
-            Assertions.assertDoesNotThrow(()->
+        public void Should_LoadPage() {
+            Assertions.assertDoesNotThrow(() ->
                     page.Form.<FormPage>init()
             );
         }
@@ -103,7 +103,7 @@ public class ParcelCreationTest {
 
         @Test
         @Order(3)
-        public void Should_DisplaySummaryModal_When_FormIsSubmitted(){
+        public void Should_DisplaySummaryModal_When_FormIsSubmitted() {
             assertTrue(page.Form.submit());
         }
 
